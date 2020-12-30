@@ -12,3 +12,8 @@
 ![Details](/Wireframes/details.png)
 ![About](/Wireframes/about.png)
 ![NavBar](/Wireframes/NavBar.png)
+
+## To Do
+- [] User List (Admin)
+- [] User Detail (Admin)
+- [] (?) Profile page (User's own info)
