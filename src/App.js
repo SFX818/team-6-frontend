@@ -8,6 +8,9 @@ import Layout from "./components/common/Layout"
 import Login from './components/Login'
 import Signup from './components/Signup'
 
+// Admin Components
+import Admin from './components/Admin'
+
 //CSS imports
 import './css/App.css';
 
@@ -18,6 +21,7 @@ const App = () => {
         <Route exact path={["/","/home"]} component={Home}/>
         <Route exact path="/login" component={Login}/>
         <Route exact path="/register" component={Signup}/>
+        <Route exact path='/admin' component={Admin} />
       </Switch>
     </Layout>
   );

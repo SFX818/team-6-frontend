@@ -5,15 +5,17 @@ const API_URL_DASHBOARD = 'http://localhost8080/dashboard/'
 const API_URL_SEARCH = 'http://localhost8080/search/'
 
 // --- ADMIN ROUTES --- //
-const getAllUsers = () => {
-    return axios.get(API_URL_ADMIN + 'all')
+export const getAllUsers = () => {
+    axios.get(API_URL_ADMIN + 'all')
+    .then(response => {return response})
+    .catch(err => console.log(err))
 }
 
-const getOneUser = () => {
+export const getOneUser = () => {
     return axios.get(API_URL_ADMIN + ':id')
 }
 
-const updateUser = () => {
+export const updateUser = (id,username,email,password,roles) => {
     return axios.put(API_URL_ADMIN + ':id', {
         id,
         username,
@@ -23,22 +25,22 @@ const updateUser = () => {
     })
 }
 
-const deleteUser = () => {
+export const deleteUser = (id) => {
     return axios.delete(API_URL_ADMIN + ':id', {
         id
     })
 }
 
 // --- USER DASHBOARD ROUTES --- //
-const getFavorites = () => {
+export const getFavorites = () => {
     return axios.get(API_URL_DASHBOARD + 'favorites')
 }
 
-const getHistory = () => {
+export const getHistory = () => {
     return axios.get(API_URL_DASHBOARD + 'history')
 }
 
-const editPrimary = () => {
+export const editPrimary = (id,city,state,country,county) => {
     return axios.put(API_URL_DASHBOARD + 'edit', {
         id,
         city,
@@ -48,13 +50,13 @@ const editPrimary = () => {
     })
  }
 
-const removeFavorite = () => {
+export const removeFavorite = (id) => {
     return axios.delete(API_URL_DASHBOARD + 'favorites/remove/:id', {
         id
     })
 }
 
-const addFavorite = () => {
+export const addFavorite = (id,city,state,country,county) => {
     return axios.post(API_URL_SEARCH + ':id', {
         id,
         city,
@@ -64,14 +66,14 @@ const addFavorite = () => {
     })
 }
 
-export default {
-    getAllUsers,
-    getOneUser,
-    updateUser,
-    deleteUser,
-    getFavorites,
-    getHistory,
-    editPrimary,
-    removeFavorite,
-    addFavorite
-}
+// export default {
+//     getAllUsers,
+//     getOneUser,
+//     updateUser,
+//     deleteUser,
+//     getFavorites,
+//     getHistory,
+//     editPrimary,
+//     removeFavorite,
+//     addFavorite
+// }
