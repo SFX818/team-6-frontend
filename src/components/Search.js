@@ -33,7 +33,7 @@ const Search = () => {
     return (
         <div className="App">
             <div>
-                <h1>Covid-19 Results</h1>
+                <h1>Covid-19 Cases</h1>
                 < SearchForm />
             </div>
             
