@@ -1,7 +1,13 @@
 // import React from "react"
 import React, { useRef, useEffect } from "react";
 // import useSWR from "swr";
+
+//import component
+import SearchForm from "./SearchForm";
+
+
 const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
+
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiYmluYXJ5YmVhc3QiLCJhIjoiY2tpbTU3cW8xMHE1ZTJycXJkemdjZThmMSJ9.LUCLnUpyYjcUF48GPUEUVQ';
 
@@ -28,13 +34,7 @@ const Search = () => {
         <div className="App">
             <div>
                 <h1>Covid-19 Results</h1>
-            <form>
-                <input placeholder="enter by city/state/country">
-                </input>
-                <button class="btn waves-effect waves-light" type="submit" name="action">
-                    <i class="material-icons right">search</i>
-                </button>
-            </form>
+                < SearchForm />
             </div>
             
             
