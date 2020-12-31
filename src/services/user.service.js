@@ -1,13 +1,16 @@
 import axios from 'axios'
+import authHeader from '../utilities/authHeader.utilities'
 
-const API_URL_ADMIN = 'http://localhost8080/admin/users/'
-const API_URL_DASHBOARD = 'http://localhost8080/dashboard/'
-const API_URL_SEARCH = 'http://localhost8080/search/'
+const API_URL_ADMIN = 'http://localhost:8080/admin/users/'
+const API_URL_DASHBOARD = 'http://localhost:8080/dashboard/'
+const API_URL_SEARCH = 'http://localhost:8080/search/'
 
 // --- ADMIN ROUTES --- //
 export const getAllUsers = () => {
-    axios.get(API_URL_ADMIN + 'all')
-    .then(response => {return response})
+    axios.get(API_URL_ADMIN + 'all', {header: authHeader()})
+    .then(response => {
+        return response.data
+    })
     .catch(err => console.log(err))
 }
 
