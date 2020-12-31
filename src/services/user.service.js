@@ -13,6 +13,22 @@ const getOneUser = () => {
     return axios.get(API_URL_ADMIN + ':id')
 }
 
+const updateUser = () => {
+    return axios.put(API_URL_ADMIN + ':id', {
+        id,
+        username,
+        email,
+        password,
+        roles
+    })
+}
+
+const deleteUser = () => {
+    return axios.delete(API_URL_ADMIN + ':id', {
+        id
+    })
+}
+
 // --- USER DASHBOARD ROUTES --- //
 const getFavorites = () => {
     return axios.get(API_URL_DASHBOARD + 'favorites')
@@ -23,20 +39,36 @@ const getHistory = () => {
 }
 
 const editPrimary = () => {
-    return axios.get(API_URL_DASHBOARD + 'edit')
+    return axios.put(API_URL_DASHBOARD + 'edit', {
+        id,
+        city,
+        state,
+        country,
+        county
+    })
  }
 
 const removeFavorite = () => {
-    return axios.get(API_URL_DASHBOARD + 'favorites/remove/:id')
+    return axios.delete(API_URL_DASHBOARD + 'favorites/remove/:id', {
+        id
+    })
 }
 
 const addFavorite = () => {
-    return axios.get(API_URL_SEARCH + ':id')
+    return axios.post(API_URL_SEARCH + ':id', {
+        id,
+        city,
+        state,
+        country,
+        county
+    })
 }
 
 export default {
     getAllUsers,
     getOneUser,
+    updateUser,
+    deleteUser,
     getFavorites,
     getHistory,
     editPrimary,
