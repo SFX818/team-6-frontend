@@ -32,11 +32,12 @@ const Search = () => {
     
     return (
         <div className="App">
-            <div>
+            <div> < SearchForm />
                 <h1>Covid-19 Cases</h1>
-                < SearchForm />
+               
+
             </div>
-            
+           
             
           <div className="mapContainer">
             {/* Assigned Mapbox container */}
