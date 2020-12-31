@@ -36,7 +36,11 @@ export const deleteUser = (id) => {
 
 // --- USER DASHBOARD ROUTES --- //
 export const getFavorites = () => {
-    return axios.get(API_URL_DASHBOARD + 'favorites')
+    return axios.get(API_URL_DASHBOARD + 'favorites',{header: authHeader()})
+    .then(response => {
+        return(response.data)
+    })
+    .catch(err => console.log(err))
 }
 
 export const getHistory = () => {
