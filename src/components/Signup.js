@@ -111,7 +111,7 @@ const Register = (props) => {
         //Prevent message clear them out
         setMessage("")
         setSuccessful(false)
-
+        
         // validtes all the fields in your form
         form.current.validateAll()
         
