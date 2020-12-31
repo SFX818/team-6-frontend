@@ -70,7 +70,21 @@ const Register = (props) => {
     const [country, setCountry] = useState('')
     const [region, setRegion] = useState('')
     const [city, setCity] = useState('')
-    const [county, setCounty] = useState('')
+    // const [county, setCounty] = useState('')
+
+    // useEffect(() => {
+    //     axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${city},${region}&key=${GOOGLE_API_KEY}`)
+    //     .then(response => {
+    //         //Assigns county value from API request
+    //         const county_name = Object.values(response.data.results[0])[0][1].long_name
+    //         //newCounty string extracts "County" from string from API
+    //         const newCounty = county_name.replace(/County/g, '')
+    //         console.log(newCounty)
+    //         setCounty(newCounty)
+    //         console.log("COUNTY AFTER REQUEST", county)
+    //     })
+    // }, [city, region])
+    
 
     const onChangeUsername = (e) => {
         const username = e.target.value
@@ -103,9 +117,7 @@ const Register = (props) => {
         setCity(city)
     }
 
-    console.log(password)
-
-    const handleSignup = (e) => {
+    const handleSignup = async (e) => {
         //Prevent reload of pressing the button
         e.preventDefault()
         //Prevent message clear them out
@@ -118,28 +130,22 @@ const Register = (props) => {
         // Validator stores errors and we can check if errors exist
         
         if(checkBtn.current.context._errors.length === 0) {
-            axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${city},${region}&key=${GOOGLE_API_KEY}`)
-            .then(response => {
-                //Assigns county value from API request
-                const county_name = Object.values(response.data.results[0])[0][1].long_name
-                //newCounty string extracts "County" from string from API
-                const newCounty = county_name.replace(/County/g, '')
-                setCounty(newCounty)
-                console.log("COUNTY AFTER REQUEST", county)
-            })
-            .finally(() => {
-                register(username, email, password, country, region, city, county).then(
-                    (response) => {
-                        setMessage(response.data.message)
-                        setSuccessful(true)
-                        console.log("COUNTY AFTER REGISTER", county)
-                    },
-                    (error) => {
-                        setMessage(resMessage(error))
-                        setSuccessful(false)
-                    }
-                )
-            })
+            //Google API request
+            const apiResponse = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${city},${region}&key=${GOOGLE_API_KEY}`)
+            //Parses over API and pulls out "____ County", replace removes county for disease API
+            const county = Object.values(apiResponse.data.results[0])[0][1].long_name.replace(/County/g, '')
+            register(username, email, password, country, region, city, county).then(
+                (response) => {
+                    setMessage(response.data.message)
+                    setSuccessful(true)
+                    console.log("COUNTY AFTER REGISTER", county)
+                },
+                (error) => {
+                    setMessage(resMessage(error))
+                    setSuccessful(false)
+                }
+            )
+
         } else {
             successful(false)
         }
@@ -211,7 +217,7 @@ const Register = (props) => {
                     </FormGroup>
 
                     <div className="form-group">
-                        <button className="btn">
+                        <button className="btn" >
                             <span>Sign Up</span>
                         </button>   
                     </div>
