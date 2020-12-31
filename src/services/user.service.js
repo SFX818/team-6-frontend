@@ -5,29 +5,43 @@ const API_URL_ADMIN = 'http://localhost:8080/admin/users/'
 const API_URL_DASHBOARD = 'http://localhost:8080/dashboard/'
 const API_URL_SEARCH = 'http://localhost:8080/search/'
 
-// --- ADMIN ROUTES --- //
-// export const getAllUsers = () => {
-//     axios.get(API_URL_ADMIN + 'all', {header: authHeader()})
-//     .then(response => {
-//         return response.data
-//     })
-//     .catch(err => console.log(err))
-// }
-
-export const getAllUsers = () => {
-    axios({
-        method: 'GET',
-        url: API_URL_ADMIN + 'all',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': authHeader()
-        }
+// --- TEST --- //
+export const testRoute = userToken => {
+    axios.get('http://localhost:8080/profile', {
+        headers: authHeader()
     })
     .then(response => {
-        return(response.data)
+        console.log(response)
     })
     .catch(err => console.log(err))
 }
+
+
+// --- ADMIN ROUTES --- //
+export const getAllUsers = () => {
+    axios.get('http://localhost:8080/admin/users/all', {headers: authHeader()})
+    // .then(response => {
+    //     console.log(response.data)
+    //     return response.data
+    // })
+    // .catch(err => console.log(err))
+}
+
+// export const getAllUsers = () => {
+//     axios({
+//         method: 'GET',
+//         url: API_URL_ADMIN + 'all',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Authorization': authHeader()
+//         }
+//     })
+//     .then(response => {
+//         console.log(response.data)
+//         return(response.data)
+//     })
+//     .catch(err => console.log(err))
+// }
 
 export const getOneUser = () => {
     return axios.get(API_URL_ADMIN + ':id')
@@ -51,8 +65,9 @@ export const deleteUser = (id) => {
 
 // --- USER DASHBOARD ROUTES --- //
 export const getFavorites = () => {
-    return axios.get(API_URL_DASHBOARD + 'favorites',{header: authHeader()})
+    return axios.get(API_URL_DASHBOARD + 'favorites',{headers: authHeader()})
     .then(response => {
+        // console.log(response.data)
         return(response.data)
     })
     .catch(err => console.log(err))
