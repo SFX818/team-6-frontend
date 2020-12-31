@@ -6,28 +6,28 @@ const API_URL_DASHBOARD = 'http://localhost:8080/dashboard/'
 const API_URL_SEARCH = 'http://localhost:8080/search/'
 
 // --- ADMIN ROUTES --- //
-// export const getAllUsers = () => {
-//     axios.get(API_URL_ADMIN + 'all', {header: authHeader()})
-//     .then(response => {
-//         return response.data
-//     })
-//     .catch(err => console.log(err))
-// }
-
 export const getAllUsers = () => {
-    axios({
-        method: 'GET',
-        url: API_URL_ADMIN + 'all',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': authHeader()
-        }
-    })
+    axios.get(API_URL_ADMIN + 'all', {header: authHeader()})
     .then(response => {
-        return(response.data)
+        return response.data
     })
     .catch(err => console.log(err))
 }
+
+// export const getAllUsers = () => {
+//     axios({
+//         method: 'GET',
+//         url: API_URL_ADMIN + 'all',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Authorization': authHeader()
+//         }
+//     })
+//     .then(response => {
+//         return(response.data)
+//     })
+//     .catch(err => console.log(err))
+// }
 
 export const getOneUser = () => {
     return axios.get(API_URL_ADMIN + ':id')
