@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import { getFavorites, getHistory } from '../services/user.service'
 import { getCurrentUser } from '../services/auth.service'
-
+import Statistics from './Statistics'
+      
 const Dashboard = () => {
     const [currentUser, setCurrentUser] = useState(undefined)
     const [userDashboard, setUserDashboard] = useState(undefined)
@@ -57,8 +58,10 @@ const Dashboard = () => {
         ) : (
             <div>Loading...</div>
         )}
+        <Statistics />
 
         </>
+
     )
 }
 
