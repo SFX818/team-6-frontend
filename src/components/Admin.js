@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { getAllUsers } from '../services/user.service'
 
 const Admin = () => {
@@ -28,7 +29,9 @@ const Admin = () => {
                         <div>
                             {users.map(user => (
                                 <div key={user._id}>
-                                    <h3>{user.username}</h3>
+                                    <Link to={`/admin/users/${user._id}`}>
+                                        <h3>{user.username}</h3>
+                                    </Link>    
                                     <p>{user.email}</p>
                                     {user.primaryLocation && 
                                     <p>

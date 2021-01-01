@@ -22,8 +22,8 @@ export const getAllUsers = () => {
     return axios.get(API_URL_ADMIN + 'all', {headers: authHeader()})
 }
 
-export const getOneUser = () => {
-    return axios.get(API_URL_ADMIN + ':id')
+export const getOneUser = (id) => {
+    return axios.get(API_URL_ADMIN + id, {headers: authHeader()})
 }
 
 export const updateUser = (id,username,email,password,roles) => {
