@@ -19,7 +19,7 @@ export const testRoute = userToken => {
 
 // --- ADMIN ROUTES --- //
 export const getAllUsers = () => {
-    return axios.get('http://localhost:8080/admin/users/all', {headers: authHeader()})
+    return axios.get(API_URL_ADMIN + 'all', {headers: authHeader()})
 }
 
 export const getOneUser = () => {
