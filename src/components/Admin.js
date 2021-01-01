@@ -41,7 +41,7 @@ const Admin = () => {
                                         {user.primaryLocation.country}
                                     </p>}
                                     {user.roles && 
-                                        user.roles.map(role => <p key={role}>{role}</p>)
+                                        user.roles.map(role => <p key={role._id}>{role.name}</p>)
                                     }
                                 </div>
                             ))}
