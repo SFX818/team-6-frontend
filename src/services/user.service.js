@@ -19,9 +19,9 @@ export const testRoute = userToken => {
 
 // --- ADMIN ROUTES --- //
 export const getAllUsers = () => {
-    axios.get('http://localhost:8080/admin/users/all', {headers: authHeader()})
+    return axios.get('http://localhost:8080/admin/users/all', {headers: authHeader()})
     // .then(response => {
-    //     console.log(response.data)
+    //     console.log(response.data) // this console logs successfully
     //     return response.data
     // })
     // .catch(err => console.log(err))

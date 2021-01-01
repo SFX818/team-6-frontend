@@ -24,8 +24,8 @@ const Dashboard = () => {
                 <div>
                 <h2>My Locations</h2>
                 <ul>
-                    {userDashboard.map(favorite => (
-                        <li key={favorite.id}>{favorite.city}, {favorite.state}</li>
+                    {userDashboard.map((favorite, index)=> (
+                        <li key={index}>{favorite.city}, {favorite.state}</li>
                     ))}
                 </ul>
                 </div>
