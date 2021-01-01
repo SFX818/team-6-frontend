@@ -5,7 +5,6 @@ const API_URL_ADMIN = 'http://localhost:8080/admin/users/'
 const API_URL_DASHBOARD = 'http://localhost:8080/dashboard/'
 const API_URL_SEARCH = 'http://localhost:8080/search/'
 
-
 // --- TEST --- //
 export const testRoute = userToken => {
     axios.get('http://localhost:8080/profile', {
@@ -16,7 +15,6 @@ export const testRoute = userToken => {
     })
     .catch(err => console.log(err))
 }
-
 
 // --- ADMIN ROUTES --- //
 export const getAllUsers = () => {
@@ -48,6 +46,14 @@ export const getFavorites = () => {
     return axios.get(API_URL_DASHBOARD + 'favorites',{headers: authHeader()})
     .then(response => {
         return(response.data)
+    })
+    .catch(err => console.log(err))
+}
+
+export const getPrimaryLocation = () => {
+    return axios.get(API_URL_DASHBOARD + 'primary-location',{headers: authHeader()})
+    .then(response => {
+        return response.data
     })
     .catch(err => console.log(err))
 }
@@ -85,5 +91,4 @@ export const addFavorite = (id,city,state,country,county) => {
         county
     })
 }
-
 

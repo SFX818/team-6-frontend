@@ -4,7 +4,8 @@ import Input from 'react-validation/build/input'
 import CheckButton from 'react-validation/build/button'
 import { getFavorites, getHistory, editPrimary } from '../services/user.service'
 import { getCurrentUser } from '../services/auth.service'
-
+import Statistics from './Statistics'
+      
 const Dashboard = () => {
     const [currentUser, setCurrentUser] = useState(undefined)
     const [userDashboard, setUserDashboard] = useState(undefined)
@@ -115,8 +116,10 @@ const Dashboard = () => {
         ) : (
             <div>Loading...</div>
         )}
+        <Statistics />
 
         </>
+
     )
 }
 
