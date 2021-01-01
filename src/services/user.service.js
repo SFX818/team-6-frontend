@@ -54,6 +54,9 @@ export const getPrimaryLocation = () => {
     return axios.get(API_URL_DASHBOARD + 'primary-location',{headers: authHeader()})
     .then(response => {
         return response.data
+    })
+    .catch(err => console.log(err))
+}
 
 export const getHistory = () => {
     return axios.get(API_URL_DASHBOARD + 'history',{headers: authHeader()})
