@@ -52,7 +52,11 @@ export const getFavorites = () => {
 }
 
 export const getHistory = () => {
-    return axios.get(API_URL_DASHBOARD + 'history')
+    return axios.get(API_URL_DASHBOARD + 'history',{headers: authHeader()})
+    .then(response => {
+        return(response.data)
+    })
+    .catch(err => console.log(err))
 }
 
 export const editPrimary = (id,city,state,country,county) => {
