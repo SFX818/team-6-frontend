@@ -11,9 +11,13 @@ import Signup from './components/Signup'
 
 // Admin Components
 import Admin from './components/Admin'
+import UserDetail from './components/UserDetail'
 
 // Dashboard
 import Dashboard from './components/Dashboard'
+
+// --- TEST COMPONENTS --- //
+import Profile from './components/Profile'
 
 //CSS imports
 import './css/App.css';
@@ -28,6 +32,8 @@ const App = () => {
         <Route exact path="/register" component={Signup}/>
         <Route exact path='/admin' component={Admin} />
         <Route exact path='/dashboard' component={Dashboard} />
+        <Route exact path='/profile' component={Profile} />
+        <Route exact path='/admin/users/:id' component={UserDetail} />
       </Switch>
     </Layout>
   );
