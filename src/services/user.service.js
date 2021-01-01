@@ -5,6 +5,7 @@ const API_URL_ADMIN = 'http://localhost:8080/admin/users/'
 const API_URL_DASHBOARD = 'http://localhost:8080/dashboard/'
 const API_URL_SEARCH = 'http://localhost:8080/search/'
 
+
 // --- TEST --- //
 export const testRoute = userToken => {
     axios.get('http://localhost:8080/profile', {
