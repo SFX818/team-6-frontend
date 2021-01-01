@@ -3,6 +3,7 @@ import {Switch, Route} from 'react-router-dom'
 //Component Imports
 import Home from "./components/Home"
 import Search from "./components/Search"
+// import New from "./components/New"
 //HOC which wraps around other components
 import Layout from "./components/common/Layout"
 

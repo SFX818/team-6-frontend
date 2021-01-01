@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
+import { Button } from '@material-ui/core';
 
 import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
+
+// const API_URL_SEARCH = 'http://localhost:8080/search/'
 
 export const SearchForm = () => {
 
@@ -45,9 +48,9 @@ export const SearchForm = () => {
                     
                 />
             </form>
-            <button class="btn waves-effect waves-light" type="submit" name="action">
-                <i class="material-icons right">search</i>
-            </button>
+            <Button color="primary" type="submit" name="action">
+                search
+            </Button>
     
         </div>
     )

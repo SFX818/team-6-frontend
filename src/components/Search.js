@@ -20,7 +20,7 @@ const Search = () => {
         const map = new mapboxgl.Map({
           container: mapboxElRef.current,
           // temperory styling
-          style: "mapbox://styles/binarybeast/ckjbvkxi151ce1ao2552nc7bn",
+          style: "mapbox://styles/binarybeast/ckjdljfpu6smv1ao028dmjh4r",
           center: [16, 27], // initial geo location
           zoom: 1.5 // initial zoom
         });
