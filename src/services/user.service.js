@@ -20,28 +20,7 @@ export const testRoute = userToken => {
 // --- ADMIN ROUTES --- //
 export const getAllUsers = () => {
     return axios.get('http://localhost:8080/admin/users/all', {headers: authHeader()})
-    // .then(response => {
-    //     console.log(response.data) // this console logs successfully
-    //     return response.data
-    // })
-    // .catch(err => console.log(err))
 }
-
-// export const getAllUsers = () => {
-//     axios({
-//         method: 'GET',
-//         url: API_URL_ADMIN + 'all',
-//         headers: {
-//             'Content-Type': 'application/json',
-//             'Authorization': authHeader()
-//         }
-//     })
-//     .then(response => {
-//         console.log(response.data)
-//         return(response.data)
-//     })
-//     .catch(err => console.log(err))
-// }
 
 export const getOneUser = () => {
     return axios.get(API_URL_ADMIN + ':id')
@@ -67,7 +46,6 @@ export const deleteUser = (id) => {
 export const getFavorites = () => {
     return axios.get(API_URL_DASHBOARD + 'favorites',{headers: authHeader()})
     .then(response => {
-        // console.log(response.data)
         return(response.data)
     })
     .catch(err => console.log(err))
