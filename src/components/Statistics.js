@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { getPrimaryLocation } from '../services/user.service'
 import { getCurrentUser } from '../services/auth.service'
+import DeathsGraph from './DeathsGraph'
+import CasesGraph from './CasesGraph'
 
 const axios = require('axios')
 
@@ -33,16 +35,15 @@ const Statistics = () => {
             axios.get(`https://disease.sh/v3/covid-19/jhucsse/counties/${primaryLocation.county}`)
             .then(response => {
                 response.data.forEach(data=> {
-                //Change state abbreviation to state name
-                // const stateName = abbrState(state, 'name')
-                if(primaryLocation.state === data.province)
-                    setCountry(data.country)
-                    setCounty(data.county)
-                    setRegion(data.province)
-                    setConfirmedCases(data.stats.confirmed)
-                    setDeaths(data.stats.deaths)
-                    setRecovered(data.stats.recovered)
-                    setUpdatedAt(data.updatedAt)
+                    if(primaryLocation.state === data.province) {
+                        setCountry(data.country)
+                        setCounty(data.county)
+                        setRegion(data.province)
+                        setConfirmedCases(data.stats.confirmed)
+                        setDeaths(data.stats.deaths)
+                        setRecovered(data.stats.recovered)
+                        setUpdatedAt(data.updatedAt)
+                    }
                 })
             })
         }
@@ -83,11 +84,9 @@ const Statistics = () => {
             <p>Deaths: {deaths}</p>
             <p>Recovered: {recovered}</p>
             <p>Last Updated: {updatedAt}</p>
-            <ol>
-            {historicalCases.map((cases, index) => (
-                <li key={index}> Date: {historicalDates[index]} Cases: {cases} Deaths: {historicalDeaths[index]}</li>
-            ))}
-            </ol>
+        
+            <CasesGraph dates={historicalDates} cases={historicalCases} />
+            <DeathsGraph dates={historicalDates} deaths={historicalDeaths} />
         </div>
     )
 
