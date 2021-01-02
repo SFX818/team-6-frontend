@@ -5,4 +5,4 @@
 ## To-Do
 - [x] populate user roles with more than ids
 - [x] useParams for :id routes
-- [] add LogOut function to Layout
+- [x] add LogOut function to Layout

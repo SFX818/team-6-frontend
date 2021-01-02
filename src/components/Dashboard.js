@@ -1,15 +1,44 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
-import CheckButton from 'react-validation/build/button'
-import { getFavorites, getHistory, editPrimary } from '../services/user.service'
+import { getFavorites, getHistory, getPrimaryLocation, editPrimary } from '../services/user.service'
 import { getCurrentUser } from '../services/auth.service'
 import Statistics from './Statistics'
       
 const Dashboard = () => {
+    const form = useRef()
     const [currentUser, setCurrentUser] = useState(undefined)
     const [userDashboard, setUserDashboard] = useState(undefined)
     const [searchHistory, setSearchHistory] = useState(undefined)
+    const [primaryLocation, setPrimaryLocation] = useState(undefined)
+
+    const [id, setId] = useState('')
+    const [city, setCity] = useState('')
+    const [userState, setUserState] = useState('')
+    const [country, setCountry] = useState('')
+    const [county, setCounty] = useState('')
+
+    const onChangeId = e => {
+        let id = e.target.value
+        setId(id)
+    }
+    const onChangeCity = e => {
+        let city = e.target.value
+        setCity(city)
+    }
+    const onChangeUserState = e => {
+        let userState = e.target.value
+        setUserState(userState)
+    }
+    const onChangeCountry = e => {
+        let country = e.target.value
+        setCountry(country)
+    }
+    const onChangeCounty = e => {
+        let county = e.target.value
+        setCounty(county)
+    }
+
 
     useEffect(()=> {
         const user = getCurrentUser()
@@ -17,11 +46,24 @@ const Dashboard = () => {
           setCurrentUser(user)
           getFavorites().then(favorites => setUserDashboard(favorites))
           getHistory().then(history => setSearchHistory(history))
+          getPrimaryLocation().then(location => setPrimaryLocation(location))
         }
       }, [])
 
-    const updatePrimary = (id,city,state,country,county) => {
-        editPrimary(id,city,state,country,county)
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        let user = currentUser.id
+
+        editPrimary(user,id,city,userState,country,county)
+        .then(response => {
+            // setPrimaryLocation(response.data)
+            console.log(response.data)
+        },
+        err => {
+            console.log(err)
+        }
+        )
+        .catch(err => console.log(err))
     }
 
     return(
@@ -29,12 +71,11 @@ const Dashboard = () => {
         {currentUser ? (
         <div>
             <h1>Dashboard - {currentUser.username}</h1>
-            {console.log(currentUser)}
-            {currentUser.primaryLocation ? (
+            {primaryLocation ? (
                 <div>
                     <h3>My Primary Location</h3>
                     <div>
-                        <h4>{currentUser.primaryLocation.city}, {currentUser.primaryLocation.state} - {currentUser.primaryLocation.country}</h4>
+                        <h4>{primaryLocation.city}, {primaryLocation.state} - {primaryLocation.country}</h4>
                     </div>
                 </div>
             ) : (
@@ -54,31 +95,36 @@ const Dashboard = () => {
                     {userDashboard.map(favorite=> (
                         <div key={favorite._id}>
                             <h4>{favorite.city}, {favorite.state} - {favorite.country}</h4>
-                            <Form onSubmit={updatePrimary}>
+                            <Form onSubmit={handleSubmit} ref={form}>
                                 <Input 
-                                    type='hidden'
+                                    type='text'
                                     value={favorite._id}
                                     name='id'
+                                    onChange={onChangeId}
                                 />
                                 <Input 
-                                    type='hidden'
+                                    type='text'
                                     value={favorite.city}
                                     name='city'
+                                    onChange={onChangeCity}
                                 />
                                 <Input 
-                                    type='hidden'
+                                    type='text'
                                     value={favorite.state}
-                                    name='state'
+                                    name='userState'
+                                    onChange={onChangeUserState}
                                 />
                                 <Input 
-                                    type='hidden'
+                                    type='text'
                                     value={favorite.country}
                                     name='country'
+                                    onChange={onChangeCountry}
                                 />
                                 <Input 
-                                    type='hidden'
+                                    type='text'
                                     value={favorite.county}
                                     name='county'
+                                    onChange={onChangeCounty}
                                 />
                                 <Input 
                                     type='submit'
