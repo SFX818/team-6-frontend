@@ -46,7 +46,7 @@ export const removeUserRoles = (id,roles) => {
 }
 
 export const deleteUser = id => {
-    return axios.delete(API_URL_ADMIN + id, {
+    return axios.delete(API_URL_ADMIN + id +'/delete', {
         id: id
     },
         {headers: authHeader()}

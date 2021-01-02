@@ -2,9 +2,9 @@ import React, {useState, useEffect, useRef} from 'react'
 import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
 import { useParams } from 'react-router-dom'
-import { getOneUser, getRoles, addUserRoles, removeUserRoles } from '../services/user.service'
+import { getOneUser, getRoles, addUserRoles, removeUserRoles, deleteUser } from '../services/user.service'
 
-const UserDetail = () => {
+const UserDetail = (props) => {
     const form = useRef()
     const [user, setUser] = useState('')
     const [roles, setRoles] = useState('')
@@ -44,6 +44,18 @@ const UserDetail = () => {
             window.location.reload()
         })
         .catch(err => console.log(err))
+    }
+
+    const handleDelete = e => {
+        e.preventDefault()
+        deleteUser(id)
+        .then(
+            ()=> {
+                props.history.push('/admin')
+                window.location.reload()
+            }
+        )
+        console.log(id)
     }
 
     useEffect(() => {
@@ -88,6 +100,9 @@ const UserDetail = () => {
                         {user.primaryLocation.county}{' '}-{' '}
                         {user.primaryLocation.country}
                     </p>}
+                    <Form onSubmit={handleDelete} ref={form}>
+                        <Input type='submit' value='Delete User' />
+                    </Form>
                     {user.roles && 
                         user.roles.map(role => 
                         <div key={role._id}>
