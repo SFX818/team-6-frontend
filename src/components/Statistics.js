@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { getPrimaryLocation } from '../services/user.service'
 import { getCurrentUser } from '../services/auth.service'
+import DeathsGraph from './DeathsGraph'
+import CasesGraph from './CasesGraph'
 
 const axios = require('axios')
 
@@ -83,11 +85,9 @@ const Statistics = () => {
             <p>Deaths: {deaths}</p>
             <p>Recovered: {recovered}</p>
             <p>Last Updated: {updatedAt}</p>
-            <ol>
-            {historicalCases.map((cases, index) => (
-                <li key={index}> Date: {historicalDates[index]} Cases: {cases} Deaths: {historicalDeaths[index]}</li>
-            ))}
-            </ol>
+        
+            <CasesGraph dates={historicalDates} cases={historicalCases} />
+            <DeathsGraph dates={historicalDates} deaths={historicalDeaths} />
         </div>
     )
 
