@@ -35,16 +35,15 @@ const Statistics = () => {
             axios.get(`https://disease.sh/v3/covid-19/jhucsse/counties/${primaryLocation.county}`)
             .then(response => {
                 response.data.forEach(data=> {
-                //Change state abbreviation to state name
-                // const stateName = abbrState(state, 'name')
-                if(primaryLocation.state === data.province)
-                    setCountry(data.country)
-                    setCounty(data.county)
-                    setRegion(data.province)
-                    setConfirmedCases(data.stats.confirmed)
-                    setDeaths(data.stats.deaths)
-                    setRecovered(data.stats.recovered)
-                    setUpdatedAt(data.updatedAt)
+                    if(primaryLocation.state === data.province) {
+                        setCountry(data.country)
+                        setCounty(data.county)
+                        setRegion(data.province)
+                        setConfirmedCases(data.stats.confirmed)
+                        setDeaths(data.stats.deaths)
+                        setRecovered(data.stats.recovered)
+                        setUpdatedAt(data.updatedAt)
+                    }
                 })
             })
         }
