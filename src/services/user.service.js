@@ -25,10 +25,20 @@ export const getOneUser = id => {
     return axios.get(API_URL_ADMIN + id, {headers: authHeader()})
 }
 
-export const updateUser = (id,username,email,roles) => {
+export const getRoles = () => {
+    return axios.get('http://localhost:8080/admin/roles', {headers: authHeader()})
+}
+
+export const addUserRoles = (id,roles) => {
     return axios.put(API_URL_ADMIN + id, {
-        username: username,
-        email: email,
+        roles: roles
+    },
+        {headers: authHeader()}
+    )
+}
+
+export const removeUserRoles = (id,roles) => {
+    return axios.put(API_URL_ADMIN + id + '/remove', {
         roles: roles
     },
         {headers: authHeader()}
@@ -42,6 +52,8 @@ export const deleteUser = id => {
         {headers: authHeader()}
     )
 }
+
+
 
 // --- USER DASHBOARD ROUTES --- //
 export const getFavorites = () => {
