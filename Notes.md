@@ -6,3 +6,5 @@
 - [x] populate user roles with more than ids
 - [x] useParams for :id routes
 - [x] add LogOut function to Layout
+- [] refactor updateUser to just update roles / makeAdmin checkbox (?)
+    - probably will require backend work too

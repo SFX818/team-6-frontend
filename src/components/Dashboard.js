@@ -35,10 +35,10 @@ const Dashboard = () => {
         editPrimary(user,id,city,userState,country,county)
         .then(response => {
             console.log(response.data)
+            window.location.reload()
         })
         .catch(err => console.log(err))
 
-        window.location.reload()
     }
 
     return(

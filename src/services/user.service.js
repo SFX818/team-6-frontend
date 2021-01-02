@@ -25,20 +25,22 @@ export const getOneUser = id => {
     return axios.get(API_URL_ADMIN + id, {headers: authHeader()})
 }
 
-export const updateUser = (id,username,email,password,roles) => {
+export const updateUser = (id,username,email,roles) => {
     return axios.put(API_URL_ADMIN + id, {
-        id,
-        username,
-        email,
-        password,
-        roles
-    })
+        username: username,
+        email: email,
+        roles: roles
+    },
+        {headers: authHeader()}
+    )
 }
 
 export const deleteUser = id => {
     return axios.delete(API_URL_ADMIN + id, {
-        id
-    })
+        id: id
+    },
+        {headers: authHeader()}
+    )
 }
 
 // --- USER DASHBOARD ROUTES --- //
@@ -80,8 +82,10 @@ export const editPrimary = (user,id,city,state,country,county) => {
 
 export const removeFavorite = (id) => {
     return axios.delete(API_URL_DASHBOARD + 'favorites/remove/' + id, {
-        id
-    })
+        id: id
+    },
+        {headers: authHeader()}
+    )
 }
 
 export const addFavorite = (id,city,state,country,county) => {
@@ -91,6 +95,8 @@ export const addFavorite = (id,city,state,country,county) => {
         state,
         country,
         county
-    })
+    },
+        {headers: authHeader()}
+    )
 }
 
