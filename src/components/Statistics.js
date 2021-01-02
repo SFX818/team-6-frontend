@@ -37,7 +37,9 @@ const Statistics = () => {
                 response.data.forEach(data=> {
                 //Change state abbreviation to state name
                 // const stateName = abbrState(state, 'name')
-                if(primaryLocation.state === data.province)
+                if(primaryLocation.state === data.province) {
+                    console.log("REQUEST DATA:",data.province)
+                    console.log("PRIMARY LOCATION DATA:",primaryLocation.state)
                     setCountry(data.country)
                     setCounty(data.county)
                     setRegion(data.province)
@@ -45,6 +47,7 @@ const Statistics = () => {
                     setDeaths(data.stats.deaths)
                     setRecovered(data.stats.recovered)
                     setUpdatedAt(data.updatedAt)
+                }
                 })
             })
         }
