@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom'
-import {getCurrentUser} from '../../services/auth.service'
+import {getCurrentUser, logout} from '../../services/auth.service'
 
 const Layout = (props) => {
     const [showAdmin, setShowAdmin] = useState(false)
@@ -15,7 +15,9 @@ const Layout = (props) => {
       }
     }, [])
 
-    // --- NEED TO ADD LOGOUT --- //
+    const logOut = () => {
+      logout()
+    }
 
     return (
         <>
@@ -33,6 +35,7 @@ const Layout = (props) => {
             {currentUser ? (
           <div>
               <Link to={'/profile'}>{currentUser.username}</Link>
+              <a href='/' onClick={logOut}>Logout</a>
           </div>)
           : (
             <div>
