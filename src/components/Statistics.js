@@ -21,6 +21,12 @@ const Statistics = () => {
     const [historicalDates, setHistoricalDates] = useState([])
     const [historicalCases, setHistoricalCases] = useState([])
     const [historicalDeaths, setHistoricalDeaths] = useState([])
+    const [dayFilter, setDayFilter] = useState(30)
+
+    const onChangeDayFilter = (event, val) => {
+        setDayFilter(val)
+        console.log(dayFilter)
+    }
 
 
     useEffect(()=>{
@@ -29,6 +35,7 @@ const Statistics = () => {
             setPrimaryLocation(response)
         })
     }, [])
+    
 
     useEffect(()=> {
         if(primaryLocation.county !== undefined) {
@@ -49,11 +56,10 @@ const Statistics = () => {
         }
     }, [primaryLocation])
 
-    //https://disease.sh/v3/covid-19/historical/usacounties/texas?lastdays=30
 
     useEffect(() => {
         if(region !== undefined) {
-            axios.get(`https://disease.sh/v3/covid-19/historical/usacounties/${region.toLowerCase()}?lastdays=30`)
+            axios.get(`https://disease.sh/v3/covid-19/historical/usacounties/${region.toLowerCase()}?lastdays=${dayFilter}`)
             .then(response => {
                 response.data.forEach(data => {
                     if (data.county !== undefined && data.county === county.toLowerCase()) {
@@ -64,15 +70,8 @@ const Statistics = () => {
                 })
             })
         }
-    }, [region])
+    }, [region, dayFilter])
 
-
-    // const getStatistics = async () => {
-    //     await getPrimaryLocation()
-    //     .then(response => {
-    //         setPrimaryLocation(response)
-    //     })
-    // }
 
     return(
         <div>
@@ -84,7 +83,13 @@ const Statistics = () => {
             <p>Deaths: {deaths}</p>
             <p>Recovered: {recovered}</p>
             <p>Last Updated: {updatedAt}</p>
-        
+            <h3>Filters: </h3>
+            <ul>
+                <button onClick={e => onChangeDayFilter(e, 7)}>7 Days</button>
+                <button onClick={e => onChangeDayFilter(e, 30)}>30 Days</button>
+                <button onClick={e => onChangeDayFilter(e, "all")}>All</button>
+            </ul>
+
             <CasesGraph dates={historicalDates} cases={historicalCases} />
             <DeathsGraph dates={historicalDates} deaths={historicalDeaths} />
         </div>
