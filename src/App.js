@@ -2,10 +2,13 @@ import {Switch, Route} from 'react-router-dom'
 
 
 //Component Imports
-import Home from "./components/Home"
+import Search from "./components/Search"
+// import New from "./components/New"
+import Home from './components/Home'
 import About from './components/About'
+
 //HOC which wraps around other components
-import Layout from "./components/common/Layout"
+import Layout from './components/common/Layout'
 import Login from './components/Login'
 import Signup from './components/Signup'
 
@@ -21,15 +24,18 @@ import Profile from './components/Profile'
 
 //CSS imports
 import './css/App.css';
+import './css/site.css';
 
 const App = () => {
   return (
     <Layout>
       <Switch>
-        <Route exact path={["/","/home"]} component={Home}/>
+
+        <Route exact path="/search" component={Search}/>
+        <Route exact path={['/','/home']} component={Home}/>
         <Route exact path='/about' component={About} />
-        <Route exact path="/login" component={Login}/>
-        <Route exact path="/register" component={Signup}/>
+        <Route exact path='/login' component={Login}/>
+        <Route exact path='/register' component={Signup}/>
         <Route exact path='/admin' component={Admin} />
         <Route exact path='/dashboard' component={Dashboard} />
         <Route exact path='/profile' component={Profile} />

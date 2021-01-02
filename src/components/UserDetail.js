@@ -1,8 +1,11 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
+// import Form from 'react-validation/build/form'
+// import Input from 'react-validation/build/input'
 import { useParams } from 'react-router-dom'
 import { getOneUser } from '../services/user.service'
 
 const UserDetail = () => {
+    const form = useRef()
     const [user, setUser] = useState('')
     let { id } = useParams()
 
@@ -21,6 +24,7 @@ const UserDetail = () => {
               }
         )
     },[])
+    
     return(
         <>
             {user ? (
@@ -37,7 +41,7 @@ const UserDetail = () => {
                     {user.roles && 
                         user.roles.map(role => <p key={role._id}>{role.name}</p>)
                     }
-                    {console.log(user)}
+                    {/* {console.log(user)} */}
                 </div>
             ) : (
                 <div>Loading...</div>
