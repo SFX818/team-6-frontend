@@ -36,8 +36,6 @@ const Statistics = () => {
             .then(response => {
                 response.data.forEach(data=> {
                     if(primaryLocation.state === data.province) {
-                        console.log("REQUEST DATA:",data.province)
-                        console.log("PRIMARY LOCATION DATA:",primaryLocation.state)
                         setCountry(data.country)
                         setCounty(data.county)
                         setRegion(data.province)
