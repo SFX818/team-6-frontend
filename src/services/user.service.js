@@ -25,21 +25,44 @@ export const getOneUser = id => {
     return axios.get(API_URL_ADMIN + id, {headers: authHeader()})
 }
 
-export const updateUser = (id,username,email,password,roles) => {
-    return axios.put(API_URL_ADMIN + id, {
-        id,
-        username,
-        email,
-        password,
-        roles
-    })
+export const getRoles = () => {
+    return axios.get('http://localhost:8080/admin/roles', {headers: authHeader()})
 }
 
-export const deleteUser = id => {
-    return axios.delete(API_URL_ADMIN + id, {
-        id
-    })
+export const addUserRoles = (id,roles) => {
+    return axios.put(API_URL_ADMIN + id, {
+        roles: roles
+    },
+        {headers: authHeader()}
+    )
 }
+
+export const removeUserRoles = (id,roles) => {
+    return axios.put(API_URL_ADMIN + id + '/remove', {
+        roles: roles
+    },
+        {headers: authHeader()}
+    )
+}
+
+// export const deleteUser = id => {
+//     return axios.delete(API_URL_ADMIN + id +'/delete', {
+//         _id: id
+//     },
+//         {headers: authHeader()}
+//     )
+// }
+
+export const deleteUser = id => {
+    return axios({
+        method: 'DELETE',
+        url: API_URL_ADMIN + id +'/delete',
+        headers: authHeader()
+    },
+    {_id: id}
+    )
+}
+
 
 // --- USER DASHBOARD ROUTES --- //
 export const getFavorites = () => {
@@ -66,20 +89,24 @@ export const getHistory = () => {
     .catch(err => console.log(err))
 }
 
-export const editPrimary = (id,city,state,country,county) => {
-    return axios.put(API_URL_DASHBOARD + 'edit', {
-        id,
-        city,
-        state,
-        country,
-        county
-    })
- }
+export const editPrimary = (user,id,city,state,country,county) => {
+    return axios.put(API_URL_DASHBOARD + 'edit/' + user, {
+        id: id,
+        city: city,
+        state: state,
+        country: country,
+        county: county
+    },
+        {headers: authHeader()}
+    )
+}
 
 export const removeFavorite = (id) => {
     return axios.delete(API_URL_DASHBOARD + 'favorites/remove/' + id, {
-        id
-    })
+        id: id
+    },
+        {headers: authHeader()}
+    )
 }
 
 export const addFavorite = (id,city,state,country,county) => {
@@ -89,6 +116,8 @@ export const addFavorite = (id,city,state,country,county) => {
         state,
         country,
         county
-    })
+    },
+        {headers: authHeader()}
+    )
 }
 

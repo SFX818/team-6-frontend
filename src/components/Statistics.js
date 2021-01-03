@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { getPrimaryLocation } from '../services/user.service'
 import { getCurrentUser } from '../services/auth.service'
+import DeathsGraph from './DeathsGraph'
+import CasesGraph from './CasesGraph'
 
 const axios = require('axios')
 
@@ -19,6 +21,12 @@ const Statistics = () => {
     const [historicalDates, setHistoricalDates] = useState([])
     const [historicalCases, setHistoricalCases] = useState([])
     const [historicalDeaths, setHistoricalDeaths] = useState([])
+    const [dayFilter, setDayFilter] = useState(30)
+
+    const onChangeDayFilter = (event, val) => {
+        setDayFilter(val)
+        console.log(dayFilter)
+    }
 
 
     useEffect(()=>{
@@ -27,32 +35,31 @@ const Statistics = () => {
             setPrimaryLocation(response)
         })
     }, [])
+    
 
     useEffect(()=> {
         if(primaryLocation.county !== undefined) {
             axios.get(`https://disease.sh/v3/covid-19/jhucsse/counties/${primaryLocation.county}`)
             .then(response => {
                 response.data.forEach(data=> {
-                //Change state abbreviation to state name
-                // const stateName = abbrState(state, 'name')
-                if(primaryLocation.state === data.province)
-                    setCountry(data.country)
-                    setCounty(data.county)
-                    setRegion(data.province)
-                    setConfirmedCases(data.stats.confirmed)
-                    setDeaths(data.stats.deaths)
-                    setRecovered(data.stats.recovered)
-                    setUpdatedAt(data.updatedAt)
+                    if(primaryLocation.state === data.province) {
+                        setCountry(data.country)
+                        setCounty(data.county)
+                        setRegion(data.province)
+                        setConfirmedCases(data.stats.confirmed)
+                        setDeaths(data.stats.deaths)
+                        setRecovered(data.stats.recovered)
+                        setUpdatedAt(data.updatedAt)
+                    }
                 })
             })
         }
     }, [primaryLocation])
 
-    //https://disease.sh/v3/covid-19/historical/usacounties/texas?lastdays=30
 
     useEffect(() => {
         if(region !== undefined) {
-            axios.get(`https://disease.sh/v3/covid-19/historical/usacounties/${region.toLowerCase()}?lastdays=30`)
+            axios.get(`https://disease.sh/v3/covid-19/historical/usacounties/${region.toLowerCase()}?lastdays=${dayFilter}`)
             .then(response => {
                 response.data.forEach(data => {
                     if (data.county !== undefined && data.county === county.toLowerCase()) {
@@ -63,15 +70,8 @@ const Statistics = () => {
                 })
             })
         }
-    }, [region])
+    }, [region, dayFilter])
 
-
-    // const getStatistics = async () => {
-    //     await getPrimaryLocation()
-    //     .then(response => {
-    //         setPrimaryLocation(response)
-    //     })
-    // }
 
     return(
         <div>
@@ -83,11 +83,15 @@ const Statistics = () => {
             <p>Deaths: {deaths}</p>
             <p>Recovered: {recovered}</p>
             <p>Last Updated: {updatedAt}</p>
-            <ol>
-            {historicalCases.map((cases, index) => (
-                <li key={index}> Date: {historicalDates[index]} Cases: {cases} Deaths: {historicalDeaths[index]}</li>
-            ))}
-            </ol>
+            <h3>Filters: </h3>
+            <ul>
+                <button onClick={e => onChangeDayFilter(e, 7)}>7 Days</button>
+                <button onClick={e => onChangeDayFilter(e, 30)}>30 Days</button>
+                <button onClick={e => onChangeDayFilter(e, "all")}>All</button>
+            </ul>
+
+            <CasesGraph dates={historicalDates} cases={historicalCases} />
+            <DeathsGraph dates={historicalDates} deaths={historicalDeaths} />
         </div>
     )
 

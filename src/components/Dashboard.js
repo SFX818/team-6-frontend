@@ -1,15 +1,16 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
-import CheckButton from 'react-validation/build/button'
-import { getFavorites, getHistory, editPrimary } from '../services/user.service'
+import { getFavorites, getHistory, getPrimaryLocation, editPrimary } from '../services/user.service'
 import { getCurrentUser } from '../services/auth.service'
 import Statistics from './Statistics'
       
 const Dashboard = () => {
+    const form = useRef()
     const [currentUser, setCurrentUser] = useState(undefined)
     const [userDashboard, setUserDashboard] = useState(undefined)
     const [searchHistory, setSearchHistory] = useState(undefined)
+    const [primaryLocation, setPrimaryLocation] = useState(undefined)
 
     useEffect(()=> {
         const user = getCurrentUser()
@@ -17,11 +18,27 @@ const Dashboard = () => {
           setCurrentUser(user)
           getFavorites().then(favorites => setUserDashboard(favorites))
           getHistory().then(history => setSearchHistory(history))
+          getPrimaryLocation().then(location => setPrimaryLocation(location))
         }
       }, [])
 
-    const updatePrimary = (id,city,state,country,county) => {
-        editPrimary(id,city,state,country,county)
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        let user = currentUser.id
+        
+        let id = (event.target.id.value)
+        let city = (event.target.city.value)
+        let userState = (event.target.userState.value)
+        let country = (event.target.country.value)
+        let county = (event.target.county.value)
+
+        editPrimary(user,id,city,userState,country,county)
+        .then(response => {
+            console.log(response.data)
+            window.location.reload()
+        })
+        .catch(err => console.log(err))
+
     }
 
     return(
@@ -29,12 +46,11 @@ const Dashboard = () => {
         {currentUser ? (
         <div>
             <h1>Dashboard - {currentUser.username}</h1>
-            {console.log(currentUser)}
-            {currentUser.primaryLocation ? (
+            {primaryLocation ? (
                 <div>
                     <h3>My Primary Location</h3>
                     <div>
-                        <h4>{currentUser.primaryLocation.city}, {currentUser.primaryLocation.state} - {currentUser.primaryLocation.country}</h4>
+                        <h4>{primaryLocation.city}, {primaryLocation.state} - {primaryLocation.country}</h4>
                     </div>
                 </div>
             ) : (
@@ -54,7 +70,7 @@ const Dashboard = () => {
                     {userDashboard.map(favorite=> (
                         <div key={favorite._id}>
                             <h4>{favorite.city}, {favorite.state} - {favorite.country}</h4>
-                            <Form onSubmit={updatePrimary}>
+                            <Form onSubmit={handleSubmit} ref={form}>
                                 <Input 
                                     type='hidden'
                                     value={favorite._id}
@@ -68,7 +84,7 @@ const Dashboard = () => {
                                 <Input 
                                     type='hidden'
                                     value={favorite.state}
-                                    name='state'
+                                    name='userState'
                                 />
                                 <Input 
                                     type='hidden'

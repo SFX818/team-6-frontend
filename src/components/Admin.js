@@ -24,7 +24,7 @@ const Admin = () => {
             {users ? (
                 <div>
                     <h1>All Users</h1>
-                    {console.log(users)}
+                    {/* {console.log(users)} */}
                     {users.length > 0 ? (
                         <div>
                             {users.map(user => (
