@@ -9,7 +9,7 @@
 - [x] refactor updateUser to just update roles / makeAdmin checkbox (?)
     - [x] probably will require backend work too
     - [] figure out how to hide roles that are already present in user.roles
-- [] deleteUser
+- [x] deleteUser
 - [] addToFavorites, removeFromFavorites
 - [] addToSearchHistory
     - limit to 15-20 results

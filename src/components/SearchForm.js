@@ -9,7 +9,7 @@ import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-countr
 import FormGroup from "./common/FormGroup"
 
 //Helper
-import { locationSearch } from '../services/location.services'
+import { locationSearch, getOneLocation } from '../services/location.services'
 import { resMessage } from '../utilities/functions.utilities'
 import searchTerm from './Search'
 
@@ -40,9 +40,9 @@ const SearchForm = (props) => {
     const [country, setCountry] = useState('')
     const [region, setRegion] = useState('')
     const [city, setCity] = useState('')
+    const [id, setId] = useState('')
    
     
-
     const onChangeCountry = (val) => {
         console.log(val)
         setCountry(val)
@@ -58,6 +58,7 @@ const SearchForm = (props) => {
         console.log(city)
         setCity(city)
     }
+
 
     const mapSearch = async (e) => {
         //Prevent reload of pressing the button
@@ -79,16 +80,18 @@ const SearchForm = (props) => {
             locationSearch(country, region, city, county).then(
                 (response) => {
                     // console.log("----ggh--", apiResponse)
+                    // console.log(response.data._id)
+                    getOneLocation(response.data._id)
+                        .then(response => {
+                            setId(response.data._id)
+                        })
+                        .catch(err => console.log(err))
                     setMessage(response.data.message)
                     setSuccessful(true)
                     console.log("country:", country)
                     console.log("region:", region)
                     console.log("city:", city)
                     console.log("county:", county)
-
-
-
-                    
                     // searchTerm(apiResponse.data.results)
                 },
                 (error) => {
@@ -132,7 +135,7 @@ const SearchForm = (props) => {
                     </FormGroup>
                 </div>
 
-                    <div className="form-group">
+                    <div className='input-field'>
                         <button className="btn" >
                             <span>Search</span>
                         </button>   

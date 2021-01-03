@@ -6,7 +6,7 @@ import authHeader from '../utilities/authHeader.utilities'
 const API_URL_SEARCH = 'http://localhost:8080/api/location/'
 
 //Find Or Create location
-export const locationSearch = (city,region,country,county) => {
+export const locationSearch = (country,region,city,county) => {
     return axios.post(API_URL_SEARCH,{
         city: city,
         state: region,
@@ -15,13 +15,22 @@ export const locationSearch = (city,region,country,county) => {
     })
 }
 
-//Find location by id
-export const getOneLocation = id => {
-    return axios.get(API_URL_SEARCH + id, {headers: authHeader()})
+export const getLocationId = (country,region,city) => {
+    return axios.get(API_URL_SEARCH + 'getId',{
+        city: city,
+        state: region,
+        country: country
+    })
     .then(response => {
+        console.log(response.data)
         return(response.data)
     })
     .catch(err => console.log(err))
+}
+
+//Find location by id
+export const getOneLocation = id => {
+    return axios.get(API_URL_SEARCH + id, {headers: authHeader()})
 }
 
 export const updateLocation = (id,city,state,country,county, roles) => {
