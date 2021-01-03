@@ -109,13 +109,10 @@ export const removeFavorite = (id) => {
     )
 }
 
-export const addFavorite = (id,city,state,country,county) => {
+export const addFavorite = (user, id) => {
     return axios.post(API_URL_SEARCH + id, {
-        id,
-        city,
-        state,
-        country,
-        county
+        user,
+        id
     },
         {headers: authHeader()}
     )

@@ -79,7 +79,7 @@ const SearchForm = (props) => {
             const county = Object.values(apiResponse.data.results[0])[0][1].long_name.replace(/County/g, '')
             locationSearch(country, region, city, county).then(
                 (response) => {
-                        if(response.length > 1) {
+                        if(response.data[0]) {
                             setId(response.data[0]._id)
                             addToSearchHistory(response.data[0]._id)
                         } else {
