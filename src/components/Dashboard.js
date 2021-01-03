@@ -44,7 +44,7 @@ const Dashboard = () => {
     return(
         <>
         {currentUser ? (
-        <div>
+        <div className='container'>
             <h1>Dashboard - {currentUser.username}</h1>
             {primaryLocation ? (
                 <div>
