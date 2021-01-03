@@ -25,6 +25,8 @@ const Layout = (props) => {
           <Link to='/'>LOGO/APP NAME HERE</Link>
           <div>
             <Link to='/home'>Home</Link>
+            <Link to='/search'>Search</Link>
+            <Link to='/about'>About</Link>
             {showAdmin && (
               <Link to={'/admin'}>Admin</Link>
             )}
