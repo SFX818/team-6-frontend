@@ -55,6 +55,7 @@ const UserDetail = (props) => {
                 window.location.reload()
             }
         )
+        .catch(err => {console.log(err)})
         console.log(id)
     }
 

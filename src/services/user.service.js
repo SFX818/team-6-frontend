@@ -45,14 +45,23 @@ export const removeUserRoles = (id,roles) => {
     )
 }
 
+// export const deleteUser = id => {
+//     return axios.delete(API_URL_ADMIN + id +'/delete', {
+//         _id: id
+//     },
+//         {headers: authHeader()}
+//     )
+// }
+
 export const deleteUser = id => {
-    return axios.delete(API_URL_ADMIN + id +'/delete', {
-        id: id
+    return axios({
+        method: 'DELETE',
+        url: API_URL_ADMIN + id +'/delete',
+        headers: authHeader()
     },
-        {headers: authHeader()}
+    {_id: id}
     )
 }
-
 
 
 // --- USER DASHBOARD ROUTES --- //
