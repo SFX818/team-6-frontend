@@ -48,7 +48,7 @@ const Layout = (props) => {
 
         <div>{props.children}</div>
 
-        <footer className="page-footer">
+        {/* <footer className="page-footer">
           <div className="container">
             <div className="row">
               <div className="col l6 s12">
@@ -72,7 +72,7 @@ const Layout = (props) => {
             <a className="grey-text text-lighten-4 right" href="#!">More Links</a>
             </div>
           </div>
-        </footer>
+        </footer> */}
         </>
     )
   };

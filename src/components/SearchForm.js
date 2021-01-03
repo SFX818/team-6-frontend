@@ -13,6 +13,9 @@ import { locationSearch } from '../services/location.services'
 import { resMessage } from '../utilities/functions.utilities'
 import searchTerm from './Search'
 
+//CSS
+// import '../css/SearchForm.css'
+
 const axios = require('axios')
 const GOOGLE_API_KEY = 'AIzaSyDbjklIejS9yn5KhRaEWen72vYpBu_0BZo'
 
@@ -103,18 +106,20 @@ const SearchForm = (props) => {
 
 
     return(
-        <div>
-            <div className="container">
-                <Form onSubmit={mapSearch} ref={form}>
-
+            <div className="form-container container">
+                <Form onSubmit={mapSearch} ref={form} className='container'>
+                <div className='input-field'>
                     <CountryDropdown
                         value={country}
                         onChange={(val) => onChangeCountry(val)} />
+                </div>
+                <div className='input-field'>
                     <RegionDropdown
                         country={country}
                         value={region}
                         onChange={(val) => onChangeRegion(val)} />
-
+                </div>
+                <div className='input-field'>
                     <FormGroup text="city">
                         <Input
                             type="text"
@@ -125,6 +130,7 @@ const SearchForm = (props) => {
                             validations={[required]}
                         />
                     </FormGroup>
+                </div>
 
                     <div className="form-group">
                         <button className="btn" >
@@ -143,7 +149,6 @@ const SearchForm = (props) => {
                     <CheckButton style={{display: "none"}} ref={checkBtn}/>
                 </Form>
             </div>
-        </div>
     )
 }
 

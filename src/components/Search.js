@@ -4,8 +4,10 @@ import useSWR from "swr";
 //import component
 import SearchForm from "./SearchForm";
 
-const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
+//CSS
+// import '../css/Search.css'
 
+const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiYmluYXJ5YmVhc3QiLCJhIjoiY2tpbTU3cW8xMHE1ZTJycXJkemdjZThmMSJ9.LUCLnUpyYjcUF48GPUEUVQ';
 
@@ -184,8 +186,8 @@ const popup = new mapboxgl.Popup({
 
     
     return (
-        <div className="App">
-            <div>
+        <div className="App container">
+            <div className='container'>
                 <h1>Covid-19 Cases</h1>
                 < SearchForm />
             </div>
