@@ -1,7 +1,12 @@
 // import React from "react"
 import React, { useRef, useEffect } from "react";
 import useSWR from "swr";
+
+//import component
+import SearchForm from "./SearchForm";
+
 const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
+
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiYmluYXJ5YmVhc3QiLCJhIjoiY2tpbTU3cW8xMHE1ZTJycXJkemdjZThmMSJ9.LUCLnUpyYjcUF48GPUEUVQ';
 
@@ -40,7 +45,7 @@ function Search() {
         // You can store the map instance with useRef too
         const map = new mapboxgl.Map({
           container: mapboxElRef.current,
-          style: "mapbox://styles/binarybeast/ckjbvkxi151ce1ao2552nc7bn",
+          style: "mapbox://styles/binarybeast/ckjdljfpu6smv1ao028dmjh4r",
           center: [16, 27], // initial geo location
           zoom: 1.5 // initial zoom
         });
@@ -144,7 +149,10 @@ const popup = new mapboxgl.Popup({
     
     return (
         <div className="App">
-            <h1>Covid-19 Results</h1>
+            <div>
+                <h1>Covid-19 Cases</h1>
+                < SearchForm />
+            </div>
             <form>
                 <input placeholder="enter by city/state/country">
                 </input>
