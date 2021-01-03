@@ -9,7 +9,7 @@ import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-countr
 import FormGroup from "./common/FormGroup"
 
 //Helper
-import { register } from '../services/auth.service'
+import { register, login } from '../services/auth.service'
 import { resMessage } from '../utilities/functions.utilities'
 
 const axios = require('axios')
@@ -70,6 +70,7 @@ const Register = (props) => {
     const [country, setCountry] = useState('')
     const [region, setRegion] = useState('')
     const [city, setCity] = useState('')
+    const [loading, setLoading] = useState(false)
     
     const onChangeUsername = (e) => {
         const username = e.target.value
@@ -124,6 +125,19 @@ const Register = (props) => {
                     setMessage(response.data.message)
                     setSuccessful(true)
                     console.log("COUNTY AFTER REGISTER", county)
+                    login(username, password).then(
+                        ()=> {
+                            props.history.push("/dashboard")
+                            window.location.reload()
+                        },
+                        (error) => {
+                            // Checking all the data received from our backend
+                            
+                            // Setting loading to false and return the error
+                            setLoading(false)
+                            setMessage(resMessage(error))
+                        }
+                    )
                 },
                 (error) => {
                     setMessage(resMessage(error))
