@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react'
+import { Link } from 'react-router-dom'
 import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
 import { getFavorites, getHistory, getPrimaryLocation, editPrimary } from '../services/user.service'
@@ -121,7 +122,7 @@ const Dashboard = () => {
                 <div>
                 <ul>
                     {searchHistory.map((history, index)=> (
-                        <li key={index}>{history.city}, {history.state}, {history.country}</li>
+                        <li key={index}><Link to= {`/search/${history._id}`}>{history.city}, {history.state}, {history.country}</Link></li>
                     ))}
                 </ul>
                 </div>

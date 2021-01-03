@@ -11,5 +11,6 @@
     - [] figure out how to hide roles that are already present in user.roles
 - [x] deleteUser
 - [] addToFavorites, removeFromFavorites
-- [] addToSearchHistory
-    - limit to 15-20 results
+- [x] addToSearchHistory
+    - [] limit to 15-20 results
+    - [] don't add if last city is the same
