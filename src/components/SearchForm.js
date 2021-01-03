@@ -78,7 +78,13 @@ const SearchForm = (props) => {
                     // console.log("----ggh--", apiResponse)
                     setMessage(response.data.message)
                     setSuccessful(true)
-                    console.log("COUNTY Is found", county)
+                    console.log("country:", country)
+                    console.log("region:", region)
+                    console.log("city:", city)
+                    console.log("county:", county)
+
+
+
                     
                     // searchTerm(apiResponse.data.results)
                 },
