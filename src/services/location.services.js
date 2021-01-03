@@ -15,19 +15,6 @@ export const locationSearch = (country,region,city,county) => {
     })
 }
 
-export const getLocationId = (country,region,city) => {
-    return axios.get(API_URL_SEARCH + 'getId',{
-        city: city,
-        state: region,
-        country: country
-    })
-    .then(response => {
-        console.log(response.data)
-        return(response.data)
-    })
-    .catch(err => console.log(err))
-}
-
 //Find location by id
 export const getOneLocation = id => {
     return axios.get(API_URL_SEARCH + id, {headers: authHeader()})
@@ -44,8 +31,17 @@ export const updateLocation = (id,city,state,country,county, roles) => {
     })
 }
 
-export const removeFavorite = (id) => {
-    return axios.delete(API_URL_SEARCH + 'search/remove/' + id, {
+// Adds search to user's search history
+export const addToSearchHistory = id => {
+    return axios.post(API_URL_SEARCH + 'search/' + id, {
         id
-    })
+    },
+        {headers: authHeader()}
+    )
 }
+
+// export const removeFavorite = (id) => {
+//     return axios.delete(API_URL_SEARCH + 'search/remove/' + id, {
+//         id
+//     })
+// }

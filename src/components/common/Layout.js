@@ -24,7 +24,7 @@ const Layout = (props) => {
         <nav>
           <div className='nav-wrapper'>
           <Link to='/' className='brand-logo'>APP NAME HERE</Link>
-            <ul id='nav-mobile' class='right hide-on-med-and-down'>
+            <ul id='nav-mobile' className='right hide-on-med-and-down'>
               <li><Link to='/home'>Home</Link></li>
               <li><Link to='/search'>Search</Link></li>
               <li><Link to='/about'>About</Link></li>

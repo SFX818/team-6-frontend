@@ -9,7 +9,7 @@ import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-countr
 import FormGroup from "./common/FormGroup"
 
 //Helper
-import { locationSearch, getOneLocation } from '../services/location.services'
+import { locationSearch, addToSearchHistory } from '../services/location.services'
 import { resMessage } from '../utilities/functions.utilities'
 import searchTerm from './Search'
 
@@ -79,19 +79,21 @@ const SearchForm = (props) => {
             const county = Object.values(apiResponse.data.results[0])[0][1].long_name.replace(/County/g, '')
             locationSearch(country, region, city, county).then(
                 (response) => {
-                    // console.log("----ggh--", apiResponse)
-                    // console.log(response.data._id)
-                    getOneLocation(response.data._id)
-                        .then(response => {
+                        if(response.length > 1) {
+                            setId(response.data[0]._id)
+                            addToSearchHistory(response.data[0]._id)
+                        } else {
                             setId(response.data._id)
-                        })
-                        .catch(err => console.log(err))
+                            addToSearchHistory(response.data._id)
+                        }
                     setMessage(response.data.message)
                     setSuccessful(true)
-                    console.log("country:", country)
-                    console.log("region:", region)
-                    console.log("city:", city)
-                    console.log("county:", county)
+                    // console.log(response.data)
+                    // console.log("country:", country)
+                    // console.log("region:", region)
+                    // console.log("city:", city)
+                    // console.log("county:", county)
+                    // console.log("id:", id)
                     // searchTerm(apiResponse.data.results)
                 },
                 (error) => {
