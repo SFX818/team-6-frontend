@@ -186,16 +186,18 @@ const popup = new mapboxgl.Popup({
 
     
     return (
-        <div className="App container">
+      <>
             <div className='container'>
                 <h1>Covid-19 Cases</h1>
                 < SearchForm />
             </div>
+        <div className="App container">
           <div className="mapContainer">
             {/* Assigned Mapbox container */}
             <div className="mapBox" ref={mapboxElRef} />
           </div>
         </div>
+      </>
       );
     }
 
