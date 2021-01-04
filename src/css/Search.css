@@ -1,0 +1,100 @@
+*,*::before,*::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  
+  /* DEV CLASSES */
+  
+  .border-blue {
+    border: 1px solid blue;
+  }
+  
+  .border-green {
+    border: 1px solid green;
+  }
+  
+  .display-none {
+    display: none !important;
+  }
+  
+  .disabled {
+    pointer-events: none;
+    /* opacity: 0.7; */
+  }
+
+html, body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+
+}
+
+#root, .AppContainer {
+    height: 100%;
+}
+
+.mapContainer {
+    height: 50rem;
+    flex-direction: column-reverse;
+   
+}
+
+.mapBox {
+    height: 80%;
+    /* box-sizing: border-box; */
+    margin: 6rem 1rem;
+}
+
+.flex-horizontal {
+  -webkit-box-direction: normal;
+  -webkit-box-orient: horizontal;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+
+element.style {
+}
+.list-widget .feature-list .feature-list-item {
+    cursor: pointer;
+    align-items: center;
+    margin: 0;
+    padding: 0 .375rem;
+}
+.btn-form:not(.inline-flex):not(.btn-form), .flex-horizontal:not(.inline-flex):not(.btn-form), .flex-vertical:not(.inline-flex):not(.btn-form) {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+.border-bottom, .config-dialog .header-container, .list-widget .feature-list .feature-list-item, .list-widget .feature-list-filter {
+    border-bottom: 1px solid #5c5c5c;
+}
+.btn-form, .flex-horizontal {
+    -webkit-box-direction: normal;
+    -webkit-box-orient: horizontal;
+    -webkit-flex-direction: row;
+    -moz-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+}
+*, :after, :before {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.am-chart svg, .block-container label, .block-container span, .btn.btn-grouped, .chart-widget .am-chart .amcharts-balloon-div, .data-source-table-container table td, .direction-ltr, .feature-description td, .input-spinner .input-spinner-input, .list-widget .feature-list, .power-element .dropdown-menu .side-nav-link, .power-element .filter-dropdown-list .side-nav-link, .power-element .side-nav .side-nav-link, .power-element .value-container, .power-element input, .widget .widget-header .caption {
+    direction: ltr;
+}
+.flex-vertical {
+    -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+    -webkit-flex-direction: column;
+    -moz-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}

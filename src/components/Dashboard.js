@@ -1,7 +1,8 @@
 import React, {useState, useEffect, useRef} from 'react'
+import { Link } from 'react-router-dom'
 import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
-import { getFavorites, getHistory, getPrimaryLocation, editPrimary } from '../services/user.service'
+import { getFavorites, getHistory, getPrimaryLocation, editPrimary, removeFavorite } from '../services/user.service'
 import { getCurrentUser } from '../services/auth.service'
 import Statistics from './Statistics'
       
@@ -38,7 +39,19 @@ const Dashboard = () => {
             window.location.reload()
         })
         .catch(err => console.log(err))
+    }
 
+    const handleRemove = event => {
+        event.preventDefault()
+        let user = currentUser.id
+        let id = (event.target.id.value)
+
+        removeFavorite(user, id)
+        .then(response => {
+            console.log(response.data)
+            window.location.reload()
+        })
+        .catch(err => console.log(err))
     }
 
     return(
@@ -71,36 +84,16 @@ const Dashboard = () => {
                         <div key={favorite._id}>
                             <h4>{favorite.city}, {favorite.state} - {favorite.country}</h4>
                             <Form onSubmit={handleSubmit} ref={form}>
-                                <Input 
-                                    type='hidden'
-                                    value={favorite._id}
-                                    name='id'
-                                />
-                                <Input 
-                                    type='hidden'
-                                    value={favorite.city}
-                                    name='city'
-                                />
-                                <Input 
-                                    type='hidden'
-                                    value={favorite.state}
-                                    name='userState'
-                                />
-                                <Input 
-                                    type='hidden'
-                                    value={favorite.country}
-                                    name='country'
-                                />
-                                <Input 
-                                    type='hidden'
-                                    value={favorite.county}
-                                    name='county'
-                                />
-                                <Input 
-                                    type='submit'
-                                    value='Set as Primary Location'
-                                    name='submit'
-                                />
+                                <Input type='hidden' value={favorite._id} name='id' />
+                                <Input type='hidden' value={favorite.city} name='city' />
+                                <Input type='hidden' value={favorite.state} name='userState' />
+                                <Input type='hidden' value={favorite.country} name='country' />
+                                <Input type='hidden' value={favorite.county} name='county' />
+                                <Input type='submit' value='Set as Primary Location' name='submit' />
+                            </Form>
+                            <Form onSubmit={handleRemove} ref={form}>
+                                <Input type='hidden' value={favorite._id} name='id' />
+                                <Input type='submit' value='Remove from My Locations' name='submit' />
                             </Form>
                         </div>
                     ))}
@@ -121,7 +114,7 @@ const Dashboard = () => {
                 <div>
                 <ul>
                     {searchHistory.map((history, index)=> (
-                        <li key={index}>{history.city}, {history.state}, {history.country}</li>
+                        <li key={index}><Link to= {`/search/${history._id}`}>{history.city}, {history.state}, {history.country}</Link></li>
                     ))}
                 </ul>
                 </div>

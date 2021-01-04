@@ -2,7 +2,8 @@ import {Switch, Route} from 'react-router-dom'
 
 
 //Component Imports
-import Search from "./components/Search"
+import Search from './components/Search'
+import SearchDetail from './components/SearchDetail'
 // import New from "./components/New"
 import Home from './components/Home'
 import About from './components/About'
@@ -25,12 +26,14 @@ import Profile from './components/Profile'
 //CSS imports
 import './css/App.css';
 import './css/site.css';
+import './css/Search.css';
 
 const App = () => {
   return (
     <Layout>
       <Switch>
-        <Route exact path="/search" component={Search}/>
+        <Route exact path='/search' component={Search}/>
+        <Route exact path='/search/:id' component={SearchDetail} />
         <Route exact path={['/','/home']} component={Home}/>
         <Route exact path='/about' component={About} />
         <Route exact path='/login' component={Login}/>

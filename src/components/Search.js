@@ -1,41 +1,20 @@
-// import React from "react"
 import React, { useRef, useEffect, useState } from "react";
 import useSWR from "swr";
 //import component
 import SearchForm from "./SearchForm";
 
-const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
+//CSS
+// import '../css/Search.css'
 
+const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiYmluYXJ5YmVhc3QiLCJhIjoiY2tpbTU3cW8xMHE1ZTJycXJkemdjZThmMSJ9.LUCLnUpyYjcUF48GPUEUVQ';
 
 function Search() {
     const [searchTerm, setSearchTerm] = useState(null)
-    const [searchLatitude, setSearchLatitude] = useState(16)
-    const [searchLongitude, setSearchLongitude] = useState(27)
-
     const mapboxElRef = useRef(null);
 
-    const setLatAndLong = (latitude, longitude)  =>{
-      setSearchLatitude(latitude)
-      setSearchLongitude(longitude)
-      console.log("---testing---",latitude, longitude)
-
-    }
-    const setSearch = (value) => {
-
-      console.log(value)
-      setSearchTerm(value)
-      // data = useSWR("https://disease.sh/v3/covid-19/jhucsse", fetcher);
-    }
-    //  const onChange = (latitude, longitude) =>  {
-    //     map.jumpTo({
-    //       center: [latitude, longitude],
-    //       zoom: 8,
-    //       pitch: 45,
-    //       bearing: 90
-    //       });
-    //    }
+    
     const fetcher = (url,city,state,county,country) =>
     fetch(url) 
      
@@ -43,10 +22,9 @@ function Search() {
       .then(data =>
         
         data.map((point, index) => {
-
+            // console.log(point)
             // i need to another if statement to check if the search terms matches
             if(searchTerm) {
-              console.log("---testing---", searchTerm)
                 return {
                     type: "Feature",
                     geometry: {
@@ -89,31 +67,22 @@ function Search() {
             
         }})
       );
- 
-       
-   
+
   // Fetching our data with swr package
-  let { data } = useSWR("https://disease.sh/v3/covid-19/jhucsse", fetcher);
+  const { data } = useSWR("https://disease.sh/v3/covid-19/jhucsse", fetcher);
     
     useEffect(() => {
-      console.log("rerender")
         if (data) {
         // You can store the map instance with useRef too
         const map = new mapboxgl.Map({
           container: mapboxElRef.current,
           style: "mapbox://styles/binarybeast/ckjdljfpu6smv1ao028dmjh4r",
-          center: [searchLatitude, searchLongitude], // initial geo location
+          center: [16, 27], // initial geo location
           zoom: 1.5 // initial zoom
         });
-        
+
         map.addControl(new mapboxgl.NavigationControl());
-      let filterData = data
-      if(searchTerm){
-        console.log(searchTerm)
-        filterData = data.filter((locationData) => locationData.properties.country === searchTerm.country)
-      }
-      console.log(filterData)
-      console.log(data)
+        
      // Call this method when the map is loaded
      map.once("load", function() {
         // Add our SOURCE
@@ -122,7 +91,7 @@ function Search() {
           type: "geojson",
           data: {
             type: "FeatureCollection",
-            features: filterData
+            features: data
           }
         });
 
@@ -163,12 +132,20 @@ const popup = new mapboxgl.Popup({
       const { cases, deaths, country, province,county,recovered } = e.features[0].properties;
       const coordinates = e.features[0].geometry.coordinates.slice();
   
+      // Get all data for the tooltip
+      // const countryISO =
+      //   lookup.byCountry(country)?.iso2 || lookup.byInternet(country)?.iso2;
+  
       const provinceHTML =
         province !== "null" ? `<p>Province: <b>${province}</b></p>` : "";
   
         const cityHTML =
         county !== "null" ? `<p>City: <b>${county}</b></p>` : "";
       const mortalityRate = ((deaths / cases) * 100).toFixed(2);
+  
+      // const countryFlagHTML = Boolean(countryISO)
+      //   ? `<img src="https://www.countryflags.io/flat/${countryISO}/64.png"></img>`
+      //   : "";
   
       const HTML = `<p>Country: <b>${country}</b></p>
                 ${provinceHTML}
@@ -187,14 +164,12 @@ const popup = new mapboxgl.Popup({
       }
   
       popup
-        
         .setLngLat(coordinates)
         .setHTML(HTML)
         .addTo(map);
     }
   });
-   
-
+  
   // Mouse leave event
   map.on("mouseleave", "circles", function() {
     // Reset the last Id
@@ -203,34 +178,46 @@ const popup = new mapboxgl.Popup({
     popup.remove();
   });
       });
-      if(searchLatitude) {
-      map.jumpTo({
-      center: [searchLatitude, searchLongitude],
-      zoom: 8,
-      pitch: 45,
-      bearing: 90
-      });
-    }
     }
 
     
-    
-  }, [searchTerm, searchLatitude, data]);
+  }, [data]);
 
     
-    return (
-        <div className="App">
-            <div>
-                <h1>Covid-19 Cases</h1>
-                < SearchForm setSearch={setSearch} setLatAndLong={setLatAndLong} />
-            </div>
-          <div className="mapContainer">
-            {/* Assigned Mapbox container */}
-            <div className="mapBox" ref={mapboxElRef} />
-          </div>
+  return (
+    <div className="App container">
+        <div className='container'>
+            <h1>Covid-19 Cases</h1>
+            < SearchForm />
+
+        </div><div className="flex-fix widget-header">
+        <div className="caption">
+        <p style={{textAlign: 'left'}}><strong>Cases by Country/Region/Sovereignty</strong></p>
+        <nav className="feature-list">
+        <span style={{color:"#e60000"}} id="ember1051" className="flex-horizontal feature-list-item active ember-view"><div class="flex-fluid list-item-content overflow-hidden ">
+      <div class="external-html">
+<h5><span style={{color:"#e60000"}}><strong></strong></span><span style={{color:"#ffffff"}}>&nbsp;</span><span style={{color:"#d6d6d6"}}>US</span></h5>
+        <span style={{color:"#e60000"}} id="ember1053" class="flex-horizontal feature-list-item ember-view"><div className="flex-fluid list-item-content overflow-hidden ">
+      <div class="external-html">
+        <h5><span style={{color:"#e60000"}}><strong>10,323,965</strong></span><span style={{color:"#ffffff"}}>&nbsp;</span><span style={{color:"#d6d6d6"}}>India</span></h5>
+
         </div>
-      );
-    }
+      </div>
+      </span>
+
+        </div>
+      </div>
+      </span>
+        </nav>
+      </div>
+      <div className="mapContainer">
+        
+      </div>
+        {/* Assigned Mapbox container */}
+        <div className="mapBox" ref={mapboxElRef} />
+      </div>
+    </div>
+  );
+}
 
 export default Search
-

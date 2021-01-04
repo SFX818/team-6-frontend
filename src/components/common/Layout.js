@@ -24,7 +24,7 @@ const Layout = (props) => {
         <nav>
           <div className='nav-wrapper'>
           <Link to='/' className='brand-logo'>APP NAME HERE</Link>
-            <ul id='nav-mobile' class='right hide-on-med-and-down'>
+            <ul id='nav-mobile' className='right hide-on-med-and-down'>
               <li><Link to='/home'>Home</Link></li>
               <li><Link to='/search'>Search</Link></li>
               <li><Link to='/about'>About</Link></li>
@@ -48,7 +48,7 @@ const Layout = (props) => {
 
         <div>{props.children}</div>
 
-        <footer className="page-footer">
+        {/* <footer className="page-footer">
           <div className="container">
             <div className="row">
               <div className="col l6 s12">
@@ -72,7 +72,7 @@ const Layout = (props) => {
             <a className="grey-text text-lighten-4 right" href="#!">More Links</a>
             </div>
           </div>
-        </footer>
+        </footer> */}
         </>
     )
   };
