@@ -116,11 +116,13 @@ const SearchForm = (props) => {
                 <Form onSubmit={mapSearch} ref={form} className='container'>
                 <div className='input-field'>
                     <CountryDropdown
+                        className="browser-default"
                         value={country}
                         onChange={(val) => onChangeCountry(val)} />
                 </div>
                 <div className='input-field'>
                     <RegionDropdown
+                        className="browser-default"
                         country={country}
                         value={region}
                         onChange={(val) => onChangeRegion(val)} />
