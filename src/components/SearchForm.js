@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react'
 import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
+import { Link } from 'react-router-dom'
 import CheckButton from 'react-validation/build/button'
 
 import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
@@ -153,6 +154,11 @@ const SearchForm = (props) => {
 
                     <CheckButton style={{display: "none"}} ref={checkBtn}/>
                 </Form>
+                <div>
+                    {id && (
+                        <Link to={`/search/${id}`}>Go to Details</Link>
+                    )}
+                </div>
             </div>
     )
 }
