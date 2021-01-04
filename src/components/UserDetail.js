@@ -125,19 +125,26 @@ const UserDetail = (props) => {
                     <h4>Add Roles</h4>
                 {/* {console.log(roles)} */}
                 {roles.length > 0 ? (
-                <div>
-                    {roles.map(role => (
-                        <div key={role._id}>
-                            <p>{role.name}</p>
-                            <Form onSubmit={handleAddRole} ref={form}>
-                                <Input type='hidden' value={role._id} name='roleId'/>
-                                <Input type='hidden' value={role.name} name='roleName'/>
-                                <Input type='submit'  value='Add Role'/>
-                            </Form>
-                        </div>
-                    )
-                    )}
-                </div>
+                    <div>
+                        {console.log(user.roles)}
+                            {roles.map(role => (
+                                <>
+                                    {(user.roles && user.roles.some(existing => existing._id === role._id)) ? (
+                                        <></>
+                                    ) : (
+                                        <div key={role._id}>
+                                            <p>{role.name}</p>
+                                            <Form onSubmit={handleAddRole} ref={form}>
+                                                <Input type='hidden' value={role._id} name='roleId'/>
+                                                <Input type='hidden' value={role.name} name='roleName'/>
+                                                <Input type='submit'  value='Add Role'/>
+                                            </Form>
+                                        </div>
+                                    )}
+                                </>
+                            )
+                        )}
+                    </div>
                 ) : (
                     <div>No roles to display!</div>
                 )
