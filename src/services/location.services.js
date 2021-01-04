@@ -20,6 +20,7 @@ export const getOneLocation = id => {
     return axios.get(API_URL_SEARCH + id, {headers: authHeader()})
 }
 
+// --- Do we need this one?
 export const updateLocation = (id,city,state,country,county, roles) => {
     return axios.put(API_URL_SEARCH + id, {
         id,
@@ -39,9 +40,3 @@ export const addToSearchHistory = id => {
         {headers: authHeader()}
     )
 }
-
-// export const removeFavorite = (id) => {
-//     return axios.delete(API_URL_SEARCH + 'search/remove/' + id, {
-//         id
-//     })
-// }

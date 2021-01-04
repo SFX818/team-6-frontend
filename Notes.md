@@ -10,7 +10,9 @@
     - [x] probably will require backend work too
     - [] figure out how to hide roles that are already present in user.roles
 - [x] deleteUser
-- [] addToFavorites, removeFromFavorites
+- [x] addToFavorites
+    - [] something to check whether location is already in favorites on SearchDetail
+- []removeFromFavorites
 - [x] addToSearchHistory
     - [] limit to 15-20 results
     - [] don't add if last city is the same
