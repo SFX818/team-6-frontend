@@ -23,7 +23,7 @@ function Search() {
       .then(data =>
         
         data.map((point, index) => {
-            console.log(point)
+            // console.log(point)
             // i need to another if statement to check if the search terms matches
             if(searchTerm) {
                 return {
