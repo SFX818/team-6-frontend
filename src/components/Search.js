@@ -11,9 +11,31 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiYmluYXJ5YmVhc3QiLCJhIjoiY2tpbTU3cW8xMHE1ZTJyc
 
 function Search() {
     const [searchTerm, setSearchTerm] = useState(null)
+    const [searchLatitude, setSearchLatitude] = useState(16)
+    const [searchLongitude, setSearchLongitude] = useState(27)
+
     const mapboxElRef = useRef(null);
 
-    
+    const setLatAndLong = (latitude, longitude)  =>{
+      setSearchLatitude(latitude)
+      setSearchLongitude(longitude)
+      console.log("---testing---",latitude, longitude)
+
+    }
+    const setSearch = (value) => {
+
+      console.log(value)
+      setSearchTerm(value)
+      // data = useSWR("https://disease.sh/v3/covid-19/jhucsse", fetcher);
+    }
+    //  const onChange = (latitude, longitude) =>  {
+    //     map.jumpTo({
+    //       center: [latitude, longitude],
+    //       zoom: 8,
+    //       pitch: 45,
+    //       bearing: 90
+    //       });
+    //    }
     const fetcher = (url,city,state,county,country) =>
     fetch(url) 
      
@@ -21,8 +43,10 @@ function Search() {
       .then(data =>
         
         data.map((point, index) => {
+
             // i need to another if statement to check if the search terms matches
             if(searchTerm) {
+              console.log("---testing---", searchTerm)
                 return {
                     type: "Feature",
                     geometry: {
@@ -65,22 +89,31 @@ function Search() {
             
         }})
       );
-
+ 
+       
+   
   // Fetching our data with swr package
-  const { data } = useSWR("https://disease.sh/v3/covid-19/jhucsse", fetcher);
+  let { data } = useSWR("https://disease.sh/v3/covid-19/jhucsse", fetcher);
     
     useEffect(() => {
+      console.log("rerender")
         if (data) {
         // You can store the map instance with useRef too
         const map = new mapboxgl.Map({
           container: mapboxElRef.current,
           style: "mapbox://styles/binarybeast/ckjdljfpu6smv1ao028dmjh4r",
-          center: [16, 27], // initial geo location
+          center: [searchLatitude, searchLongitude], // initial geo location
           zoom: 1.5 // initial zoom
         });
-
-        map.addControl(new mapboxgl.NavigationControl());
         
+        map.addControl(new mapboxgl.NavigationControl());
+      let filterData = data
+      if(searchTerm){
+        console.log(searchTerm)
+        filterData = data.filter((locationData) => locationData.properties.country === searchTerm.country)
+      }
+      console.log(filterData)
+      console.log(data)
      // Call this method when the map is loaded
      map.once("load", function() {
         // Add our SOURCE
@@ -89,7 +122,7 @@ function Search() {
           type: "geojson",
           data: {
             type: "FeatureCollection",
-            features: data
+            features: filterData
           }
         });
 
@@ -154,12 +187,14 @@ const popup = new mapboxgl.Popup({
       }
   
       popup
+        
         .setLngLat(coordinates)
         .setHTML(HTML)
         .addTo(map);
     }
   });
-  
+   
+
   // Mouse leave event
   map.on("mouseleave", "circles", function() {
     // Reset the last Id
@@ -168,17 +203,26 @@ const popup = new mapboxgl.Popup({
     popup.remove();
   });
       });
+      if(searchLatitude) {
+      map.jumpTo({
+      center: [searchLatitude, searchLongitude],
+      zoom: 8,
+      pitch: 45,
+      bearing: 90
+      });
+    }
     }
 
     
-  }, [data]);
+    
+  }, [searchTerm, searchLatitude, data]);
 
     
     return (
         <div className="App">
             <div>
                 <h1>Covid-19 Cases</h1>
-                < SearchForm />
+                < SearchForm setSearch={setSearch} setLatAndLong={setLatAndLong} />
             </div>
           <div className="mapContainer">
             {/* Assigned Mapbox container */}
@@ -190,42 +234,3 @@ const popup = new mapboxgl.Popup({
 
 export default Search
 
-// class Search extends React.Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//         lng: 5,
-//         lat: 34,
-//         zoom: 2
-//         };
-//     }
-
-
-
-    // componentDidMount() {
-    //     const map = new mapboxgl.Map({
-    //     container: this.mapContainer,
-    //     style: 'mapbox://styles/mapbox/streets-v11',
-    //     center: [16, 27], // initial geo location
-    //     zoom: 2
-    //     });
-    //     map.on('move', () => {
-    //         this.setState({
-    //         lng: map.getCenter().lng.toFixed(4),
-    //         lat: map.getCenter().lat.toFixed(4),
-    //         zoom: map.getZoom().toFixed(2)
-    //         });
-    //         });
-    //     }
-    //     render() {
-    //         return (
-    //         <div>
-    //             <h1>Covid Results</h1>
-    //         <div className='sidebarStyle'>
-    //         <div>Longitude: {this.state.lng} | Latitude: {this.state.lat} | Zoom: {this.state.zoom}</div>
-    //         </div>
-    //         <div ref={el => this.mapContainer = el} className='mapContainer' />
-    //         </div>
-    //         )
-    //         }
-    //         }

@@ -9,11 +9,8 @@
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.6.0",
     "axios": "^0.21.1",
-
-    "country-code-lookup": "0.0.18",
-
     "chart.js": "^2.9.4",
-
+    "country-code-lookup": "0.0.18",
     "dotenv": "^8.2.0",
     "mapbox-gl": "^2.0.1",
     "materialize-css": "^1.0.0-rc.2",

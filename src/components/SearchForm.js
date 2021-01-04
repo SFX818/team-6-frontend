@@ -11,11 +11,12 @@ import FormGroup from "./common/FormGroup"
 //Helper
 import { locationSearch } from '../services/location.services'
 import { resMessage } from '../utilities/functions.utilities'
-import searchTerm from './Search'
+// import searchTerm from './Search'
 
 const axios = require('axios')
 const GOOGLE_API_KEY = 'AIzaSyDbjklIejS9yn5KhRaEWen72vYpBu_0BZo'
-
+let latitude=("")
+let longitude=("")
 //Function given to react-validator
 const required = (value) => {
     if(!value){
@@ -56,6 +57,11 @@ const SearchForm = (props) => {
         setCity(city)
     }
 
+    const longLat = (latitude, longitude)=>{
+        props.setLatAndLong(latitude, longitude)
+
+    }
+
     const mapSearch = async (e) => {
         //Prevent reload of pressing the button
         e.preventDefault()
@@ -73,12 +79,37 @@ const SearchForm = (props) => {
             const apiResponse = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${city},${region}&key=${GOOGLE_API_KEY}`)
             //Parses over API and pulls out "____ County", replace removes county for disease API
             const county = Object.values(apiResponse.data.results[0])[0][1].long_name.replace(/County/g, '')
+            longitude = apiResponse.data.results[0].geometry.location.lat
+            latitude = apiResponse.data.results[0].geometry.location.lng
             locationSearch(country, region, city, county).then(
                 (response) => {
                     // console.log("----ggh--", apiResponse)
                     setMessage(response.data.message)
                     setSuccessful(true)
-                    console.log("COUNTY Is found", county)
+                    if(country === "United States") {
+                        props.setSearch({
+                            country: "US",
+                            region: region,
+                            county: county,
+                            city: city
+                        })
+                    } else{
+                    props.setSearch({
+                        country: country,
+                        region: region,
+                        county: county,
+                        city: city
+                    })
+                    }
+                    console.log(apiResponse)
+
+                    console.log("country:", country)
+                    console.log("region:", region)
+                    console.log("city:", city)
+                    console.log("county:", county)
+
+
+
                     
                     // searchTerm(apiResponse.data.results)
                 },
@@ -121,7 +152,7 @@ const SearchForm = (props) => {
                     </FormGroup>
 
                     <div className="form-group">
-                        <button className="btn" >
+                        <button className="btn" onClick={longLat(latitude, longitude)}>
                             <span>Search</span>
                         </button>   
                     </div>

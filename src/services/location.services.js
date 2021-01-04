@@ -7,7 +7,7 @@ const API_URL_SEARCH = 'http://localhost:8080/api/location/'
 
 //Find Or Create location
 export const locationSearch = (city,region,country,county) => {
-    return axios.post(API_URL_SEARCH, {
+    return axios.post(API_URL_SEARCH,{
         city: city,
         state: region,
         country: country,
