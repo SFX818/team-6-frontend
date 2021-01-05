@@ -88,7 +88,11 @@ const SearchDetail = () => {
             ) : (
                 <div>Loading...</div>
             )}
-            <Statistics />
+            <Statistics
+                newCountry={location.country}
+                newCounty={location.county}
+                newRegion={location.state}
+             />
             <div>
                 <Link to='/search'>Back to Map</Link>
             </div>

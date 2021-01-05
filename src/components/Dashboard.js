@@ -13,15 +13,27 @@ const Dashboard = () => {
     const [searchHistory, setSearchHistory] = useState(undefined)
     const [primaryLocation, setPrimaryLocation] = useState(undefined)
 
+    const [primaryCountry, setPrimaryCountry] = useState(undefined)
+    const [primaryCounty, setPrimaryCounty] = useState(undefined)
+    const [primaryState, setPrimaryState] = useState(undefined)
+
     useEffect(()=> {
         const user = getCurrentUser()
         if(user) {
           setCurrentUser(user)
           getFavorites().then(favorites => setUserDashboard(favorites))
           getHistory().then(history => setSearchHistory(history))
-          getPrimaryLocation().then(location => setPrimaryLocation(location))
         }
       }, [])
+
+      useEffect(()=> {
+        getPrimaryLocation().then(location => {
+            setPrimaryLocation(location)
+            setPrimaryCountry(location.country)
+            setPrimaryCounty(location.county)
+            setPrimaryState(location.state)
+          })
+      }, [primaryLocation])
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -64,6 +76,11 @@ const Dashboard = () => {
                     <h3>My Primary Location</h3>
                     <div>
                         <h4>{primaryLocation.city}, {primaryLocation.state} - {primaryLocation.country}</h4>
+                        <Statistics
+                            newCountry={primaryCountry}
+                            newCounty={primaryCounty}
+                            newRegion={primaryState}
+                        />
                     </div>
                 </div>
             ) : (
@@ -125,8 +142,7 @@ const Dashboard = () => {
         ) : (
             <div>Loading...</div>
         )}
-        <Statistics />
-
+        {/* <Statistics /> */}
         </>
 
     )

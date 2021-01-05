@@ -10,11 +10,22 @@
     padding: 6px;
     font-weight: bold;
     } 
+
+    .mapContainer {
+        height: 800px;
+    }
      
     .mapBox {
+<<<<<<< HEAD
     position: absolute;
     top: 22.8rem;
     right: 3.7rem;
     left: 16.5rem;
     bottom: 2rem;
+=======
+        height: 100%;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+>>>>>>> 32f300f2059cbdd8cad105131ec9dc1399ca7808
     }  
