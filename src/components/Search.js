@@ -1,3 +1,4 @@
+// import React from "react"
 import React, { useRef, useEffect, useState } from "react";
 import useSWR from "swr";
 //import component
@@ -184,40 +185,20 @@ const popup = new mapboxgl.Popup({
   }, [data]);
 
     
-  return (
-    <div className="App container">
-        <div className='container'>
-            <h1>Covid-19 Cases</h1>
-            < SearchForm />
-
-        </div><div className="flex-fix widget-header">
-        <div className="caption">
-        <p style={{textAlign: 'left'}}><strong>Cases by Country/Region/Sovereignty</strong></p>
-        <nav className="feature-list">
-        <span style={{color:"#e60000"}} id="ember1051" className="flex-horizontal feature-list-item active ember-view"><div class="flex-fluid list-item-content overflow-hidden ">
-      <div class="external-html">
-<h5><span style={{color:"#e60000"}}><strong></strong></span><span style={{color:"#ffffff"}}>&nbsp;</span><span style={{color:"#d6d6d6"}}>US</span></h5>
-        <span style={{color:"#e60000"}} id="ember1053" class="flex-horizontal feature-list-item ember-view"><div className="flex-fluid list-item-content overflow-hidden ">
-      <div class="external-html">
-        <h5><span style={{color:"#e60000"}}><strong>10,323,965</strong></span><span style={{color:"#ffffff"}}>&nbsp;</span><span style={{color:"#d6d6d6"}}>India</span></h5>
-
+    return (
+      <>
+            <div className='container'>
+                <h1>Covid-19 Cases</h1>
+                < SearchForm />
+            </div>
+        <div className="App container">
+          <div className="mapContainer">
+            {/* Assigned Mapbox container */}
+            <div className="mapBox" ref={mapboxElRef} />
+          </div>
         </div>
-      </div>
-      </span>
-
-        </div>
-      </div>
-      </span>
-        </nav>
-      </div>
-      <div className="mapContainer">
-        
-      </div>
-        {/* Assigned Mapbox container */}
-        <div className="mapBox" ref={mapboxElRef} />
-      </div>
-    </div>
-  );
-}
+      </>
+      );
+    }
 
 export default Search

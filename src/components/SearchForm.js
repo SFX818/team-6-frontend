@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
 import { Link } from 'react-router-dom'
@@ -11,8 +11,9 @@ import FormGroup from "./common/FormGroup"
 
 //Helper
 import { locationSearch, addToSearchHistory } from '../services/location.services'
+import { getHistory, removeFromSearchHistory } from '../services/user.service'
 import { resMessage } from '../utilities/functions.utilities'
-// import searchTerm from './Search'
+import searchTerm from './Search'
 
 //CSS
 // import '../css/SearchForm.css'
@@ -42,7 +43,12 @@ const SearchForm = (props) => {
     const [region, setRegion] = useState('')
     const [city, setCity] = useState('')
     const [id, setId] = useState('')
-   
+
+    const [searchHistory, setSearchHistory] = useState(undefined)
+
+    useEffect(() => {
+        getHistory().then(history => setSearchHistory(history))
+    },[])
     
     const onChangeCountry = (val) => {
         console.log(val)
@@ -78,7 +84,7 @@ const SearchForm = (props) => {
             const apiResponse = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${city},${region}&key=${GOOGLE_API_KEY}`)
             //Parses over API and pulls out "____ County", replace removes county for disease API
             const county = Object.values(apiResponse.data.results[0])[0][1].long_name.replace(/County/g, '')
-            locationSearch(country, region, city, county).then(
+            locationSearch(city, region, country, county).then(
                 (response) => {
                         if(response.data[0]) {
                             setId(response.data[0]._id)
@@ -87,6 +93,7 @@ const SearchForm = (props) => {
                             setId(response.data._id)
                             addToSearchHistory(response.data._id)
                         }
+                    if(searchHistory.length > 19) {removeFromSearchHistory()}
                     setMessage(response.data.message)
                     setSuccessful(true)
                     // console.log(response.data)
@@ -116,11 +123,13 @@ const SearchForm = (props) => {
                 <Form onSubmit={mapSearch} ref={form} className='container'>
                 <div className='input-field'>
                     <CountryDropdown
+                        className="browser-default"
                         value={country}
                         onChange={(val) => onChangeCountry(val)} />
                 </div>
                 <div className='input-field'>
                     <RegionDropdown
+                        className="browser-default"
                         country={country}
                         value={region}
                         onChange={(val) => onChangeRegion(val)} />

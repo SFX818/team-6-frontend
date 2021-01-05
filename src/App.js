@@ -26,7 +26,6 @@ import Profile from './components/Profile'
 //CSS imports
 import './css/App.css';
 import './css/site.css';
-import './css/Search.css';
 
 const App = () => {
   return (
