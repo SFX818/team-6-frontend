@@ -5,15 +5,16 @@ import DeathsGraph from './DeathsGraph'
 import CasesGraph from './CasesGraph'
 import MaterialTable from "material-table";
 
+
 const axios = require('axios')
 
 
-const Statistics = ({newCountry, newCounty, newRegion}) => {
-    // const [primaryLocation, setPrimaryLocation] = useState({})
+const StatisticsOLD = () => {
+    const [primaryLocation, setPrimaryLocation] = useState({})
     //Location states
-    const [country, setCountry] = useState(newCountry)
-    const [county, setCounty] = useState(newCounty)
-    const [region, setRegion] = useState(newRegion)
+    const [country, setCountry] = useState('')
+    const [county, setCounty] = useState('')
+    const [region, setRegion] = useState('')
     //API Stats states
     const [confirmedCases, setConfirmedCases] = useState('')
     const [deaths, setDeaths] = useState('')
@@ -53,12 +54,12 @@ const Statistics = ({newCountry, newCounty, newRegion}) => {
         resolve: () => {}
     })
 
-
     const onChangeDayFilter = (event, val) => {
         setDayFilter(val)
         console.log(dayFilter)
     }
-    
+
+
     const onRowDelete = oldData =>
         new Promise((resolve, reject) => {
             const dataID = oldData._id
@@ -73,8 +74,16 @@ const Statistics = ({newCountry, newCounty, newRegion}) => {
             setGridData({ ...gridData, data, updatedAt, resolve });
     });
 
-     //Run resolve for table
-     useEffect(() => {
+    // Get primary location and set the primary location state
+    useEffect(() => {
+        getPrimaryLocation()
+        .then(response => {
+            setPrimaryLocation(response)
+        })
+    }, [])
+
+    //Run resolve for table
+    useEffect(() => {
         gridData.resolve()
 
     }, [gridData])
@@ -111,23 +120,14 @@ const Statistics = ({newCountry, newCounty, newRegion}) => {
             })
         })
     },[])
-
-    // useEffect(()=>{
-    //     getPrimaryLocation()
-    //     .then(response => {
-    //         setPrimaryLocation(response)
-    //     })
-    // }, [])
     
 
     useEffect(()=> {
-        // if(primaryLocation.county !== undefined) {
-        if(newCounty !== undefined) {
-            axios.get(`https://disease.sh/v3/covid-19/jhucsse/counties/${newCounty}`)
+        if(primaryLocation.county !== undefined) {
+            axios.get(`https://disease.sh/v3/covid-19/jhucsse/counties/${primaryLocation.county}`)
             .then(response => {
                 response.data.forEach(data=> {
-                    // if(primaryLocation.state === data.province) {
-                    if(newRegion === data.province) {
+                    if(primaryLocation.state === data.province) {
                         setCountry(data.country)
                         setCounty(data.county)
                         setRegion(data.province)
@@ -139,7 +139,7 @@ const Statistics = ({newCountry, newCounty, newRegion}) => {
                 })
             })
         }
-    }, [newCountry, newCounty, newRegion])
+    }, [primaryLocation])
 
 
     useEffect(() => {
@@ -193,4 +193,4 @@ const Statistics = ({newCountry, newCounty, newRegion}) => {
 
 }
 
-export default Statistics
+export default StatisticsOLD

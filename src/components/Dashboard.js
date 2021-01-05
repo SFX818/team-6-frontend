@@ -4,8 +4,7 @@ import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
 import { getFavorites, getHistory, getPrimaryLocation, editPrimary, removeFavorite } from '../services/user.service'
 import { getCurrentUser } from '../services/auth.service'
-// import Statistics from './Statistics'
-import StatisticsCopy from './StatisticsCopy'
+import Statistics from './Statistics'
       
 const Dashboard = () => {
     const form = useRef()
@@ -77,7 +76,7 @@ const Dashboard = () => {
                     <h3>My Primary Location</h3>
                     <div>
                         <h4>{primaryLocation.city}, {primaryLocation.state} - {primaryLocation.country}</h4>
-                        <StatisticsCopy
+                        <Statistics
                             newCountry={primaryCountry}
                             newCounty={primaryCounty}
                             newRegion={primaryState}
