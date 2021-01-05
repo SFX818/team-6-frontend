@@ -4,7 +4,7 @@ import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
 import { getFavorites, getHistory, getPrimaryLocation, editPrimary, removeFavorite } from '../services/user.service'
 import { getCurrentUser } from '../services/auth.service'
-import Statistics from './Statistics'
+// import Statistics from './Statistics'
 import StatisticsCopy from './StatisticsCopy'
       
 const Dashboard = () => {
@@ -143,12 +143,7 @@ const Dashboard = () => {
         ) : (
             <div>Loading...</div>
         )}
-        <Statistics />
-        {/* <StatisticsCopy
-            newCountry={primaryLocation.country}
-            newCounty={primaryLocation.county}
-            newRegion={primaryLocation.state}
-        /> */}
+        {/* <Statistics /> */}
         </>
 
     )
