@@ -102,10 +102,7 @@ export const editPrimary = (user,id,city,state,country,county) => {
 }
 
 export const removeFavorite = (id) => {
-    return axios.delete(API_URL_DASHBOARD + 'favorites/remove/' + id, {
-        id: id
-    },
-        {headers: authHeader()}
+    return axios.delete(API_URL_DASHBOARD + 'favorites/remove/' + id, {headers: authHeader()}
     )
 }
 

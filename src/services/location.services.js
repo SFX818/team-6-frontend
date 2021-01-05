@@ -4,6 +4,7 @@ import authHeader from '../utilities/authHeader.utilities'
 
 //const API_URL =  process.env.API_URL_Search
 const API_URL_SEARCH = 'http://localhost:8080/api/location/'
+const DASHBOARD_URL_FAVORITES = 'http://localhost:8080/dashboard/favorites/remove/'
 
 //Find Or Create location
 export const locationSearch = (city,region,country,county) => {
@@ -36,7 +37,9 @@ export const updateLocation = (id,city,state,country,county, roles) => {
 }
 
 export const removeFavorite = (id) => {
-    return axios.delete(API_URL_SEARCH + 'search/remove/' + id, {
-        id
+    return axios.delete(DASHBOARD_URL_FAVORITES + id, {headers: authHeader()})
+    .then(response => {
+        return(response)
     })
+    .catch(err => console.log(err))
 }
