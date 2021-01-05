@@ -6,7 +6,7 @@ import { getOneLocation } from '../services/location.services'
 import { addFavorite, getFavorites, removeFavorite } from '../services/user.service'
 import { getCurrentUser } from '../services/auth.service'
 
-import StatisticsCopy from './StatisticsCopy'
+import Statistics from './Statistics'
 
 const SearchDetail = () => {
     const form = useRef()
@@ -88,7 +88,7 @@ const SearchDetail = () => {
             ) : (
                 <div>Loading...</div>
             )}
-            <StatisticsCopy
+            <Statistics
                 newCountry={location.country}
                 newCounty={location.county}
                 newRegion={location.state}
