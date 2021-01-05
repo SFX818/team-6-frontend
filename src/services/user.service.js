@@ -113,5 +113,12 @@ export const removeFavorite = (user,id) => {
     )
 }
 
-
+// Removes location in index[0] of search history array
+export const removeFromSearchHistory = user => {
+    return axios.put(API_URL_DASHBOARD + 'history/remove', {
+        user
+    }, 
+        {headers: authHeader()}
+    )
+}
 

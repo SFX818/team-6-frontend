@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
 import { Link } from 'react-router-dom'
@@ -11,6 +11,7 @@ import FormGroup from "./common/FormGroup"
 
 //Helper
 import { locationSearch, addToSearchHistory } from '../services/location.services'
+import { getHistory, removeFromSearchHistory } from '../services/user.service'
 import { resMessage } from '../utilities/functions.utilities'
 import searchTerm from './Search'
 
@@ -42,7 +43,12 @@ const SearchForm = (props) => {
     const [region, setRegion] = useState('')
     const [city, setCity] = useState('')
     const [id, setId] = useState('')
-   
+
+    const [searchHistory, setSearchHistory] = useState(undefined)
+
+    useEffect(() => {
+        getHistory().then(history => setSearchHistory(history))
+    },[])
     
     const onChangeCountry = (val) => {
         console.log(val)
@@ -87,6 +93,7 @@ const SearchForm = (props) => {
                             setId(response.data._id)
                             addToSearchHistory(response.data._id)
                         }
+                    if(searchHistory.length > 19) {removeFromSearchHistory()}
                     setMessage(response.data.message)
                     setSuccessful(true)
                     // console.log(response.data)
