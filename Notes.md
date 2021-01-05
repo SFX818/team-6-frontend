@@ -8,8 +8,15 @@
 - [x] add LogOut function to Layout
 - [x] refactor updateUser to just update roles / makeAdmin checkbox (?)
     - [x] probably will require backend work too
-    - [] figure out how to hide roles that are already present in user.roles
-- [] deleteUser
-- [] addToFavorites, removeFromFavorites
-- [] addToSearchHistory
-    - limit to 15-20 results
+    - [x] figure out how to hide roles that are already present in user.roles
+- [x] deleteUser
+- [x] addToFavorites
+    - [x] something to check whether location is already in favorites on SearchDetail
+- [x]removeFromFavorites
+- [x] addToSearchHistory
+    - [x] limit to 15-20 results
+    - [] don't add if last city is the same
+- [x] connect Statistics to SearchDetail
+    - [x] requires slight refactoring 
+- [] create and use utils for frequent functions
+- [] styling...

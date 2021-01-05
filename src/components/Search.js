@@ -4,8 +4,10 @@ import useSWR from "swr";
 //import component
 import SearchForm from "./SearchForm";
 
-const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
+//CSS
+// import '../css/Search.css'
 
+const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiYmluYXJ5YmVhc3QiLCJhIjoiY2tpbTU3cW8xMHE1ZTJycXJkemdjZThmMSJ9.LUCLnUpyYjcUF48GPUEUVQ';
 
@@ -21,7 +23,7 @@ function Search() {
       .then(data =>
         
         data.map((point, index) => {
-            console.log(point)
+            // console.log(point)
             // i need to another if statement to check if the search terms matches
             if(searchTerm) {
                 return {
@@ -184,16 +186,18 @@ const popup = new mapboxgl.Popup({
 
     
     return (
-        <div className="App">
-            <div>
+      <>
+            <div className='container'>
                 <h1>Covid-19 Cases</h1>
                 < SearchForm />
             </div>
+        <div className="App container">
           <div className="mapContainer">
             {/* Assigned Mapbox container */}
             <div className="mapBox" ref={mapboxElRef} />
           </div>
         </div>
+      </>
       );
     }
 

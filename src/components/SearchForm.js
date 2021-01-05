@@ -1,6 +1,7 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
+import { Link } from 'react-router-dom'
 import CheckButton from 'react-validation/build/button'
 
 import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
@@ -9,9 +10,13 @@ import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-countr
 import FormGroup from "./common/FormGroup"
 
 //Helper
-import { locationSearch } from '../services/location.services'
+import { locationSearch, addToSearchHistory } from '../services/location.services'
+import { getHistory, removeFromSearchHistory } from '../services/user.service'
 import { resMessage } from '../utilities/functions.utilities'
 import searchTerm from './Search'
+
+//CSS
+// import '../css/SearchForm.css'
 
 const axios = require('axios')
 const GOOGLE_API_KEY = 'AIzaSyDbjklIejS9yn5KhRaEWen72vYpBu_0BZo'
@@ -37,9 +42,14 @@ const SearchForm = (props) => {
     const [country, setCountry] = useState('')
     const [region, setRegion] = useState('')
     const [city, setCity] = useState('')
-   
-    
+    const [id, setId] = useState('')
 
+    const [searchHistory, setSearchHistory] = useState(undefined)
+
+    useEffect(() => {
+        getHistory().then(history => setSearchHistory(history))
+    },[])
+    
     const onChangeCountry = (val) => {
         console.log(val)
         setCountry(val)
@@ -55,6 +65,7 @@ const SearchForm = (props) => {
         console.log(city)
         setCity(city)
     }
+
 
     const mapSearch = async (e) => {
         //Prevent reload of pressing the button
@@ -75,17 +86,22 @@ const SearchForm = (props) => {
             const county = Object.values(apiResponse.data.results[0])[0][1].long_name.replace(/County/g, '')
             locationSearch(city, region, country, county).then(
                 (response) => {
-                    // console.log("----ggh--", apiResponse)
+                        if(response.data[0]) {
+                            setId(response.data[0]._id)
+                            addToSearchHistory(response.data[0]._id)
+                        } else {
+                            setId(response.data._id)
+                            addToSearchHistory(response.data._id)
+                        }
+                    if(searchHistory.length > 19) {removeFromSearchHistory()}
                     setMessage(response.data.message)
                     setSuccessful(true)
-                    console.log("country:", country)
-                    console.log("region:", region)
-                    console.log("city:", city)
-                    console.log("county:", county)
-
-
-
-                    
+                    // console.log(response.data)
+                    // console.log("country:", country)
+                    // console.log("region:", region)
+                    // console.log("city:", city)
+                    // console.log("county:", county)
+                    // console.log("id:", id)
                     // searchTerm(apiResponse.data.results)
                 },
                 (error) => {
@@ -103,20 +119,22 @@ const SearchForm = (props) => {
 
 
     return(
-        <div>
-            <div className="container">
-                <Form onSubmit={mapSearch} ref={form}>
-
+            <div className="form-container container">
+                <Form onSubmit={mapSearch} ref={form} className='container'>
+                <div className='input-field'>
                     <CountryDropdown
                         className="browser-default"
                         value={country}
                         onChange={(val) => onChangeCountry(val)} />
+                </div>
+                <div className='input-field'>
                     <RegionDropdown
                         className="browser-default"
                         country={country}
                         value={region}
                         onChange={(val) => onChangeRegion(val)} />
-
+                </div>
+                <div className='input-field'>
                     <FormGroup text="city">
                         <Input
                             type="text"
@@ -127,8 +145,9 @@ const SearchForm = (props) => {
                             validations={[required]}
                         />
                     </FormGroup>
+                </div>
 
-                    <div className="form-group">
+                    <div className='input-field'>
                         <button className="btn" >
                             <span>Search</span>
                         </button>   
@@ -144,8 +163,12 @@ const SearchForm = (props) => {
 
                     <CheckButton style={{display: "none"}} ref={checkBtn}/>
                 </Form>
+                <div>
+                    {id && (
+                        <Link to={`/search/${id}`}>Go to Details</Link>
+                    )}
+                </div>
             </div>
-        </div>
     )
 }
 

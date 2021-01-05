@@ -45,14 +45,6 @@ export const removeUserRoles = (id,roles) => {
     )
 }
 
-// export const deleteUser = id => {
-//     return axios.delete(API_URL_ADMIN + id +'/delete', {
-//         _id: id
-//     },
-//         {headers: authHeader()}
-//     )
-// }
-
 export const deleteUser = id => {
     return axios({
         method: 'DELETE',
@@ -102,18 +94,23 @@ export const editPrimary = (user,id,city,state,country,county) => {
 }
 
 export const removeFavorite = (id) => {
-    return axios.delete(API_URL_DASHBOARD + 'favorites/remove/' + id, {headers: authHeader()}
+    return axios.delete(API_URL_DASHBOARD + 'favorites/remove/' + id, {headers: authHeader()})
+}
+
+export const addFavorite = (user, id) => {
+    return axios.post(API_URL_SEARCH + id, {
+        user,
+        id
+    },
+        {headers: authHeader()}
     )
 }
 
-export const addFavorite = (id,city,state,country,county) => {
-    return axios.post(API_URL_SEARCH + id, {
-        id,
-        city,
-        state,
-        country,
-        county
-    },
+// Removes location in index[0] of search history array
+export const removeFromSearchHistory = user => {
+    return axios.put(API_URL_DASHBOARD + 'history/remove', {
+        user
+    }, 
         {headers: authHeader()}
     )
 }
