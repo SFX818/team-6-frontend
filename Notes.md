@@ -14,9 +14,9 @@
     - [x] something to check whether location is already in favorites on SearchDetail
 - [x]removeFromFavorites
 - [x] addToSearchHistory
-    - [] limit to 15-20 results
+    - [x] limit to 15-20 results
     - [] don't add if last city is the same
-- [] connect Statistics to SearchDetail
-    - [] requires slight refactoring 
+- [x] connect Statistics to SearchDetail
+    - [x] requires slight refactoring 
 - [] create and use utils for frequent functions
 - [] styling...
