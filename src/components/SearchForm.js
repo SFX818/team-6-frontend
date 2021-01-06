@@ -86,7 +86,7 @@ const SearchForm = (props) => {
             const apiResponse = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${city},${region}&key=${GOOGLE_API_KEY}`)
             //Parses over API and pulls out "____ County", replace removes county for disease API
             const county = Object.values(apiResponse.data.results[0])[0][1].long_name.replace(/County/g, '')
-            locationSearch(city, region, country, county).then(
+            locationSearch(country, region, city, county).then(
                 (response) => {
                         if(response.data[0]) {
                             setId(response.data[0]._id)
