@@ -13,6 +13,7 @@ const SearchDetail = () => {
     const [location, setLocation] = useState('')
     const [currentUser, setCurrentUser] = useState(undefined)
     const [favoriteLocations, setFavoriteLocations] = useState([])
+    const [message, setMessage] = useState('')
     let { id } = useParams()
 
     useEffect(() => {
@@ -20,19 +21,20 @@ const SearchDetail = () => {
             setLocation(response.data)
             },
             (error) => {
-                const _error =
-                    (error.response &&
-                    error.response.data &&
-                    error.response.data.message) ||
-                    error.message ||
-                    error.toString();
-                setLocation(_error);
-              }
+                setMessage(error)
+                setLocation(error)
+            }
         )
         const user = getCurrentUser()
         if(user) {
             setCurrentUser(user)
-            getFavorites().then(favorites => setFavoriteLocations(favorites))
+            getFavorites().then(favorites => {
+                setFavoriteLocations(favorites)
+            },
+            (error) => {
+                setMessage(error)
+                setFavoriteLocations(error)
+            })
         }
     },[])
 
@@ -43,10 +45,11 @@ const SearchDetail = () => {
 
         addFavorite(user,id)
         .then(response => {
-            console.log(response.data)
+            // console.log(response.data)
+            setMessage(response.data)
             window.location.reload()
         })
-        .catch(err => console.log(err))
+        .catch(err => setMessage(err))
     }
 
     const handleRemove = event => {
@@ -56,10 +59,11 @@ const SearchDetail = () => {
 
         removeFavorite(user, id)
         .then(response => {
-            console.log(response.data)
+            // console.log(response.data)
+            setMessage(response.data)
             window.location.reload()
         })
-        .catch(err => console.log(err))
+        .catch(err => setMessage(err))
     }
 
     return(
@@ -86,7 +90,9 @@ const SearchDetail = () => {
                     )}
                 </div>
             ) : (
-                <div>Loading...</div>
+                <div className='progress'>
+                    <span className='indeterminate'></span>
+                </div>
             )}
             <Statistics
                 newCountry={location.country}

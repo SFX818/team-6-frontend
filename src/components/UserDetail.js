@@ -8,6 +8,7 @@ const UserDetail = (props) => {
     const form = useRef()
     const [user, setUser] = useState('')
     const [roles, setRoles] = useState('')
+    const [message, setMessage] = useState('')
     let { id } = useParams()
 
     const handleAddRole = (event) => {
@@ -22,10 +23,10 @@ const UserDetail = (props) => {
         // console.log(newRole)
         addUserRoles(id,newRole)
         .then(response => {
-            console.log(response.data)
+            setMessage(response.data)
             window.location.reload()
         })
-        .catch(err => console.log(err))
+        .catch(err => setMessage(err))
     }
 
     const handleRemoveRole = (event) => {
@@ -40,10 +41,10 @@ const UserDetail = (props) => {
         // console.log(newRole)
         removeUserRoles(id,newRole)
         .then(response => {
-            console.log(response.data)
+            setMessage(response.data)
             window.location.reload()
         })
-        .catch(err => console.log(err))
+        .catch(err => setMessage(err))
     }
 
     const handleDelete = e => {
@@ -55,8 +56,8 @@ const UserDetail = (props) => {
                 window.location.reload()
             }
         )
-        .catch(err => {console.log(err)})
-        console.log(id)
+        .catch(err => {setMessage(err)})
+        // console.log(id)
     }
 
     useEffect(() => {
@@ -64,26 +65,16 @@ const UserDetail = (props) => {
             setUser(response.data)
             },
             (error) => {
-                const _error =
-                    (error.response &&
-                    error.response.data &&
-                    error.response.data.message) ||
-                    error.message ||
-                    error.toString();
-                setUser(_error);
+                setMessage(error)
+                setUser(error)
               }
         )
         getRoles().then(response => {
             setRoles(response.data)
             },
             (error) => {
-                const _error =
-                    (error.response &&
-                    error.response.data &&
-                    error.response.data.message) ||
-                    error.message ||
-                    error.toString();
-                setRoles(_error);
+                setMessage(error)
+                setRoles(error);
               }
         )
     },[])
@@ -118,7 +109,9 @@ const UserDetail = (props) => {
                     {/* {console.log(user)} */}
                 </div>
             ) : (
-                <div>Loading...</div>
+                <div className='progress'>
+                    <span className='indeterminate'></span>
+                </div>
             )}
             {roles ? (
                 <div>
@@ -126,7 +119,7 @@ const UserDetail = (props) => {
                 {/* {console.log(roles)} */}
                 {roles.length > 0 ? (
                     <div>
-                        {console.log(user.roles)}
+                        {/* {console.log(user.roles)} */}
                             {roles.map(role => (
                                 <>
                                     {(user.roles && user.roles.some(existing => existing._id === role._id)) ? (
@@ -151,7 +144,9 @@ const UserDetail = (props) => {
             }
                 </div>
             ) : (
-                <div>Loading...</div>
+                <div className='progress'>
+                    <span className='indeterminate'></span>
+                </div>
             )}
         </>
     )
