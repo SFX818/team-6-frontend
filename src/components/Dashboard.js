@@ -15,7 +15,6 @@ const Dashboard = () => {
     const [userDashboard, setUserDashboard] = useState(undefined)
     const [searchHistory, setSearchHistory] = useState(undefined)
     const [primaryLocation, setPrimaryLocation] = useState(undefined)
-
     const [primaryCountry, setPrimaryCountry] = useState(undefined)
     const [primaryCounty, setPrimaryCounty] = useState(undefined)
     const [primaryState, setPrimaryState] = useState(undefined)
@@ -30,7 +29,7 @@ const Dashboard = () => {
         }
       }, [])
 
-      useEffect(()=> {
+    useEffect(()=> {
         getPrimaryLocation().then(location => {
             setPrimaryLocation(location)
             setPrimaryCountry(location.country)
