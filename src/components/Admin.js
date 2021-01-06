@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+
 import { getAllUsers } from '../services/user.service'
+import {resMessage} from '../utilities/functions.utilities'
 
 const Admin = () => {
     const [users, setUsers] = useState('')
+    const [message, setMessage] = useState('')
+
     useEffect(() => {
         getAllUsers().then(response => {
             setUsers(response.data)
             },
             (error) => {
-                const _error =
-                    (error.response &&
-                    error.response.data &&
-                    error.response.data.message) ||
-                    error.message ||
-                    error.toString();
-                setUsers(_error);
+                setMessage(resMessage(error))
+                setUsers(error);
               }
         )
     },[])
@@ -51,7 +50,9 @@ const Admin = () => {
                     )}
                 </div>
             ) : (
-                <div>Loading...</div>
+                <div className='progress'>
+                    <span className='indeterminate'></span>
+                </div>
             )}
         </>
     )

@@ -2,9 +2,12 @@ import React, {useState, useEffect, useRef} from 'react'
 import { Link } from 'react-router-dom'
 import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
+
+import Statistics from './Statistics'
+import Loading from './common/Loading'
+
 import { getFavorites, getHistory, getPrimaryLocation, editPrimary, removeFavorite } from '../services/user.service'
 import { getCurrentUser } from '../services/auth.service'
-import Statistics from './Statistics'
       
 const Dashboard = () => {
     const form = useRef()
@@ -15,7 +18,8 @@ const Dashboard = () => {
     const [primaryCountry, setPrimaryCountry] = useState(undefined)
     const [primaryCounty, setPrimaryCounty] = useState(undefined)
     const [primaryState, setPrimaryState] = useState(undefined)
-
+    
+    
     useEffect(()=> {
         const user = getCurrentUser()
         if(user) {
@@ -87,10 +91,11 @@ const Dashboard = () => {
             )}
         </div>
         ) : (
-            <div>Loading...</div>
+            <div>Please <Link to='/login'>Login</Link> or <Link to='/register'>Register</Link> to add to view this page</div>
         )}
         {userDashboard ? (
         <div>
+            {/* {setLoading(false)} */}
             {/* {console.log(userDashboard)} */}
             {userDashboard.length > 0 ? (
                 <div>
@@ -116,15 +121,20 @@ const Dashboard = () => {
                 </div>
                 </div>
             ) : (
-                <div>No Favorites to Display!</div>
+                <div>No Locations to Display!</div>
             )}
         </div>
         ) : (
-            <div>Loading...</div>
+            <div>
+                <div className='progress'>
+                    <span className='indeterminate'></span>
+                </div>
+            </div>
         )}
         {searchHistory ? (
         <div>
             Search History
+            {/* {setLoading(false)} */}
             {/* {console.log(searchHistory)} */}
             {searchHistory.length > 0 ? (
                 <div>
@@ -135,13 +145,16 @@ const Dashboard = () => {
                 </ul>
                 </div>
             ) : (
-                <div>No Search History to Display!</div>
+                <div>No Search History to Display! Get started <Link to='/search'>here</Link></div>
             )}
         </div>
         ) : (
-            <div>Loading...</div>
+            <div>
+                <div className='progress'>
+                    <span className='indeterminate'></span>
+                </div>
+            </div>
         )}
-        {/* <Statistics /> */}
         </>
 
     )

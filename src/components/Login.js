@@ -4,7 +4,8 @@ import Input from 'react-validation/build/input'
 import CheckButton from 'react-validation/build/button'
 
 // Components
-import FormGroup from "./common/FormGroup"
+import FormGroup from './common/FormGroup'
+import Loading from './common/Loading'
 
 // Helper
 import { login } from '../services/auth.service'
@@ -14,7 +15,7 @@ import { resMessage } from '../utilities/functions.utilities'
 const required = (value) => {
     if(!value){
         return (
-            <div className="alert">
+            <div className='alert'>
                 This field is required!
             </div>
         )
@@ -44,7 +45,7 @@ const Login = (props) => {
         //Prevent reload of pressing the button
         e.preventDefault()
         //Prevent message clear them out
-        setMessage("")
+        setMessage('')
         setLoading(true)
 
         // validtes all the fields in your form
@@ -54,12 +55,10 @@ const Login = (props) => {
         if(checkBtn.current.context._errors.length === 0) {
             login(username, password).then(
                 ()=> {
-                    props.history.push("/dashboard")
+                    props.history.push('/dashboard')
                     window.location.reload()
                 },
-                (error) => {
-                    // Checking all the data received from our backend
-                    
+                (error) => {                    
                     // Setting loading to false and return the error
                     setLoading(false)
                     setMessage(resMessage(error))
@@ -74,52 +73,48 @@ const Login = (props) => {
 
 
     return(
-        <div>
-            <div className="container">
+        <div className='row'>
+            <div className='container col s12 m4'>
                 <img
-                    src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-                    alt="profile-img"
-                    className="profile-img-card"
+                    src='//ssl.gstatic.com/accounts/ui/avatar_2x.png'
+                    alt='profile-img'
+                    className='profile-img-card'
                 />
 
                 <Form onSubmit={handleLogin} ref={form}>
-                    <FormGroup text="username">
+                    <FormGroup text='username'>
                         <Input
-                            type="text"
-                            className="form-control"
-                            name="username"
+                            type='text'
+                            className='form-control'
+                            name='username'
                             value={username}
                             onChange={onChangeUsername}
                             validations={[required]}
                         />
                     </FormGroup>
 
-                    <FormGroup text="password">
+                    <FormGroup text='password'>
                         <Input
-                            type="password"
-                            className="form-control"
-                            name="password"
+                            type='password'
+                            className='form-control'
+                            name='password'
                             value={password}
                             onChange={onChangePassword}
                             validations={[required]}
                         />
                     </FormGroup>
 
-                    <div className="form-group">
-                        <button className="btn">
-                            <span>Login</span>
-                        </button>   
-                    </div>
+                    <Loading text='login' loading={loading} />
 
                     {message && (
-                        <div className="form-group">
-                            <div className="alert alert-danger" role="alert">
+                        <div className='input-field'>
+                            <div className='alert alert-danger' role='alert'>
                                 {message}
                             </div>
                         </div>
                     )}
 
-                    <CheckButton style={{display: "none"}} ref={checkBtn}/>
+                    <CheckButton style={{display: 'none'}} ref={checkBtn}/>
                 </Form>
             </div>
         </div>
