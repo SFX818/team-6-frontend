@@ -33,7 +33,7 @@ const Dashboard = () => {
             setPrimaryCounty(location.county)
             setPrimaryState(location.state)
           })
-      }, [primaryLocation])
+      }, [])
 
     const handleSubmit = (event) => {
         event.preventDefault()
