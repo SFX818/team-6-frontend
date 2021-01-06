@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { getPrimaryLocation, getFavorites, removeFavorite } from '../services/user.service'
-import { getCurrentUser } from '../services/auth.service'
+import { getFavorites, removeFavorite } from '../services/user.service'
 import DeathsGraph from './DeathsGraph'
 import CasesGraph from './CasesGraph'
 import MaterialTable from "material-table";
@@ -9,7 +8,6 @@ const axios = require('axios')
 
 
 const Statistics = ({newCountry, newCounty, newRegion}) => {
-    // const [primaryLocation, setPrimaryLocation] = useState({})
     //Location states
     const [country, setCountry] = useState(newCountry)
     const [county, setCounty] = useState(newCounty)
@@ -111,22 +109,12 @@ const Statistics = ({newCountry, newCounty, newRegion}) => {
             })
         })
     },[])
-
-    // useEffect(()=>{
-    //     getPrimaryLocation()
-    //     .then(response => {
-    //         setPrimaryLocation(response)
-    //     })
-    // }, [])
     
-
     useEffect(()=> {
-        // if(primaryLocation.county !== undefined) {
         if(newCounty !== undefined) {
             axios.get(`https://disease.sh/v3/covid-19/jhucsse/counties/${newCounty}`)
             .then(response => {
                 response.data.forEach(data=> {
-                    // if(primaryLocation.state === data.province) {
                     if(newRegion === data.province) {
                         setCountry(data.country)
                         setCounty(data.county)
