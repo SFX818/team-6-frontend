@@ -8,6 +8,7 @@ import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-countr
 
 //Components
 import FormGroup from "./common/FormGroup"
+import Loading from './common/Loading'
 
 //Helper
 import { locationSearch, addToSearchHistory } from '../services/location.services'
@@ -25,7 +26,7 @@ const GOOGLE_API_KEY = 'AIzaSyDbjklIejS9yn5KhRaEWen72vYpBu_0BZo'
 const required = (value) => {
     if(!value){
         return (
-            <div className="alert alert-danger" role="alert">
+            <div className='alert alert-danger' role='alert'>
                 This field is required!
             </div>
         )
@@ -45,6 +46,8 @@ const SearchForm = (props) => {
     const [id, setId] = useState('')
     // const [searchTerm, setSearchTerm] = useState(" ")
     const [searchHistory, setSearchHistory] = useState(undefined)
+
+    const[loading, setLoading] = useState(false)
 
     useEffect(() => {
         getHistory().then(history => setSearchHistory(history))
@@ -73,7 +76,7 @@ const SearchForm = (props) => {
         //Prevent reload of pressing the button
         e.preventDefault()
         //Prevent message clear them out
-        setMessage("")
+        setMessage('')
         setSuccessful(false)
 
         // validtes all the fields in your form
@@ -86,7 +89,7 @@ const SearchForm = (props) => {
             const apiResponse = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${city},${region}&key=${GOOGLE_API_KEY}`)
             //Parses over API and pulls out "____ County", replace removes county for disease API
             const county = Object.values(apiResponse.data.results[0])[0][1].long_name.replace(/County/g, '')
-            locationSearch(city, region, country, county).then(
+            locationSearch(country, region, city, county).then(
                 (response) => {
                         if(response.data[0]) {
                             setId(response.data[0]._id)
@@ -117,7 +120,7 @@ const SearchForm = (props) => {
             )
 
         } else {
-            successful(false)
+            setSuccessful(false)
         }
 
 
@@ -125,27 +128,27 @@ const SearchForm = (props) => {
 
 
     return(
-            <div className="form-container container">
+            <div className='form-container container'>
                 <Form onSubmit={mapSearch} ref={form} className='container'>
                 <div className='input-field'>
                     <CountryDropdown
-                        className="browser-default"
+                        className='browser-default'
                         value={country}
                         onChange={(val) => onChangeCountry(val)} />
                 </div>
                 <div className='input-field'>
                     <RegionDropdown
-                        className="browser-default"
+                        className='browser-default'
                         country={country}
                         value={region}
                         onChange={(val) => onChangeRegion(val)} />
                 </div>
                 <div className='input-field'>
-                    <FormGroup text="city">
+                    <FormGroup text='city'>
                         <Input
-                            type="text"
-                            className="form-control"
-                            name="city"
+                            type='text'
+                            className='form-control'
+                            name='city'
                             value={city}
                             onChange={onChangeCity}
                             validations={[required]}
@@ -153,21 +156,17 @@ const SearchForm = (props) => {
                     </FormGroup>
                 </div>
 
-                    <div className='input-field'>
-                        <button className="btn" >
-                            <span>Search</span>
-                        </button>   
-                    </div>
+                    <Loading text='Search' loading={loading} />
 
                     {message && (
-                        <div className="form-group">
-                            <div className={successful ? "alert alert-success" : "alert alert-danger"} role="alert">
+                        <div className='form-group'>
+                            <div className={successful ? 'alert alert-success' : 'alert alert-danger'} role='alert'>
                                 {message}
                             </div>
                         </div>
                     )}
 
-                    <CheckButton style={{display: "none"}} ref={checkBtn}/>
+                    <CheckButton style={{display: 'none'}} ref={checkBtn}/>
                 </Form>
                 <div>
                     {id && (
