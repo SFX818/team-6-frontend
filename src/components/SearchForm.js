@@ -1,180 +1,236 @@
-import React, { useState, useEffect, useRef } from 'react'
-import Form from 'react-validation/build/form'
-import Input from 'react-validation/build/input'
-import { Link } from 'react-router-dom'
-import CheckButton from 'react-validation/build/button'
+// import React from "react"
+import React, { useRef, useEffect, useState } from "react";
+import useSWR from "swr";
+//import component
+import SearchForm from "./SearchForm";
 
-import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
+const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 
-//Components
-import FormGroup from "./common/FormGroup"
-import Loading from './common/Loading'
 
-//Helper
-import { locationSearch, addToSearchHistory } from '../services/location.services'
-import { getHistory, removeFromSearchHistory } from '../services/user.service'
-import { resMessage } from '../utilities/functions.utilities'
-// import searchTerm from './Search'
+mapboxgl.accessToken = 'pk.eyJ1IjoiYmluYXJ5YmVhc3QiLCJhIjoiY2tpbTU3cW8xMHE1ZTJycXJkemdjZThmMSJ9.LUCLnUpyYjcUF48GPUEUVQ';
 
-//CSS
-// import '../css/SearchForm.css'
+function Search() {
+    const [searchTerm, setSearchTerm] = useState(null)
+    const [searchLatitude, setSearchLatitude] = useState(16)
+    const [searchLongitude, setSearchLongitude] = useState(27)
 
-const axios = require('axios')
-const GOOGLE_API_KEY = 'AIzaSyDbjklIejS9yn5KhRaEWen72vYpBu_0BZo'
+    const mapboxElRef = useRef(null);
 
-//Function given to react-validator
-const required = (value) => {
-    if(!value){
-        return (
-            <div className='alert alert-danger' role='alert'>
-                This field is required!
-            </div>
-        )
+    const setLatAndLong = (latitude, longitude)  =>{
+      setSearchLatitude(latitude)
+      setSearchLongitude(longitude)
+      console.log("---testing---",latitude, longitude)
+
     }
-}
+    const setSearch = (value) => {
 
+      console.log(value)
+      setSearchTerm(value)
+      // data = useSWR("https://disease.sh/v3/covid-19/jhucsse", fetcher);
+    }
+    //  const onChange = (latitude, longitude) =>  {
+    //     map.jumpTo({
+    //       center: [latitude, longitude],
+    //       zoom: 8,
+    //       pitch: 45,
+    //       bearing: 90
+    //       });
+    //    }
+    const fetcher = (url,city,state,county,country) =>
+    fetch(url) 
+     
+      .then(r => r.json())
+      .then(data =>
+        
+        data.map((point, index) => {
 
-const SearchForm = (props) => {
-    const form = useRef()
-    const checkBtn = useRef()
-
-    const [message, setMessage] = useState('')
-    const [successful, setSuccessful] = useState(false)
-    const [country, setCountry] = useState('')
-    const [region, setRegion] = useState('')
-    const [city, setCity] = useState('')
-    const [id, setId] = useState('')
-    // const [searchTerm, setSearchTerm] = useState(" ")
-    const [searchHistory, setSearchHistory] = useState(undefined)
-
-    const[loading, setLoading] = useState(false)
-
+            // i need to another if statement to check if the search terms matches
+            if(searchTerm) {
+              console.log("---testing---", searchTerm)
+                return {
+                    type: "Feature",
+                    geometry: {
+                      type: "Point",
+                      coordinates: [
+                        point.coordinates.longitude,
+                        point.coordinates.latitude
+                      ]
+                    },
+                    properties: {
+                      id: index, // unique identifier in this case the index
+                      country: point.country,
+                      province: point.province,
+                      county: point.county,
+                      cases: point.stats.confirmed,
+                      deaths: point.stats.deaths,
+                      recovered: point.stats.recovered
+                    }
+            }
+         } else {
+                return {
+                    type: "Feature",
+                    geometry: {
+                      type: "Point",
+                      coordinates: [
+                        point.coordinates.longitude,
+                        point.coordinates.latitude
+                      ]
+                    },
+                    properties: {
+                      id: index, // unique identifier in this case the index
+                      country: point.country,
+                      province: point.province,
+                      county: point.county,
+                      cases: point.stats.confirmed,
+                      deaths: point.stats.deaths,
+                      recovered: point.stats.recovered
+                    }
+            }
+            
+        }})
+      );
+ 
+       
+   
+  // Fetching our data with swr package
+  let { data } = useSWR("https://disease.sh/v3/covid-19/jhucsse", fetcher);
+    
     useEffect(() => {
-        getHistory().then(history => setSearchHistory(history))
-    },[])
+      console.log("rerender")
+        if (data) {
+        // You can store the map instance with useRef too
+        const map = new mapboxgl.Map({
+          container: mapboxElRef.current,
+          style: "mapbox://styles/binarybeast/ckjdljfpu6smv1ao028dmjh4r",
+          center: [searchLatitude, searchLongitude], // initial geo location
+          zoom: 1.5 // initial zoom
+        });
+        
+        map.addControl(new mapboxgl.NavigationControl());
+      let filterData = data
+      if(searchTerm){
+        console.log(searchTerm)
+        filterData = data.filter((locationData) => locationData.properties.country === searchTerm.country)
+      }
+      console.log(filterData)
+      console.log(data)
+     // Call this method when the map is loaded
+     map.once("load", function() {
+        // Add our SOURCE
+        // with id "points"
+        map.addSource("points", {
+          type: "geojson",
+          data: {
+            type: "FeatureCollection",
+            features: filterData
+          }
+        });
+
+        // Add our layer
+        map.addLayer({
+          id: "circles",
+          source: "points", // this should be the id of the source
+          type: "circle",
+          // paint properties
+          paint: {
+            "circle-opacity": 0.75,
+            "circle-stroke-width": 1,
+            "circle-radius": 4,
+            "circle-color": "#FFEB3B"
+          }
+        });
+        // Create a mapbox popup
+const popup = new mapboxgl.Popup({
+    closeButton: true,
+    closeOnClick: true
+  });
+  
+  // Variable to hold the active country/province on hover
+  let lastId;
+  
+  // Mouse move event
+  map.on("mousemove", "circles", e => {
+    // Get the id from the properties
+    const id = e.features[0].properties.id;
+  
+    // Only if the id are different we process the tooltip
+    if (id !== lastId) {
+      lastId = id;
+  
+      // Change the pointer type on move move
+      map.getCanvas().style.cursor = "pointer";
+  
+      const { cases, deaths, country, province,county,recovered } = e.features[0].properties;
+      const coordinates = e.features[0].geometry.coordinates.slice();
+  
+      const provinceHTML =
+        province !== "null" ? `<p>Province: <b>${province}</b></p>` : "";
+  
+        const cityHTML =
+        county !== "null" ? `<p>City: <b>${county}</b></p>` : "";
+      const mortalityRate = ((deaths / cases) * 100).toFixed(2);
+  
+      const HTML = `<p>Country: <b>${country}</b></p>
+                ${provinceHTML}
+                ${cityHTML}
+                <p>Cases: <b>${cases}</b></p>
+                <p>Recovered: <b>${recovered}</b></p>
+                <p>Deaths: <b>${deaths}</b></p>
+                <p>Mortality Rate: <b>${mortalityRate}%</b></p>
+               `;
+  
+      // Ensure that if the map is zoomed out such that multiple
+      // copies of the feature are visible, the popup appears
+      // over the copy being pointed to.
+      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+      }
+  
+      popup
+        
+        .setLngLat(coordinates)
+        .setHTML(HTML)
+        .addTo(map);
+    }
+  });
+   
+
+  // Mouse leave event
+  map.on("mouseleave", "circles", function() {
+    // Reset the last Id
+    lastId = undefined;
+    map.getCanvas().style.cursor = "";
+    popup.remove();
+  });
+      });
+      if(searchLatitude) {
+      map.jumpTo({
+      center: [searchLatitude, searchLongitude],
+      zoom: 8,
+      pitch: 45,
+      bearing: 90
+      });
+    }
+    }
+
     
-    const onChangeCountry = (val) => {
-        console.log(val)
-        setCountry(val)
-    }
-
-    const onChangeRegion = (val) => {
-        console.log(val)
-        setRegion(val)
-    }
-
-    const onChangeCity = (e) => {
-        const city = e.target.value
-        console.log(city)
-        setCity(city)
-        
-    }
     
+  }, [searchTerm, searchLatitude, data]);
 
-
-    const mapSearch = async (e) => {
-        //Prevent reload of pressing the button
-        e.preventDefault()
-        //Prevent message clear them out
-        setMessage('')
-        setSuccessful(false)
-
-        // validtes all the fields in your form
-        form.current.validateAll()
-        
-        // Validator stores errors and we can check if errors exist
-        
-        if(checkBtn.current.context._errors.length === 0) {
-            //Google API request
-            const apiResponse = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${city},${region}&key=${GOOGLE_API_KEY}`)
-            //Parses over API and pulls out "____ County", replace removes county for disease API
-            const county = Object.values(apiResponse.data.results[0])[0][1].long_name.replace(/County/g, '')
-            locationSearch(country, region, city, county).then(
-                (response) => {
-                        if(response.data[0]) {
-                            setId(response.data[0]._id)
-                            addToSearchHistory(response.data[0]._id)
-                        } else {
-                            setId(response.data._id)
-                            addToSearchHistory(response.data._id)
-                        }
-                        props.setTerm({
-                            county: county,
-                            region: region
-                        })
-                    if(searchHistory.length > 19) {removeFromSearchHistory()}
-                    setMessage(response.data.message)
-                    setSuccessful(true)
-                    // console.log(response.data)
-                    // console.log("country:", country)
-                    // console.log("region:", region)
-                    // console.log("city:", city)
-                    // console.log("county:", county)
-                    // console.log("id:", id)
-                    // searchTerm(apiResponse.data.results)
-                },
-                (error) => {
-                    setMessage(resMessage(error))
-                    setSuccessful(false)
-                }
-            )
-
-        } else {
-            setSuccessful(false)
-        }
-
-
-    }
-
-
-    return(
-            <div className='form-container container'>
-                <Form onSubmit={mapSearch} ref={form} className='container'>
-                <div className='input-field'>
-                    <CountryDropdown
-                        className='browser-default'
-                        value={country}
-                        onChange={(val) => onChangeCountry(val)} />
-                </div>
-                <div className='input-field'>
-                    <RegionDropdown
-                        className='browser-default'
-                        country={country}
-                        value={region}
-                        onChange={(val) => onChangeRegion(val)} />
-                </div>
-                <div className='input-field'>
-                    <FormGroup text='city'>
-                        <Input
-                            type='text'
-                            className='form-control'
-                            name='city'
-                            value={city}
-                            onChange={onChangeCity}
-                            validations={[required]}
-                        />
-                    </FormGroup>
-                </div>
-
-                    <Loading text='Search' loading={loading} />
-
-                    {message && (
-                        <div className='form-group'>
-                            <div className={successful ? 'alert alert-success' : 'alert alert-danger'} role='alert'>
-                                {message}
-                            </div>
-                        </div>
-                    )}
-
-                    <CheckButton style={{display: 'none'}} ref={checkBtn}/>
-                </Form>
-                <div>
-                    {id && (
-                        <Link to={`/search/${id}`}>Go to Details</Link>
-                    )}
-                </div>
+    
+    return (
+        <div className="App">
+            <div>
+                <h1>Covid-19 Cases</h1>
+                < SearchForm setSearch={setSearch} setLatAndLong={setLatAndLong} />
             </div>
-    )
-}
+          <div className="mapContainer">
+            {/* Assigned Mapbox container */}
+            <div className="mapBox" ref={mapboxElRef} />
+          </div>
+        </div>
+      );
+    }
 
-export default SearchForm
+export default Search
+

@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
 import CheckButton from 'react-validation/build/button'
 
 // Components
-import FormGroup from './common/FormGroup'
 import Loading from './common/Loading'
 
 // Helper
@@ -73,18 +73,18 @@ const Login = (props) => {
 
 
     return(
-        <div className="image">
-        <div className="row login">
-            <div className="col s7">
-                <div class="card">
+        <div className="container">
+            <div className="row">
+                <div class="input-field img-container">
                 <img
-                    src="https://cdn.pixabay.com/photo/2017/01/31/21/23/avatar-2027365_960_720.png"
+                    src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
                     alt="profile-img"
                     className="profile-img-card"
                 />
 
                 <Form onSubmit={handleLogin} ref={form}>
-                    <FormGroup text='username'>
+                    <label for='username'>Username</label>
+                    <div className='input-field'>
                         <Input
                             type="text"
                             // className="form-control"
@@ -93,9 +93,10 @@ const Login = (props) => {
                             onChange={onChangeUsername}
                             validations={[required]}
                         />
-                    </FormGroup>
+                    </div>
 
-                    <FormGroup text='password'>
+                    <label for='password'>Password</label>
+                    <div className='input-field'>
                         <Input
                             type="password"
                             // className="form-control"
@@ -104,16 +105,13 @@ const Login = (props) => {
                             onChange={onChangePassword}
                             validations={[required]}
                         />
-                    </FormGroup>
+                    </div>
                     
-                    <div className="form-group">
-                        <button className="btn red white-text">
+                    <div className="input-field">
+                        <button className="btn waves-effect waves-light">
                             <span>Login</span>
+                            <i class="material-icons right">send</i>
                         </button>   
-                    </div >
-                    <div classsName="col s8">
-                     
-                    <h5>Not a member? <a href="/register">SignUp</a></h5>          
                     </div>
 
                     {message && (
@@ -125,13 +123,13 @@ const Login = (props) => {
                     )}
 
                     <CheckButton style={{display: 'none'}} ref={checkBtn}/>
+                    
+                    <div className="input-field">
+                        <p>Not a member? <Link to="/register">Sign Up</Link></p>           
+                    </div>
                 </Form>
                 </div>
             </div>
-        </div>
-        <footer>
-            ddddddd
-        </footer>
         </div>
         
     )

@@ -1,6 +1,48 @@
+/* DEV Classes */
+.border-blue {
+    border: 1px solid blue;
+}
+
+.border-green {
+    border: 1px solid green;
+}
+
+/* Style Classes */
+.container {
+    height: 100vh;
+    width: 100vw;
+}
+
+.row {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    width: 55%;
+}
+
+.input-field {
+    width: 100%;
+}
+
+.img-container {
+    width: 50%;
+}
 
 
-.container_signup {
+
+
+
+
+
+
+
+
+/* .container_signup {
         top: 90%;
         left: 50%;
         position: absolute;
@@ -8,8 +50,6 @@
         border-style: dotted;
         /* background: rgba(0, 0, 0, .4) */
         
-}
-
 
 .container_signup label{
     font-size: 16px;
@@ -28,19 +68,4 @@
 
 .btn {
     align-items: center;
-    
 }  
-/* .browser-default {
-    background: rgba(0, 0, 0, .2)
-} */
-
-.image {
-    background-image: url("https://images.unsplash.com/photo-1487097726881-87b3f9f7e0ee?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80");
-    background-repeat: no-repeat;
-    background-size: cover;
-    
-}
-h5 {
-    font-size:  15px;
-    color: blanchedalmond;
-}

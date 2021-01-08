@@ -15,8 +15,7 @@
 - [x]removeFromFavorites
 - [x] addToSearchHistory
     - [x] limit to 15-20 results
-    - [] don't add if last city is the same
 - [x] connect Statistics to SearchDetail
     - [x] requires slight refactoring 
-- [] create and use utils for frequent functions
+- [x] create and use utils for frequent functions
 - [] styling...

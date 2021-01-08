@@ -23,7 +23,7 @@ const Layout = (props) => {
         <>
         <nav>
           <div className='nav-wrapper'>
-          <Link to='/' className='brand-logo'>Covid-Id</Link>
+          <Link to='/' className='brand-logo'>COV-ID</Link>
             <ul id='nav-mobile' className='right hide-on-med-and-down'>
               <li><Link to='/home'>Home</Link></li>
               <li><Link to='/search'>Search</Link></li>

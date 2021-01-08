@@ -3,7 +3,7 @@ import authHeader from '../utilities/authHeader.utilities'
 
 const API_URL_ADMIN = 'http://localhost:8080/admin/users/'
 const API_URL_DASHBOARD = 'http://localhost:8080/dashboard/'
-const API_URL_SEARCH = 'http://localhost:8080/search/'
+const API_URL_OSEARCH = 'http://localhost:8080/search/'
 
 // --- TEST --- //
 export const testRoute = userToken => {
@@ -98,7 +98,7 @@ export const removeFavorite = (id) => {
 }
 
 export const addFavorite = (user, id) => {
-    return axios.post(API_URL_SEARCH + id, {
+    return axios.post(API_URL_OSEARCH + id, {
         user,
         id
     },

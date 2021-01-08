@@ -3,7 +3,7 @@ import authHeader from '../utilities/authHeader.utilities'
 
 
 //const API_URL =  process.env.API_URL_Search
-const API_URL_SEARCH = 'http://localhost:8080/api/location/'
+const API_URL_SEARCH = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_DEV_URL_SEARCH : process.env.REACT_APP_PRO_URL_SEARCH;
 
 //Find Or Create location
 export const locationSearch = (country,region,city,county) => {
