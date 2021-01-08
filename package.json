@@ -11,10 +11,6 @@
     "axios": "^0.21.1",
     "chart.js": "^2.9.4",
     "country-code-lookup": "0.0.18",
-<<<<<<< HEAD
-    "deck.gl": "^8.3.12",
-=======
->>>>>>> 32f300f2059cbdd8cad105131ec9dc1399ca7808
     "dotenv": "^8.2.0",
     "mapbox-gl": "^2.0.1",
     "material-table": "^1.69.2",

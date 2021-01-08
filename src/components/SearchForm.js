@@ -13,7 +13,7 @@ import FormGroup from "./common/FormGroup"
 import { locationSearch, addToSearchHistory } from '../services/location.services'
 import { getHistory, removeFromSearchHistory } from '../services/user.service'
 import { resMessage } from '../utilities/functions.utilities'
-import searchTerm from './Search'
+// import searchTerm from './Search'
 
 //CSS
 // import '../css/SearchForm.css'
@@ -43,7 +43,7 @@ const SearchForm = (props) => {
     const [region, setRegion] = useState('')
     const [city, setCity] = useState('')
     const [id, setId] = useState('')
-
+    // const [searchTerm, setSearchTerm] = useState(" ")
     const [searchHistory, setSearchHistory] = useState(undefined)
 
     useEffect(() => {
@@ -64,7 +64,9 @@ const SearchForm = (props) => {
         const city = e.target.value
         console.log(city)
         setCity(city)
+        
     }
+    
 
 
     const mapSearch = async (e) => {
@@ -93,6 +95,10 @@ const SearchForm = (props) => {
                             setId(response.data._id)
                             addToSearchHistory(response.data._id)
                         }
+                        props.setTerm({
+                            county: county,
+                            region: region
+                        })
                     if(searchHistory.length > 19) {removeFromSearchHistory()}
                     setMessage(response.data.message)
                     setSuccessful(true)

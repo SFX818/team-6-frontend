@@ -74,10 +74,11 @@ const Login = (props) => {
 
 
     return(
-        <div>
-            <div className="container">
+        <div className="row login">
+            <div className="col s7">
+                <div class="card">
                 <img
-                    src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+                    src="https://cdn.pixabay.com/photo/2017/01/31/21/23/avatar-2027365_960_720.png"
                     alt="profile-img"
                     className="profile-img-card"
                 />
@@ -86,7 +87,7 @@ const Login = (props) => {
                     <FormGroup text="username">
                         <Input
                             type="text"
-                            className="form-control"
+                            // className="form-control"
                             name="username"
                             value={username}
                             onChange={onChangeUsername}
@@ -97,18 +98,22 @@ const Login = (props) => {
                     <FormGroup text="password">
                         <Input
                             type="password"
-                            className="form-control"
+                            // className="form-control"
                             name="password"
                             value={password}
                             onChange={onChangePassword}
                             validations={[required]}
                         />
                     </FormGroup>
-
+                    
                     <div className="form-group">
-                        <button className="btn">
+                        <button className="btn red white-text">
                             <span>Login</span>
                         </button>   
+                    </div >
+                    <div classsName="col s8">
+                     
+                    <h5>Not a member? <a href="/register">SignUp</a></h5>          
                     </div>
 
                     {message && (
@@ -121,6 +126,7 @@ const Login = (props) => {
 
                     <CheckButton style={{display: "none"}} ref={checkBtn}/>
                 </Form>
+                </div>
             </div>
         </div>
     )

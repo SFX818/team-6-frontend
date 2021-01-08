@@ -156,10 +156,10 @@ const Register = (props) => {
 
 
     return(
-        <div>
-            <div className="container">
+        <div className="container_signup">
+            
                 <img
-                    src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+                    src="https://cdn.pixabay.com/photo/2017/01/31/21/23/avatar-2027365_960_720.png"
                     alt="profile-img"
                     className="profile-img-card"
                 />
@@ -220,9 +220,13 @@ const Register = (props) => {
                     </FormGroup>
 
                     <div className="form-group">
-                        <button className="btn" >
+                        <button className="btn red white-text">
                             <span>Sign Up</span>
                         </button>   
+                    </div >
+                    <div classsName="col s8">
+                     
+                    <h5>Already a member? <a href="/login">Log In</a></h5>          
                     </div>
 
                     {message && (
@@ -235,7 +239,7 @@ const Register = (props) => {
 
                     <CheckButton style={{display: "none"}} ref={checkBtn}/>
                 </Form>
-            </div>
+            
         </div>
     )
 }
