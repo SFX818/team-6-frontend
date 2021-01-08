@@ -73,6 +73,7 @@ const Login = (props) => {
 
 
     return(
+        <div className="image">
         <div className="row login">
             <div className="col s7">
                 <div class="card">
@@ -128,6 +129,11 @@ const Login = (props) => {
                 </div>
             </div>
         </div>
+        <footer>
+            ddddddd
+        </footer>
+        </div>
+        
     )
 }
 

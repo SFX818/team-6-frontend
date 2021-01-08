@@ -3,6 +3,7 @@ import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
 import CheckButton from 'react-validation/build/button'
 import { isEmail } from "validator"
+import { Link } from 'react-router-dom'
 import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
 
 //Components
@@ -156,7 +157,8 @@ const Register = (props) => {
 
 
     return(
-        <div className="container_signup">
+        <div className="image">
+            <div className="container_signup">
             
                 <img
                     src="https://cdn.pixabay.com/photo/2017/01/31/21/23/avatar-2027365_960_720.png"
@@ -226,7 +228,7 @@ const Register = (props) => {
                     </div >
                     <div classsName="col s8">
                      
-                    <h5>Already a member? <a href="/login">Log In</a></h5>          
+                    <h5>Already a member? <Link to="/login">Log In</Link></h5>          
                     </div>
 
                     {message && (
@@ -239,7 +241,7 @@ const Register = (props) => {
 
                     <CheckButton style={{display: "none"}} ref={checkBtn}/>
                 </Form>
-            
+            </div>
         </div>
     )
 }
