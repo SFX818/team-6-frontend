@@ -1,5 +1,48 @@
-.container_signup {
-      
+/* DEV Classes */
+.border-blue {
+    border: 1px solid blue;
+}
+
+.border-green {
+    border: 1px solid green;
+}
+
+/* Style Classes */
+.container {
+    height: 100vh;
+    width: 100vw;
+}
+
+.row {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    width: 55%;
+}
+
+.input-field {
+    width: 100%;
+}
+
+.img-container {
+    width: 50%;
+}
+
+
+
+
+
+
+
+
+
+
+/* .container_signup {
         top: 90%;
         left: 50%;
         position: absolute;
@@ -8,7 +51,6 @@
         background: rgba(0, 0, 0, .4)
         
 }
-
 
 .container_signup label{
     font-size: 16px;
@@ -27,8 +69,4 @@
 
 .btn {
     align-items: center;
-    
-}  
-.browser-default {
-    background: rgba(0, 0, 0, .2)
-}
+}   */
