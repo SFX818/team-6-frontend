@@ -1,12 +1,12 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
 import CheckButton from 'react-validation/build/button'
-import { isEmail } from 'validator'
-import { CountryDropdown, RegionDropdown } from 'react-country-region-selector'
+import { isEmail } from "validator"
+import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
 
 //Components
-import FormGroup from './common/FormGroup'
+import FormGroup from "./common/FormGroup"
 
 //Helper
 import { register, login } from '../services/auth.service'
@@ -19,7 +19,7 @@ const GOOGLE_API_KEY = 'AIzaSyDbjklIejS9yn5KhRaEWen72vYpBu_0BZo'
 const required = (value) => {
     if(!value){
         return (
-            <div className='alert alert-danger' role='alert'>
+            <div className="alert alert-danger" role="alert">
                 This field is required!
             </div>
         )
@@ -30,18 +30,18 @@ const required = (value) => {
 const vusername = (value) => {
     if(value.length < 3 || value.length >= 20) {
         return (
-            <div className='alert alert-danger' role='alert'>
+            <div className="alert alert-danger" role="alert">
                 Your username must be between 3 and 20 characters
             </div>
         )
     }
 }
 
-// Function that validates passwords
+//Function that validates passwords
 const vpassword = (value) => {
     if(value.length < 6 || value.length >= 40) {
         return (
-            <div className='alert alert-danger' role='alert'>
+            <div className="alert alert-danger" role="alert">
                 Your password must be between 6 and 40 characters
             </div>
         )
@@ -51,7 +51,7 @@ const vpassword = (value) => {
 const validEmail = (value) => {
     if(!isEmail) {
         return (
-            <div className='alert alert-danger' role='alert'>
+            <div className="alert alert-danger" role="alert">
                 Submitted e-mail not valid
             </div>
         )
@@ -107,9 +107,11 @@ const Register = (props) => {
         //Prevent reload of pressing the button
         e.preventDefault()
         //Prevent message clear them out
-        setMessage('')
+        setMessage("")
         setSuccessful(false)
-
+        //delay for 2 seconds then switch to the login page
+        
+        
         // validtes all the fields in your form
         form.current.validateAll()
         
@@ -124,10 +126,10 @@ const Register = (props) => {
                 (response) => {
                     setMessage(response.data.message)
                     setSuccessful(true)
-                    console.log('COUNTY AFTER REGISTER', county)
+                    console.log("COUNTY AFTER REGISTER", county)
                     login(username, password).then(
                         ()=> {
-                            props.history.push('/dashboard')
+                            props.history.push("/dashboard")
                             window.location.reload()
                         },
                         (error) => {
@@ -154,42 +156,42 @@ const Register = (props) => {
 
 
     return(
-        <div className='row'>
-            <div className='container col s12 m4'>
+        <div className="container_signup">
+            
                 <img
-                    src='//ssl.gstatic.com/accounts/ui/avatar_2x.png'
-                    alt='profile-img'
-                    className='profile-img-card'
+                    src="https://cdn.pixabay.com/photo/2017/01/31/21/23/avatar-2027365_960_720.png"
+                    alt="profile-img"
+                    className="profile-img-card"
                 />
                 <Form onSubmit={handleSignup} ref={form}>
 
-                    <FormGroup text='username'>
+                    <FormGroup text="username">
                         <Input
-                            type='text'
-                            className='form-control'
-                            name='username'
+                            type="text"
+                            className="form-control"
+                            name="username"
                             value={username}
                             onChange={onChangeUsername}
                             validations={[required, vusername]}
                         />
                     </FormGroup>
 
-                    <FormGroup text='email'>
+                    <FormGroup text="email">
                         <Input
-                            type='text'
-                            className='form-control'
-                            name='email'
+                            type="text"
+                            className="form-control"
+                            name="email"
                             value={email}
                             onChange={onChangeEmail}
                             validations={[required, validEmail]}
                         />
                     </FormGroup>
 
-                    <FormGroup text='password'>
+                    <FormGroup text="password">
                         <Input
-                            type='password'
-                            className='form-control'
-                            name='password'
+                            type="password"
+                            className="form-control"
+                            name="password"
                             value={password}
                             onChange={onChangePassword}
                             validations={[required, vpassword]}
@@ -197,43 +199,47 @@ const Register = (props) => {
                     </FormGroup>
 
                     <CountryDropdown
-                        className='browser-default'
+                        className="browser-default"
                         value={country}
                         onChange={(val) => onChangeCountry(val)} />
                     <RegionDropdown
-                        className='browser-default'
+                        className="browser-default"
                         country={country}
                         value={region}
                         onChange={(val) => onChangeRegion(val)} />
 
-                    <FormGroup text='city'>
+                    <FormGroup text="city">
                         <Input
-                            type='text'
-                            className='form-control'
-                            name='city'
+                            type="text"
+                            className="form-control"
+                            name="city"
                             value={city}
                             onChange={onChangeCity}
                             validations={[required]}
                         />
                     </FormGroup>
 
-                    <div className='form-group'>
-                        <button className='btn' >
+                    <div className="form-group">
+                        <button className="btn red white-text">
                             <span>Sign Up</span>
                         </button>   
+                    </div >
+                    <div classsName="col s8">
+                     
+                    <h5>Already a member? <a href="/login">Log In</a></h5>          
                     </div>
 
                     {message && (
-                        <div className='form-group'>
-                            <div className={successful ? 'alert alert-success' : 'alert alert-danger'} role='alert'>
+                        <div className="form-group">
+                            <div className={successful ? "alert alert-success" : "alert alert-danger"} role="alert">
                                 {message}
                             </div>
                         </div>
                     )}
 
-                    <CheckButton style={{display: 'none'}} ref={checkBtn}/>
+                    <CheckButton style={{display: "none"}} ref={checkBtn}/>
                 </Form>
-            </div>
+            
         </div>
     )
 }
