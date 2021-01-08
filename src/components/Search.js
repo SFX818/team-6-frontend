@@ -1,7 +1,7 @@
 // import React from "react"
 import React, { useRef, useEffect, useState } from "react";
-import useSWR from "swr";
-//import component
+// import useSWR from "swr";
+import axios from 'axios'
 import SearchForm from "./SearchForm";
 
 //CSS
@@ -12,17 +12,20 @@ const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 mapboxgl.accessToken = 'pk.eyJ1IjoiYmluYXJ5YmVhc3QiLCJhIjoiY2tpbTU3cW8xMHE1ZTJycXJkemdjZThmMSJ9.LUCLnUpyYjcUF48GPUEUVQ';
 
 function Search() {
-    const [searchTerm, setSearchTerm] = useState(null)
+    const [searchTerm, setSearchTerm] = useState({})
+    const [data, setData] = useState(null)
+
     const mapboxElRef = useRef(null);
+
 
     
     const fetcher = (url,city,state,county,country) =>
     fetch(url) 
      
       .then(r => r.json())
-      .then(data =>
+      .then(data => {
         
-        data.map((point, index) => {
+      let d = data.map((point, index) => {
             // console.log(point)
             // i need to another if statement to check if the search terms matches
             if(searchTerm) {
@@ -66,13 +69,84 @@ function Search() {
                     }
             }
             
-        }})
+        }}) 
+      setData(d)
+     
+      }
       );
-
+     
+      const setSearch = (term) => {
+        setSearchTerm(term)
+        console.log("---term---", term)
+        let res = axios.get("https://disease.sh/v3/covid-19/jhucsse", fetcher);
+        let filterData = res.data.filter((locationData) => locationData.properties.county === searchTerm.county)  
+        setData(filterData)
+      }
+     
   // Fetching our data with swr package
-  const { data } = useSWR("https://disease.sh/v3/covid-19/jhucsse", fetcher);
-    
+
+//   axios.get("https://disease.sh/v3/covid-19/jhucsse")
+//   .then(response => {
+//     setData(response.data)
+//     let d = response.data.map((point, index) => {
+      
+//       // console.log(point)
+//       // i need to another if statement to check if the search terms matches
+//       if(response.data) {
+//           return {
+//               type: "Feature",
+//               geometry: {
+//                 type: "Point",
+//                 coordinates: [
+//                   point.coordinates.longitude,
+//                   point.coordinates.latitude
+//                 ]
+//               },
+//               properties: {
+//                 id: index, // unique identifier in this case the index
+//                 country: point.country,
+//                 province: point.province,
+//                 county: point.county,
+//                 cases: point.stats.confirmed,
+//                 deaths: point.stats.deaths,
+//                 recovered: point.stats.recovered
+//               }
+//       }
+//    } else {
+//           return {
+//               type: "Feature",
+//               geometry: {
+//                 type: "Point",
+//                 coordinates: [
+//                   point.coordinates.longitude,
+//                   point.coordinates.latitude
+//                 ]
+//               },
+//               properties: {
+//                 id: index, // unique identifier in this case the index
+//                 country: point.country,
+//                 province: point.province,
+//                 county: point.county,
+//                 cases: point.stats.confirmed,
+//                 deaths: point.stats.deaths,
+//                 recovered: point.stats.recovered
+//               }
+//       }
+      
+//   }
+  
+// })
+
+//   })
+    const getData = ()=> {
+      axios.get("https://disease.sh/v3/covid-19/jhucsse")
+      .then(response => {
+        setData(response.data)
+      })
+    }  
     useEffect(() => {
+      getData()
+      console.log(data)
         if (data) {
         // You can store the map instance with useRef too
         const map = new mapboxgl.Map({
@@ -81,7 +155,7 @@ function Search() {
           center: [16, 27], // initial geo location
           zoom: 1.5 // initial zoom
         });
-
+  
         map.addControl(new mapboxgl.NavigationControl());
         
      // Call this method when the map is loaded
@@ -189,7 +263,7 @@ const popup = new mapboxgl.Popup({
       <>
             <div className='container'>
                 <h1>Covid-19 Cases</h1>
-                < SearchForm />
+                < SearchForm setTerm= {setSearch}/>
             </div>
         <div className="App container">
           <div className="mapContainer">
@@ -202,43 +276,3 @@ const popup = new mapboxgl.Popup({
     }
 
 export default Search
-
-// class Search extends React.Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//         lng: 5,
-//         lat: 34,
-//         zoom: 2
-//         };
-//     }
-
-
-
-    // componentDidMount() {
-    //     const map = new mapboxgl.Map({
-    //     container: this.mapContainer,
-    //     style: 'mapbox://styles/mapbox/streets-v11',
-    //     center: [16, 27], // initial geo location
-    //     zoom: 2
-    //     });
-    //     map.on('move', () => {
-    //         this.setState({
-    //         lng: map.getCenter().lng.toFixed(4),
-    //         lat: map.getCenter().lat.toFixed(4),
-    //         zoom: map.getZoom().toFixed(2)
-    //         });
-    //         });
-    //     }
-    //     render() {
-    //         return (
-    //         <div>
-    //             <h1>Covid Results</h1>
-    //         <div className='sidebarStyle'>
-    //         <div>Longitude: {this.state.lng} | Latitude: {this.state.lat} | Zoom: {this.state.zoom}</div>
-    //         </div>
-    //         <div ref={el => this.mapContainer = el} className='mapContainer' />
-    //         </div>
-    //         )
-    //         }
-    //         }

@@ -1,0 +1,33 @@
+.login {
+    height: 100vh; /* Magic here */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.login .card{
+    background: rgba(0, 0, 0, .6)
+}
+.login label{
+    font-size: 16px;
+    color: #ccc;
+}
+.login input {
+    font-size: 20px !important;
+    color: #fff;
+}
+.login button:hover {
+    padding: 0px;
+}
+.form-group {
+    text-align: center;
+}
+.profile-img-card {
+    width: 30%;
+    height: 10%;
+    border-radius: 10rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto
+    
+}

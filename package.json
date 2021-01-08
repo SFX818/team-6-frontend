@@ -20,6 +20,8 @@
     "react-country-region-selector": "^3.0.1",
     "react-dom": "^17.0.1",
     "react-icons": "^4.1.0",
+    "react-map-gl": "^6.0.2",
+    "react-map-gl-geocoder": "^2.1.6",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "react-validation": "^3.0.7",
