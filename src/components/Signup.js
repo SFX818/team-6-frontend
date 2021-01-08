@@ -1,12 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
 import CheckButton from 'react-validation/build/button'
 import { isEmail } from "validator"
-import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
-
-//Components
-import FormGroup from "./common/FormGroup"
+import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 
 //Helper
 import { register, login } from '../services/auth.service'
@@ -126,7 +124,7 @@ const Register = (props) => {
                 (response) => {
                     setMessage(response.data.message)
                     setSuccessful(true)
-                    console.log("COUNTY AFTER REGISTER", county)
+                    // console.log("COUNTY AFTER REGISTER", county)
                     login(username, password).then(
                         ()=> {
                             props.history.push("/dashboard")
@@ -156,90 +154,103 @@ const Register = (props) => {
 
 
     return(
-        <div className="container_signup">
-            
-                <img
-                    src="https://cdn.pixabay.com/photo/2017/01/31/21/23/avatar-2027365_960_720.png"
-                    alt="profile-img"
-                    className="profile-img-card"
-                />
-                <Form onSubmit={handleSignup} ref={form}>
-
-                    <FormGroup text="username">
-                        <Input
-                            type="text"
-                            className="form-control"
-                            name="username"
-                            value={username}
-                            onChange={onChangeUsername}
-                            validations={[required, vusername]}
-                        />
-                    </FormGroup>
-
-                    <FormGroup text="email">
-                        <Input
-                            type="text"
-                            className="form-control"
-                            name="email"
-                            value={email}
-                            onChange={onChangeEmail}
-                            validations={[required, validEmail]}
-                        />
-                    </FormGroup>
-
-                    <FormGroup text="password">
-                        <Input
-                            type="password"
-                            className="form-control"
-                            name="password"
-                            value={password}
-                            onChange={onChangePassword}
-                            validations={[required, vpassword]}
-                        />
-                    </FormGroup>
-
-                    <CountryDropdown
-                        className="browser-default"
-                        value={country}
-                        onChange={(val) => onChangeCountry(val)} />
-                    <RegionDropdown
-                        className="browser-default"
-                        country={country}
-                        value={region}
-                        onChange={(val) => onChangeRegion(val)} />
-
-                    <FormGroup text="city">
-                        <Input
-                            type="text"
-                            className="form-control"
-                            name="city"
-                            value={city}
-                            onChange={onChangeCity}
-                            validations={[required]}
-                        />
-                    </FormGroup>
-
-                    <div className="form-group">
-                        <button className="btn red white-text">
-                            <span>Sign Up</span>
-                        </button>   
-                    </div >
-                    <div classsName="col s8">
-                     
-                    <h5>Already a member? <a href="/login">Log In</a></h5>          
-                    </div>
-
-                    {message && (
-                        <div className="form-group">
-                            <div className={successful ? "alert alert-success" : "alert alert-danger"} role="alert">
-                                {message}
-                            </div>
+        <div className="container">
+            <div className="row">
+                <div className="input-field img-container">
+                    <img
+                        src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+                        alt="profile-img"
+                        className="profile-img-card"
+                    />
+                </div>
+                <Form onSubmit={handleSignup} ref={form} className="form">
+                        <label for='username'>Username</label>
+                        <div className='input-field'>
+                            <Input
+                                type="text"
+                                name="username"
+                                value={username}
+                                placeholder="Username"
+                                onChange={onChangeUsername}
+                                validations={[required, vusername]}
+                            />
+                            
                         </div>
-                    )}
 
-                    <CheckButton style={{display: "none"}} ref={checkBtn}/>
+                        <label for="email">Email</label>
+                        <div className='input-field'>
+                            <Input
+                                type="email"
+                                name="email"
+                                value={email}
+                                placeholder="Email"
+                                onChange={onChangeEmail}
+                                validations={[required, validEmail]}
+                            />
+                        </div>
+
+                        <label for='password'>Password</label>
+                        <div className='input-field'>
+                            <Input
+                                type="password"
+                                name="password"
+                                value={password}
+                                placeholder="Password"
+                                onChange={onChangePassword}
+                                validations={[required, vpassword]}
+                            />
+                        </div>
+                        <div className="input-field">
+                            <CountryDropdown
+                                className="browser-default"
+                                value={country}
+                                onChange={(val) => onChangeCountry(val)} />
+                        </div>
+
+                        <div className="input-field">
+                            <RegionDropdown
+                                className="browser-default"
+                                country={country}
+                                value={region}
+                                onChange={(val) => onChangeRegion(val)} />
+                        </div>
+
+                        <label for='city'>City</label>
+                        <div className='input-field'>
+                            <Input
+                                type="text"
+                                name="city"
+                                value={city}
+                                placeholder="City"
+                                onChange={onChangeCity}
+                                validations={[required]}
+                            />
+                        </div>
+                        
+
+                        <div className="input-field">
+                            <button className="btn waves-effect waves-light">
+                                <span>Sign Up</span>
+                                <i class="material-icons right">send</i>
+                            </button>   
+                        </div>
+
+
+                        {message && (
+                            <div className="input-field">
+                                <div className={successful ? "alert alert-success" : "alert alert-danger"} role="alert">
+                                    {message}
+                                </div>
+                            </div>
+                        )}
+
+                        <CheckButton style={{display: "none"}} ref={checkBtn}/>
+
+                        <div className="input-field">
+                            <p>Already a member? <Link to="/login">Log In</Link></p>          
+                        </div>
                 </Form>
-            
+            </div>
         </div>
     )
 }
