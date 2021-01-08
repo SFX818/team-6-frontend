@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { getFavorites, removeFavorite } from '../services/user.service'
 import MaterialTable from "material-table";
 
-
 const axios = require('axios')
 
 
@@ -25,6 +24,18 @@ const StatisticsTable = () => {
             const updatedAt = new Date();
             setGridTable({ ...gridTable, data, updatedAt, resolve });
         })
+    
+    const onRowEdit = oldData =>
+    new Promise((resolve, reject) => {
+        const dataID = oldData._id
+        console.log(dataID)
+        // let data = [...gridTable.data];
+        // const index = data.indexOf(oldData);
+        // data.splice(index, 1);
+        // const updatedAt = new Date();
+        // setGridTable({ ...gridTable, data, updatedAt, resolve });
+    })
+
 
     //Get favorites and set state
     useEffect(() => {
@@ -81,11 +92,11 @@ const StatisticsTable = () => {
                     field: "country",
                 },
                 {
-                    title: "Confirmed",
+                    title: "Confirmed Cases",
                     field: "confirmed",
                 },
                 {
-                    title: "Deaths",
+                    title: "Confirmed Deaths",
                     field: "deaths",
                 },
             ],
@@ -107,7 +118,7 @@ const StatisticsTable = () => {
                 columns={gridTable.columns}
                 editable={{
                     deletable: rowData => true,
-                    onRowDelete: onRowDelete
+                    onRowDelete: onRowDelete,
                 }}
                 options={{ search: true, paging: false, filtering: true, exportButton: true }}
                 localization={{
@@ -121,6 +132,7 @@ const StatisticsTable = () => {
                         deleteTooltip: "Remove from favorite location",
                     },
                 }}
+                onRowClick={(event, rowData,) => console.log(rowData)}
             />
         </div>
     )
