@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { getFavorites, removeFavorite } from '../services/user.service'
 import MaterialTable from "material-table";
+<<<<<<< HEAD
+=======
+import '../css/StatisticsTable.css'
+>>>>>>> 6f79f08ef84558e40be107fc84fd86bd05719d95
 
 const axios = require('axios')
 
@@ -111,6 +115,7 @@ const StatisticsTable = () => {
     }, [gridData, gridTable])
 
     return (
+<<<<<<< HEAD
         <div>
             <MaterialTable
                 title="Favorited Locations"
@@ -134,6 +139,33 @@ const StatisticsTable = () => {
                 }}
                 onRowClick={(event, rowData,) => console.log(rowData)}
             />
+=======
+        <div className='row stats-container'>
+            <div className='col s12'>
+                <MaterialTable
+                    title="Favorited Locations"
+                    className='stats-table'
+                    data={gridTable.data}
+                    columns={gridTable.columns}
+                    editable={{
+                        deletable: rowData => true,
+                        onRowDelete: onRowDelete
+                    }}
+                    options={{ search: true, paging: false, filtering: true, exportButton: true }}
+                    localization={{
+                        header: {
+                            actions: "Actions"
+                        },
+                        body: {
+                            editRow: {
+                                deleteText: "Are you sure you want to remove this favorited location?"
+                            },
+                            deleteTooltip: "Remove from favorite location",
+                        },
+                    }}
+                />
+            </div>
+>>>>>>> 6f79f08ef84558e40be107fc84fd86bd05719d95
         </div>
     )
 }

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Line } from "react-chartjs-2";
 
-
+import '../css/CasesGraph.css'
 
 const CasesGraph = ({dates, deaths}) => {
     const data = {
@@ -20,12 +20,14 @@ const CasesGraph = ({dates, deaths}) => {
     const options = {
         title: {
             display: true,
-            text: "Confirmed Cases"
-          }
+            text: "Confirmed Deaths"
+          },
+        responsive: true,
+        maintainAspectRatio: true
     }
 
     return(
-        <div className="cases-graph">
+        <div className="cases-graph col s12">
             <Line data={data} options={options}/>
         </div>
     )
