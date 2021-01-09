@@ -4,7 +4,8 @@ import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
 
 import Statistics from './Statistics'
-import Loading from './common/Loading'
+import StatisticsTable from './StatisticsTable'
+import '../css/Dashboard.css'
 
 import { getFavorites, getHistory, getPrimaryLocation, editPrimary, removeFavorite } from '../services/user.service'
 import { getCurrentUser } from '../services/auth.service'
@@ -70,14 +71,13 @@ const Dashboard = () => {
     }
 
     return(
-        <>
-        {currentUser ? (
         <div className='container'>
+        {currentUser ? (
+        <div className='row charts-container'>
             <h1>Dashboard - {currentUser.username}</h1>
             {primaryLocation ? (
-                <div>
-                    <h3>My Primary Location</h3>
-                    <div>
+                <>
+                    <div className='row'>
                         <h4>{primaryLocation.city}, {primaryLocation.state} - {primaryLocation.country}</h4>
                         <Statistics
                             newCountry={primaryCountry}
@@ -85,43 +85,49 @@ const Dashboard = () => {
                             newRegion={primaryState}
                         />
                     </div>
-                </div>
+                    {/* <div className='row stats-container'> */}
+                        <StatisticsTable />
+                    {/* </div> */}
+                </>
             ) : (
-                <div>No Primary Location set</div>
+                <div className='row'>No Primary Location set</div>
             )}
         </div>
         ) : (
-            <div>Please <Link to='/login'>Login</Link> or <Link to='/register'>Register</Link> to add to view this page</div>
+            <div>Please <Link to='/login'>Login</Link> or <Link to='/register'>Register</Link> to view this page</div>
         )}
         {userDashboard ? (
-        <div>
+        <div className='row'>
             {/* {setLoading(false)} */}
             {/* {console.log(userDashboard)} */}
             {userDashboard.length > 0 ? (
-                <div>
-                <h2>My Locations</h2>
-                <div>
+                <div className='container'>
                     {userDashboard.map(favorite=> (
-                        <div key={favorite._id}>
-                            <h4>{favorite.city}, {favorite.state} - {favorite.country}</h4>
-                            <Form onSubmit={handleSubmit} ref={form}>
-                                <Input type='hidden' value={favorite._id} name='id' />
-                                <Input type='hidden' value={favorite.city} name='city' />
-                                <Input type='hidden' value={favorite.state} name='userState' />
-                                <Input type='hidden' value={favorite.country} name='country' />
-                                <Input type='hidden' value={favorite.county} name='county' />
-                                <Input type='submit' value='Set as Primary Location' name='submit' />
-                            </Form>
-                            <Form onSubmit={handleRemove} ref={form}>
-                                <Input type='hidden' value={favorite._id} name='id' />
-                                <Input type='submit' value='Remove from My Locations' name='submit' />
-                            </Form>
+                        <div key={favorite._id} className='row'>
+                            <div className='col s12'>
+                                <div className='card'>
+                                    <div className='card-content'>
+                                        <span className='card-title'>{favorite.city}, {favorite.state} - {favorite.country}</span>
+                                        <Form onSubmit={handleSubmit} ref={form}>
+                                            <Input type='hidden' value={favorite._id} name='id' />
+                                            <Input type='hidden' value={favorite.city} name='city' />
+                                            <Input type='hidden' value={favorite.state} name='userState' />
+                                            <Input type='hidden' value={favorite.country} name='country' />
+                                            <Input type='hidden' value={favorite.county} name='county' />
+                                            <Input type='submit' value='Set as Primary Location' name='submit' className='card-action' />
+                                        </Form>
+                                        <Form onSubmit={handleRemove} ref={form}>
+                                            <Input type='hidden' value={favorite._id} name='id' />
+                                            <Input type='submit' value='Remove from My Locations' name='submit' className='card-action' />
+                                        </Form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     ))}
-                </div>
-                </div>
+            </div>
             ) : (
-                <div>No Locations to Display!</div>
+                <div className='row'>No Locations to Display!</div>
             )}
         </div>
         ) : (
@@ -132,22 +138,25 @@ const Dashboard = () => {
             </div>
         )}
         {searchHistory ? (
-        <div>
+        <>
             Search History
             {/* {setLoading(false)} */}
             {/* {console.log(searchHistory)} */}
             {searchHistory.length > 0 ? (
-                <div>
-                <ul>
+                <>
+                <ul id='slide-out' class='sidenav sidenav-fixed'>
+                <h6 className='search-header'>Search History</h6>
                     {searchHistory.map((history, index)=> (
                         <li key={index}><Link to= {`/search/${history._id}`}>{history.city}, {history.state}, {history.country}</Link></li>
                     ))}
                 </ul>
-                </div>
+                </>
             ) : (
-                <div>No Search History to Display! Get started <Link to='/search'>here</Link></div>
+                <ul id='slide-out' class='sidenav sidenav-fixed'>
+                    <li>No Search History to Display! Get started <Link to='/search'>here</Link></li>
+                </ul>
             )}
-        </div>
+        </>
         ) : (
             <div>
                 <div className='progress'>
@@ -155,7 +164,7 @@ const Dashboard = () => {
                 </div>
             </div>
         )}
-        </>
+        </div>
 
     )
 }

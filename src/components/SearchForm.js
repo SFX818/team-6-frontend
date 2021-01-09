@@ -88,6 +88,7 @@ const SearchForm = (props) => {
             const county = Object.values(apiResponse.data.results[0])[0][1].long_name.replace(/County/g, '')
             locationSearch(country, region, city, county).then(
                 (response) => {
+                    // console.log(response)
                         if(response.data[0]) {
                             setId(response.data[0]._id)
                             addToSearchHistory(response.data[0]._id)
@@ -136,23 +137,23 @@ const SearchForm = (props) => {
                         value={region}
                         onChange={(val) => onChangeRegion(val)} />
                 </div>
+                <label for='city'>City</label>
                 <div className='input-field'>
-                    <FormGroup text='city'>
                         <Input
                             type='text'
                             className='form-control'
                             name='city'
                             value={city}
+                            placeholder='City'
                             onChange={onChangeCity}
                             validations={[required]}
                         />
-                    </FormGroup>
                 </div>
 
                     <Loading text='Search' loading={loading} />
 
                     {message && (
-                        <div className='form-group'>
+                        <div className='input-field'>
                             <div className={successful ? 'alert alert-success' : 'alert alert-danger'} role='alert'>
                                 {message}
                             </div>
@@ -160,12 +161,12 @@ const SearchForm = (props) => {
                     )}
 
                     <CheckButton style={{display: 'none'}} ref={checkBtn}/>
-                </Form>
-                <div>
+                <div className='input-field'>
                     {id && (
                         <Link to={`/search/${id}`}>Go to Details</Link>
                     )}
                 </div>
+                </Form>
             </div>
     )
 }

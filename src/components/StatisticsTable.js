@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { getFavorites, removeFavorite } from '../services/user.service'
 import MaterialTable from "material-table";
-
+import '../css/StatisticsTable.css'
 
 const axios = require('axios')
 
@@ -100,28 +100,31 @@ const StatisticsTable = () => {
     }, [gridData, gridTable])
 
     return (
-        <div>
-            <MaterialTable
-                title="Favorited Locations"
-                data={gridTable.data}
-                columns={gridTable.columns}
-                editable={{
-                    deletable: rowData => true,
-                    onRowDelete: onRowDelete
-                }}
-                options={{ search: true, paging: false, filtering: true, exportButton: true }}
-                localization={{
-                    header: {
-                        actions: "Actions"
-                    },
-                    body: {
-                        editRow: {
-                            deleteText: "Are you sure you want to remove this favorited location?"
+        <div className='row stats-container'>
+            <div className='col s12'>
+                <MaterialTable
+                    title="Favorited Locations"
+                    className='stats-table'
+                    data={gridTable.data}
+                    columns={gridTable.columns}
+                    editable={{
+                        deletable: rowData => true,
+                        onRowDelete: onRowDelete
+                    }}
+                    options={{ search: true, paging: false, filtering: true, exportButton: true }}
+                    localization={{
+                        header: {
+                            actions: "Actions"
                         },
-                        deleteTooltip: "Remove from favorite location",
-                    },
-                }}
-            />
+                        body: {
+                            editRow: {
+                                deleteText: "Are you sure you want to remove this favorited location?"
+                            },
+                            deleteTooltip: "Remove from favorite location",
+                        },
+                    }}
+                />
+            </div>
         </div>
     )
 }
