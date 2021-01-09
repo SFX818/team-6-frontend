@@ -79,7 +79,7 @@ const SearchForm = (props) => {
         setMessage('')
         setSuccessful(false)
 
-        // validtes all the fields in your form
+        // validates all the fields in your form
         form.current.validateAll()
         
         // Validator stores errors and we can check if errors exist
