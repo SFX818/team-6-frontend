@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
 import CheckButton from 'react-validation/build/button'
 
 // Components
-import FormGroup from './common/FormGroup'
 import Loading from './common/Loading'
 
 // Helper
@@ -73,38 +73,46 @@ const Login = (props) => {
 
 
     return(
-        <div className='row'>
-            <div className='container col s12 m4'>
+        <div className="container">
+            <div className="row">
+                <div class="input-field img-container">
                 <img
-                    src='//ssl.gstatic.com/accounts/ui/avatar_2x.png'
-                    alt='profile-img'
-                    className='profile-img-card'
+                    src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+                    alt="profile-img"
+                    className="profile-img-card"
                 />
 
                 <Form onSubmit={handleLogin} ref={form}>
-                    <FormGroup text='username'>
+                    <label for='username'>Username</label>
+                    <div className='input-field'>
                         <Input
-                            type='text'
-                            className='form-control'
-                            name='username'
+                            type="text"
+                            // className="form-control"
+                            name="username"
                             value={username}
                             onChange={onChangeUsername}
                             validations={[required]}
                         />
-                    </FormGroup>
+                    </div>
 
-                    <FormGroup text='password'>
+                    <label for='password'>Password</label>
+                    <div className='input-field'>
                         <Input
-                            type='password'
-                            className='form-control'
-                            name='password'
+                            type="password"
+                            // className="form-control"
+                            name="password"
                             value={password}
                             onChange={onChangePassword}
                             validations={[required]}
                         />
-                    </FormGroup>
-
-                    <Loading text='login' loading={loading} />
+                    </div>
+                    
+                    <div className="input-field">
+                        <button className="btn waves-effect waves-light">
+                            <span>Login</span>
+                            <i class="material-icons right">send</i>
+                        </button>   
+                    </div>
 
                     {message && (
                         <div className='input-field'>
@@ -115,7 +123,12 @@ const Login = (props) => {
                     )}
 
                     <CheckButton style={{display: 'none'}} ref={checkBtn}/>
+                    
+                    <div className="input-field">
+                        <p>Not a member? <Link to="/register">Sign Up</Link></p>           
+                    </div>
                 </Form>
+                </div>
             </div>
         </div>
     )

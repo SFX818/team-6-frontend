@@ -26,6 +26,9 @@ import Profile from './components/Profile'
 //CSS imports
 import './css/App.css';
 import './css/site.css';
+import './css/Signup.css';
+import './css/Login.css';
+import './css/Home.css';
 
 const App = () => {
   return (

@@ -1,0 +1,72 @@
+/* DEV Classes */
+.border-blue {
+    border: 1px solid blue;
+}
+
+.border-green {
+    border: 1px solid green;
+}
+
+/* Style Classes */
+.container {
+    height: 100vh;
+    width: 100vw;
+}
+
+.row {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    width: 55%;
+}
+
+.input-field {
+    width: 100%;
+}
+
+.img-container {
+    width: 50%;
+}
+
+
+
+
+
+
+
+
+
+
+/* .container_signup {
+        top: 90%;
+        left: 50%;
+        position: absolute;
+        transform: translate(-50%,-50%);
+        border-style: dotted;
+        background: rgba(0, 0, 0, .4)
+        
+}
+
+.container_signup label{
+    font-size: 16px;
+    color: #ccc;
+}
+.container_signup input {
+    font-size: 20px !important;
+    color: #fff;
+}
+.container_signup button:hover {
+    padding: 0px;
+}
+.form-group {
+    text-align: center;
+}
+
+.btn {
+    align-items: center;
+}   */
