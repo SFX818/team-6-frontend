@@ -25,8 +25,8 @@ FRONTEND
 ![Search](/Wireframes/search.png)
 ![Results](/Wireframes/results.png)
 ![Details](/Wireframes/details.png)
-![Admin](/Wireframes/admin.png)
-![UserDetail](/Wireframes/userdetail.png)
+![Admin](/Wireframes/Admin.png)
+![UserDetail](/Wireframes/UserDetail.png)
 ![About](/Wireframes/about.png)
 ![NavBar](/Wireframes/NavBar.png)
 
