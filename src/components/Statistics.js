@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import DeathsGraph from './DeathsGraph'
 import CasesGraph from './CasesGraph'
-import StatisticsTable from './StatisticsTable'
-
+import '../css/Statistics.css'
 
 const axios = require('axios')
 
@@ -64,27 +63,30 @@ const Statistics = ({newCountry, newCounty, newRegion}) => {
 
 
     return(
-        <div>
-            Statistics
-            <p>Country: {country}</p>
-            <p>County: {county}</p>
-            <p>State: {region}</p>
-            <p>Confirmed Cases: {confirmedCases}</p>
-            <p>Deaths: {deaths}</p>
-            <p>Recovered: {recovered}</p>
-            <p>Last Updated: {updatedAt}</p>
-            <h3>Filters: </h3>
-            <ul>
-                <button onClick={e => onChangeDayFilter(e, 7)}>7 Days</button>
-                <button onClick={e => onChangeDayFilter(e, 30)}>30 Days</button>
-                <button onClick={e => onChangeDayFilter(e, "all")}>All</button>
-            </ul>
+        <div className='container'>
+            <div className='row'>
+                <div className='col s12'>
+                    <div className='card'>
+                        <p>Country: {country}</p>
+                        <p>County: {county}</p>
+                        <p>State: {region}</p>
+                        <p>Confirmed Cases: {confirmedCases}</p>
+                        <p>Deaths: {deaths}</p>
+                        <p>Last Updated: {updatedAt}</p>
+                    </div>
+                </div>
+            </div>
 
-            <CasesGraph dates={historicalDates} cases={historicalCases} />
-            <DeathsGraph dates={historicalDates} deaths={historicalDeaths} />
+            <div className='row graph-container'>
+                    <ul>
+                        <button onClick={e => onChangeDayFilter(e, 7)} className='waves-effect waves-light btn-small'>7 Days</button>
+                        <button onClick={e => onChangeDayFilter(e, 30)} className='waves-effect waves-light btn-small'>30 Days</button>
+                        <button onClick={e => onChangeDayFilter(e, "all")} className='waves-effect waves-light btn-small'>All</button>
+                    </ul>
 
-            <StatisticsTable />
-
+                    <CasesGraph dates={historicalDates} cases={historicalCases} />
+                    <DeathsGraph dates={historicalDates} deaths={historicalDeaths} />
+            </div>
         </div>
     )
 

@@ -21,30 +21,38 @@ const Admin = () => {
     return(
         <>
             {users ? (
-                <div>
-                    <h1>All Users</h1>
+                <div className='container'>
+                    <h2>All Users</h2>
                     {/* {console.log(users)} */}
                     {users.length > 0 ? (
-                        <div>
+                        <>
                             {users.map(user => (
-                                <div key={user._id}>
-                                    <Link to={`/admin/users/${user._id}`}>
-                                        <h3>{user.username}</h3>
-                                    </Link>    
-                                    <p>{user.email}</p>
-                                    {user.primaryLocation && 
-                                    <p>
-                                        {user.primaryLocation.city},{' '}
-                                        {user.primaryLocation.state},{' '} 
-                                        {user.primaryLocation.county}{' '}-{' '}
-                                        {user.primaryLocation.country}
-                                    </p>}
-                                    {user.roles && 
-                                        user.roles.map(role => <p key={role._id}>{role.name}</p>)
-                                    }
+                                <div key={user._id} className='row'>
+                                    <div className='col s12'>
+                                        <div className='card'>
+                                            <div className='card-content'>
+                                                <span className='card-title'>
+                                                    <Link to={`/admin/users/${user._id}`}>
+                                                        <h4>{user.username}</h4>
+                                                    </Link>    
+                                                </span>
+                                                <p>{user.email}</p>
+                                                {user.primaryLocation && 
+                                                <p>
+                                                    {user.primaryLocation.city},{' '}
+                                                    {user.primaryLocation.state},{' '} 
+                                                    {user.primaryLocation.county}{' '}-{' '}
+                                                    {user.primaryLocation.country}
+                                                </p>}
+                                                {user.roles && 
+                                                    user.roles.map(role => <p key={role._id}>{role.name}</p>)
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             ))}
-                        </div>
+                        </>
                     ) : (
                         <div>No Users to Show!</div>
                     )}

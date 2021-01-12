@@ -56,9 +56,6 @@ html, body {
   flex-direction: row;
 }
 
-
-element.style {
-}
 .list-widget .feature-list .feature-list-item {
     cursor: pointer;
     align-items: center;
@@ -83,10 +80,7 @@ element.style {
     -ms-flex-direction: row;
     flex-direction: row;
 }
-*, :after, :before {
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-}
+
 .am-chart svg, .block-container label, .block-container span, .btn.btn-grouped, .chart-widget .am-chart .amcharts-balloon-div, .data-source-table-container table td, .direction-ltr, .feature-description td, .input-spinner .input-spinner-input, .list-widget .feature-list, .power-element .dropdown-menu .side-nav-link, .power-element .filter-dropdown-list .side-nav-link, .power-element .side-nav .side-nav-link, .power-element .value-container, .power-element input, .widget .widget-header .caption {
     direction: ltr;
 }
