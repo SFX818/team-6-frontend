@@ -4,6 +4,7 @@ import SearchPractice from './components/SearchPractice'
 
 //Component Imports
 import Search from './components/Search'
+import SearchForm from './components/SearchForm'
 import SearchDetail from './components/SearchDetail'
 // import New from "./components/New"
 import Home from './components/Home'
@@ -40,7 +41,7 @@ const App = () => {
       
         <Route exact path='/search-practice' component={SearchPractice} />
 
-        <Route exact path='/search' component={Search}/>
+        <Route exact path='/search' component={SearchForm}/>
         <Route exact path='/search/:id' component={SearchDetail} />
         <Route exact path={['/','/home']} component={Home}/>
         <Route exact path='/about' component={About} />
