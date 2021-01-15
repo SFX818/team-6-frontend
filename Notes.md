@@ -18,4 +18,5 @@
 - [x] connect Statistics to SearchDetail
     - [x] requires slight refactoring 
 - [x] create and use utils for frequent functions
-- [] styling...
+- [x] styling...
+- [] better About page
