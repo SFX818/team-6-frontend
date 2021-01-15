@@ -14,13 +14,13 @@ import { getOneLocation } from '../services/location.services'
 mapboxgl.accessToken = 'pk.eyJ1IjoiYmluYXJ5YmVhc3QiLCJhIjoiY2tpbTU3cW8xMHE1ZTJycXJkemdjZThmMSJ9.LUCLnUpyYjcUF48GPUEUVQ'
 
 
-  function Search(id) {
+  function Search(id, city) {
     const [searchTerm, setSearchTerm] = useState(null)
 
     const [searchCountry, setSearchCountry] = useState('')
     const [searchRegion, setSearchRegion] = useState('')
     const [searchCounty, setSearchCounty] = useState('')
-    const [searchCity, setSearchCity] = useState('')
+    const [searchCity, setSearchCity] = useState(city)
     const [searchId, setSearchId] = useState(id)
     const [searchLocation, setSearchLocation] = useState('')
     const [searchUrl, setSearchUrl] = useState('https://disease.sh/v3/covid-19/jhucsse')
@@ -43,8 +43,9 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiYmluYXJ5YmVhc3QiLCJhIjoiY2tpbTU3cW8xMHE1ZTJyc
           }
       )} else {
         setSearchUrl('https://disease.sh/v3/covid-19/jhucsse')
+        console.log('Nope, no search location here!')
       }
-    },[id])
+    },[searchCity])
 
     const fetcher = (url,city,state,county,country) =>
     fetch(url) 

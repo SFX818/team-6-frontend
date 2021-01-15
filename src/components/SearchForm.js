@@ -168,7 +168,7 @@ const SearchForm = (props) => {
                     )}
                 </div>
                 </Form>
-                <Search id={id}/>
+                <Search id={id} city={city}/>
             </div>
     )
 }
