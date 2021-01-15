@@ -11,9 +11,6 @@ const Home = () => {
                     <h2>
                     Check up on other communities affected by COVID-19
                     </h2>
-                    <p>
-                    Be wise, keep your mask on and avoid any gatherings
-                    </p>
                     <a href="/register" class="filbtn">Register</a>
                 </div>
             </div>

@@ -7,6 +7,7 @@ import { addFavorite, getFavorites, removeFavorite } from '../services/user.serv
 import { getCurrentUser } from '../services/auth.service'
 
 import Statistics from './Statistics'
+import '../css/SearchDetail.css'
 
 const SearchDetail = () => {
     const form = useRef()
@@ -67,42 +68,44 @@ const SearchDetail = () => {
     }
 
     return(
-        <>
+        <div className='main container'>
             {location ? (
-                <div>
+                <div className='row header-container'>
                     <h3>{location.city}, {location.state} - {location.country}</h3>
                     {currentUser ? (
                         <>
                         {(favoriteLocations.length > 0 && favoriteLocations.some(existing => existing._id === location._id)) ? (
                             <Form ref={form} onSubmit={handleRemove}>
                                 <Input type='hidden' value={location._id} name='id'/>
-                                <Input type='submit' value='Remove from Favorite Locations' name='submit'/>
+                                <Input type='submit' value='Remove from Favorite Locations' name='submit' className='waves-effect waves-light btn'/>
                             </Form>
                         ) : (
                             <Form ref={form} onSubmit={handleAddFavorite}>
                                 <Input type='hidden' value={location._id} name='id'/>
-                                <Input type='submit' value='Add to Favorite Locations' name='submit'/>
+                                <Input type='submit' value='Add to Favorite Locations' name='submit' className='waves-effect waves-light btn'/>
                             </Form>
                         )}
                         </>
                     ) : (
                         <div><Link to='/login'>Login</Link> or <Link to='/register'>Register</Link> to add to favorite locations!</div>
                     )}
+                    <div className='row back-container'>
+                        <Link to='/search' className='waves-effect waves-teal btn-flat'>Back to Map</Link>
+                    </div>
                 </div>
             ) : (
                 <div className='progress'>
                     <span className='indeterminate'></span>
                 </div>
             )}
-            <Statistics
-                newCountry={location.country}
-                newCounty={location.county}
-                newRegion={location.state}
-             />
-            <div>
-                <Link to='/search'>Back to Map</Link>
+            <div className='row statistics-container'>
+                <Statistics
+                    newCountry={location.country}
+                    newCounty={location.county}
+                    newRegion={location.state}
+                />
             </div>
-        </>
+        </div>
     )
 }
 

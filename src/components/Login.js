@@ -75,7 +75,7 @@ const Login = (props) => {
     return(
         <div className="container">
             <div className="row">
-                <div class="input-field img-container">
+                <div className="input-field img-container">
                 <img
                     src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
                     alt="profile-img"

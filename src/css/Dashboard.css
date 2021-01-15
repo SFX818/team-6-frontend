@@ -1,0 +1,43 @@
+*,*::before,*::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  
+  /* DEV CLASSES */
+  
+  .border-blue {
+    border: 1px solid blue;
+  }
+  
+  .border-green {
+    border: 1px solid green;
+  }
+  
+  .display-none {
+    display: none !important;
+  }
+  
+  .disabled {
+    pointer-events: none;
+    /* opacity: 0.7; */
+  }
+
+
+/* Style classes */
+html, body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+
+}
+
+.stats-container {
+    position: relative;
+    bottom: 100%;
+}
+
+.search-header {
+    margin: 0.8rem;
+}
