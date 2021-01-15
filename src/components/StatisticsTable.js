@@ -6,7 +6,7 @@ import '../css/StatisticsTable.css'
 const axios = require('axios')
 
 
-const StatisticsTable = () => {
+const StatisticsTable = ({onChangeStatistics}) => {
     const [gridTable, setGridTable] = useState({
         resolve: () => {}
     })
@@ -25,6 +25,18 @@ const StatisticsTable = () => {
             const updatedAt = new Date();
             setGridTable({ ...gridTable, data, updatedAt, resolve });
         })
+    
+    const onRowEdit = oldData =>
+    new Promise((resolve, reject) => {
+        const dataID = oldData._id
+        console.log(dataID)
+        // let data = [...gridTable.data];
+        // const index = data.indexOf(oldData);
+        // data.splice(index, 1);
+        // const updatedAt = new Date();
+        // setGridTable({ ...gridTable, data, updatedAt, resolve });
+    })
+
 
     //Get favorites and set state
     useEffect(() => {
@@ -81,11 +93,11 @@ const StatisticsTable = () => {
                     field: "country",
                 },
                 {
-                    title: "Confirmed",
+                    title: "Confirmed Cases",
                     field: "confirmed",
                 },
                 {
-                    title: "Deaths",
+                    title: "Confirmed Deaths",
                     field: "deaths",
                 },
             ],
@@ -123,6 +135,7 @@ const StatisticsTable = () => {
                             deleteTooltip: "Remove from favorite location",
                         },
                     }}
+                    onRowClick={(event, rowData, ) => onChangeStatistics(rowData.county, rowData.state, rowData.country)}
                 />
             </div>
         </div>

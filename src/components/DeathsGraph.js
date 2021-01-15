@@ -23,7 +23,8 @@ const CasesGraph = ({dates, deaths}) => {
             text: "Confirmed Deaths"
           },
         responsive: true,
-        maintainAspectRatio: true
+        maintainAspectRatio: true,
+        aspectRatio: 4
     }
 
     return(
