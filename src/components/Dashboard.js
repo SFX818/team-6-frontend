@@ -20,7 +20,18 @@ const Dashboard = () => {
     const [primaryCounty, setPrimaryCounty] = useState(undefined)
     const [primaryState, setPrimaryState] = useState(undefined)
     
-    
+    const onChangeStatistics = (county, region, country) => {
+        console.log(county)
+        console.log(region)
+        console.log(country)
+        setPrimaryCounty(county)
+        setPrimaryState(region)
+        setPrimaryCountry(country)
+        console.log(primaryCounty)
+        console.log(primaryState)
+        console.log(primaryCountry)
+    }
+
     useEffect(()=> {
         const user = getCurrentUser()
         if(user) {
@@ -86,7 +97,7 @@ const Dashboard = () => {
                         />
                     </div>
                     {/* <div className='row stats-container'> */}
-                        <StatisticsTable />
+                        <StatisticsTable onChangeStatistics={onChangeStatistics}/>
                     {/* </div> */}
                 </>
             ) : (

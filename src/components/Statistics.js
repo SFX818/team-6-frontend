@@ -43,7 +43,7 @@ const Statistics = ({newCountry, newCounty, newRegion}) => {
                 })
             })
         }
-    }, [newCountry, newCounty, newRegion])
+    }, [newCountry, newCounty, newRegion, country, county, region])
 
 
     useEffect(() => {
@@ -59,7 +59,7 @@ const Statistics = ({newCountry, newCounty, newRegion}) => {
                 })
             })
         }
-    }, [region, dayFilter])
+    }, [region, dayFilter, newCountry, newCounty, newRegion])
 
 
     return(
