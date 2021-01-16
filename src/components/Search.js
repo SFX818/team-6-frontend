@@ -45,34 +45,60 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiYmluYXJ5YmVhc3QiLCJhIjoiY2tpbTU3cW8xMHE1ZTJyc
         }
     },[id])
 
-    const fetcher = (url,city,state,county,country) =>
+    const fetcher = (url,city,state,county,country) => 
     fetch(url) 
-     
       .then(r => r.json())
-      .then(data =>
-        data.map((point, index) => ({
-            // console.log(point)
-            // i need to another if statement to check if the search terms matches
-                // return {
-                    type: "Feature",
-                    geometry: {
-                      type: "Point",
-                      coordinates: [
-                        point.coordinates.longitude,
-                        point.coordinates.latitude
-                      ]
-                    },
-                    properties: {
-                      id: index, // unique identifier in this case the index
-                      country: point.country,
-                      province: point.province,
-                      county: point.county,
-                      cases: point.stats.confirmed,
-                      deaths: point.stats.deaths,
-                      recovered: point.stats.recovered
-                    }
-        }))
-      );
+      .then(data => {
+        if(id.id === null) {
+          return data.map((point, index) => ({
+                      type: "Feature",
+                      geometry: {
+                        type: "Point",
+                        coordinates: [
+                          point.coordinates.longitude,
+                          point.coordinates.latitude
+                        ]
+                      },
+                      properties: {
+                        id: index,
+                        country: point.country,
+                        province: point.province,
+                        county: point.county,
+                        cases: point.stats.confirmed,
+                        deaths: point.stats.deaths,
+                        recovered: point.stats.recovered
+                      }
+          }))
+        } else {
+          // console.log(data)
+          // data.forEach(point => {
+          //   if (searchLocation.state === point.province) {
+          let filteredData = data.filter(point => point.province === searchLocation.state)
+              // console.log(point) // it's pulling the right thing // why isn't it formatting?
+              return filteredData.map((point, index) => ({
+                type: "Feature",
+                geometry: {
+                  type: "Point",
+                  coordinates: [
+                    point.coordinates.longitude,
+                    point.coordinates.latitude
+                  ]
+                },
+                properties: {
+                  id: index,
+                  country: point.country,
+                  province: point.province,
+                  county: point.county,
+                  cases: point.stats.confirmed,
+                  deaths: point.stats.deaths,
+                  recovered: point.stats.recovered
+                }
+            }))
+          }
+
+        })
+      // }
+    // })
 
   // Fetching our data with swr package
   const { data } = useSWR(searchUrl, fetcher);
