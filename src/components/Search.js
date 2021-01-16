@@ -31,28 +31,25 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiYmluYXJ5YmVhc3QiLCJhIjoiY2tpbTU3cW8xMHE1ZTJyc
     const popUpRef = useRef(new mapboxgl.Popup({ offset: 15 }))
 
     useEffect(() => {
-      if(searchId !== null){
-        getOneLocation(id).then(response => {
-          setSearchLocation(response.data)
-          setSearchUrl(`https://disease.sh/v3/covid-19/jhucsse/counties/${searchLocation.county}`)
-          console.log(searchLocation)
-          },
-          (error) => {
-              setMessage(error)
-              setSearchLocation(error)
-          }
-      )} else {
-        setSearchUrl('https://disease.sh/v3/covid-19/jhucsse')
-        console.log('Nope, no search location here!')
-      }
-    },[searchCity])
+        if(id.id !== null){
+          getOneLocation(id.id).then(response => {
+            setSearchLocation(response.data)
+            setSearchUrl(`https://disease.sh/v3/covid-19/jhucsse/counties/${response.data.county}`)
+            },
+            (error) => {
+                setMessage(error)
+                setSearchLocation(error)
+            }
+        )} else {
+          setSearchUrl('https://disease.sh/v3/covid-19/jhucsse')
+        }
+    },[id])
 
     const fetcher = (url,city,state,county,country) =>
     fetch(url) 
      
       .then(r => r.json())
       .then(data =>
-        
         data.map((point, index) => ({
             // console.log(point)
             // i need to another if statement to check if the search terms matches
@@ -176,7 +173,6 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiYmluYXJ5YmVhc3QiLCJhIjoiY2tpbTU3cW8xMHE1ZTJyc
                 },
             });
            
-
             // now add the layer, and reference the data source above by name
             map.addLayer({
               id: 'country-data-layer',

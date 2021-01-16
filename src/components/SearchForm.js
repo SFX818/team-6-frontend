@@ -44,7 +44,7 @@ const SearchForm = (props) => {
     const [country, setCountry] = useState('')
     const [region, setRegion] = useState('')
     const [city, setCity] = useState('')
-    const [id, setId] = useState('')
+    const [id, setId] = useState(null)
     const [searchHistory, setSearchHistory] = useState(undefined)
 
     const[loading, setLoading] = useState(false)
@@ -168,7 +168,7 @@ const SearchForm = (props) => {
                     )}
                 </div>
                 </Form>
-                <Search id={id} city={city}/>
+                <Search id={id}/>
             </div>
     )
 }
