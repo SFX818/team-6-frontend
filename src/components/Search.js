@@ -16,6 +16,8 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiYmluYXJ5YmVhc3QiLCJhIjoiY2tpbTU3cW8xMHE1ZTJyc
 
   function Search(id, city) {
     const [searchTerm, setSearchTerm] = useState(null)
+    const [zoom, setZoom] = useState(2.5)
+    const [center, setCenter] = useState([-104.9876, 39.7405])
 
     const [searchCountry, setSearchCountry] = useState('')
     const [searchRegion, setSearchRegion] = useState('')
@@ -177,12 +179,17 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiYmluYXJ5YmVhc3QiLCJhIjoiY2tpbTU3cW8xMHE1ZTJyc
     
 
     useEffect(() => {
+        if(data && data.length === 1) {
+          setCenter([data[0].geometry.coordinates[0], data[0].geometry.coordinates[1]]) // this all works, it's just very slow
+          setZoom(12)
+          // console.log(data[0].geometry.coordinates)
+        }
         const map = new mapboxgl.Map({
             container: mapContainerRef.current,
             // See style options here: https://docs.mapbox.com/api/maps/#styles
             style: 'mapbox://styles/binarybeast/ckjdljfpu6smv1ao028dmjh4r',
-            center: [-104.9876, 39.7405],
-            zoom: 2.5,
+            center: center,
+            zoom: zoom,
           });
 
 
