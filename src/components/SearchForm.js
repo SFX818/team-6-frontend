@@ -7,14 +7,15 @@ import CheckButton from 'react-validation/build/button'
 import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
 
 //Components
-import FormGroup from "./common/FormGroup"
+// import FormGroup from "./common/FormGroup"
 import Loading from './common/Loading'
+import Search from './Search'
 
 //Helper
 import { locationSearch, addToSearchHistory } from '../services/location.services'
 import { getHistory, removeFromSearchHistory } from '../services/user.service'
 import { resMessage } from '../utilities/functions.utilities'
-import searchTerm from './Search'
+// import searchTerm from './Search'
 
 //CSS
 // import '../css/SearchForm.css'
@@ -43,7 +44,7 @@ const SearchForm = (props) => {
     const [country, setCountry] = useState('')
     const [region, setRegion] = useState('')
     const [city, setCity] = useState('')
-    const [id, setId] = useState('')
+    const [id, setId] = useState(null)
     const [searchHistory, setSearchHistory] = useState(undefined)
 
     const[loading, setLoading] = useState(false)
@@ -137,7 +138,7 @@ const SearchForm = (props) => {
                         value={region}
                         onChange={(val) => onChangeRegion(val)} />
                 </div>
-                <label for='city'>City</label>
+                <label>City</label>
                 <div className='input-field'>
                         <Input
                             type='text'
@@ -147,7 +148,7 @@ const SearchForm = (props) => {
                             placeholder='City'
                             onChange={onChangeCity}
                             validations={[required]}
-                        />
+                        />               
                 </div>
 
                     <Loading text='Search' loading={loading} />
@@ -167,6 +168,7 @@ const SearchForm = (props) => {
                     )}
                 </div>
                 </Form>
+                <Search id={id}/>
             </div>
     )
 }
