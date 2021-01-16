@@ -1,7 +1,5 @@
 import {Switch, Route} from 'react-router-dom'
 
-import SearchPractice from './components/SearchPractice'
-
 //Component Imports
 import Search from './components/Search'
 import SearchForm from './components/SearchForm'
@@ -38,9 +36,6 @@ const App = () => {
   return (
     <Layout>
       <Switch>
-      
-        <Route exact path='/search-practice' component={SearchPractice} />
-
         <Route exact path='/search' component={SearchForm}/>
         <Route exact path='/search/:id' component={SearchDetail} />
         <Route exact path={['/','/home']} component={Home}/>
