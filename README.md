@@ -1,6 +1,9 @@
 # COV-ID
 ## Binary Beasts
 
+[Front End Deployed Site](https://cov-id.netlify.app/)
+(buggy, review full site on local for now)
+
 ![Landing Page](/cov-id_landingpage.png)
 
 
@@ -66,6 +69,8 @@ We wanted to create an app that would be simple to navigate and would provide us
 
 ## Major Hurdles
 Mapbox. Mapbox was our biggest hurdle. The biggest challenge was probably because the Covid-19 API has different endpoints depending on the level of data you're looking for, so the endpoint has to dynamically change depending on the search terms.
+
+Getting the site deployed on the front end was also a huge challenge. Some of the parts of the site would work, then they wouldn't. We tried both Surge and Netlify for hosting, but because those are primarily for static sites, the dynamic parts of our site would throw errors. Currently researching other options and workarounds.
 
 ## Acknowledgements
 We used the following tutorials to troubleshoot our Mapbox problems:
