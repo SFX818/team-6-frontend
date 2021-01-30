@@ -1,9 +1,14 @@
 import axios from 'axios'
 import authHeader from '../utilities/authHeader.utilities'
 
-const API_URL_ADMIN = 'http://localhost:8080/admin/users/'
-const API_URL_DASHBOARD = 'http://localhost:8080/dashboard/'
-const API_URL_OSEARCH = 'http://localhost:8080/search/'
+// const API_URL_ADMIN = 'http://localhost:8080/admin/users/'
+// const API_URL_DASHBOARD = 'http://localhost:8080/dashboard/'
+// const API_URL_OSEARCH = 'http://localhost:8080/search/'
+
+const API_URL_ADMIN = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_DEV_URL_ADMIN : process.env.REACT_APP_PRO_URL_ADMIN;
+const API_URL_DASHBOARD = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_DEV_URL_DASHBOARD : process.env.REACT_APP_PRO_URL_DASHBOARD;
+const API_URL_OSEARCH = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_DEV_URL_OSEARCH : process.env.REACT_APP_PRO_URL_OSEARCH;
+
 
 // --- TEST --- //
 export const testRoute = userToken => {
