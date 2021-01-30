@@ -23,19 +23,19 @@ export const testRoute = userToken => {
 
 // --- ADMIN ROUTES --- //
 export const getAllUsers = () => {
-    return axios.get(API_URL_ADMIN + 'all', {headers: authHeader()})
+    return axios.get(API_URL_ADMIN + 'users/all', {headers: authHeader()})
 }
 
 export const getOneUser = id => {
-    return axios.get(API_URL_ADMIN + id, {headers: authHeader()})
+    return axios.get(API_URL_ADMIN + 'users/' + id, {headers: authHeader()})
 }
 
 export const getRoles = () => {
-    return axios.get('http://localhost:8080/admin/roles', {headers: authHeader()})
+    return axios.get(API_URL_ADMIN + 'roles', {headers: authHeader()})
 }
 
 export const addUserRoles = (id,roles) => {
-    return axios.put(API_URL_ADMIN + id, {
+    return axios.put(API_URL_ADMIN + 'users/' + id, {
         roles: roles
     },
         {headers: authHeader()}
@@ -43,7 +43,7 @@ export const addUserRoles = (id,roles) => {
 }
 
 export const removeUserRoles = (id,roles) => {
-    return axios.put(API_URL_ADMIN + id + '/remove', {
+    return axios.put(API_URL_ADMIN + 'users/' + id + '/remove', {
         roles: roles
     },
         {headers: authHeader()}
@@ -53,7 +53,7 @@ export const removeUserRoles = (id,roles) => {
 export const deleteUser = id => {
     return axios({
         method: 'DELETE',
-        url: API_URL_ADMIN + id +'/delete',
+        url: API_URL_ADMIN + 'users/' + id +'/delete',
         headers: authHeader()
     },
     {_id: id}
