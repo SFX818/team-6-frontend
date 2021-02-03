@@ -128,7 +128,7 @@ const Register = (props) => {
                     login(username, password).then(
                         ()=> {
                             props.history.push("/dashboard")
-                            window.location.reload()
+                            // window.location.reload()
                         },
                         (error) => {
                             // Checking all the data received from our backend

@@ -48,7 +48,8 @@ const SearchDetail = () => {
         .then(response => {
             // console.log(response.data)
             setMessage(response.data)
-            window.location.reload()
+            window.location.reload() // this could be why this is crashing
+            // history.push()
         })
         .catch(err => setMessage(err))
     }
