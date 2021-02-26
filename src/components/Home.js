@@ -13,7 +13,7 @@ const Home = () => {
                     Check up on other communities affected by COVID-19
                     </h2>
                     {/* <a href="/register" class="filbtn">Register</a> */}
-                    <Link to='/register' className='fillBtn'>Register</Link>
+                    <Link to='/register' className='filbtn'>Register</Link>
                 </div>
             </div>
         </div>
